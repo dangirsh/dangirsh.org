@@ -7,10 +7,42 @@ The posts are written in [[https://emacs.sexy/][Emacs]] with [[https://orgmode.o
 
 * Build + Publish
 
-Assuming Nix is setup, just run:
+Assuming Nix is setup, the [[file:publi.sh][publish script]] runs =nix-build=, then =rsync=.
 
-#+begin_src sh
+#+begin_src sh :async yes :results output :export code
 ./publi.sh
 #+end_src
 
-This runs =nix-build=, then =rsync=.
+#+RESULTS:
+#+begin_example
+/nix/store/2ysqblhg1f6rwab4k84hw9hajrr7ikqg-dangirsh_org-site
+sending incremental file list
+about.html
+            700  53%    0.00kB/s    0:00:00            1,300 100%  585.94kB/s    0:00:00 (xfr#1, to-chk=15/17)
+archive.html
+            700  51%  683.59kB/s    0:00:00            1,359 100%    1.30MB/s    0:00:00 (xfr#2, to-chk=14/17)
+contact.html
+            700  52%  683.59kB/s    0:00:00            1,346 100%    1.28MB/s    0:00:00 (xfr#3, to-chk=13/17)
+index.html
+            700  51%  683.59kB/s    0:00:00            1,371 100%    1.31MB/s    0:00:00 (xfr#4, to-chk=12/17)
+css/default.css
+            700  51%   42.72kB/s    0:00:00            1,358 100%   82.89kB/s    0:00:00 (xfr#5, to-chk=7/17)
+css/hack-subset.css
+            700  85%   42.72kB/s    0:00:00              818 100%   49.93kB/s    0:00:00 (xfr#6, to-chk=6/17)
+css/syntax.css
+            700  81%   42.72kB/s    0:00:00              863 100%   52.67kB/s    0:00:00 (xfr#7, to-chk=5/17)
+doc/gpg.txt
+            700  28%   42.72kB/s    0:00:00            2,464 100%  150.39kB/s    0:00:00 (xfr#8, to-chk=4/17)
+doc/resume.pdf
+            700   0%   42.72kB/s    0:00:01           81,908 100%    4.34MB/s    0:00:00 (xfr#9, to-chk=3/17)
+img/favicon.png
+            700  13%   37.98kB/s    0:00:00            5,157 100%  279.79kB/s    0:00:00 (xfr#10, to-chk=2/17)
+img/headshot.jpg
+            700   1%   37.98kB/s    0:00:01           39,588 100%    1.99MB/s    0:00:00 (xfr#11, to-chk=1/17)
+posts/test.html
+            700  41%   35.98kB/s    0:00:00            1,686 100%   86.66kB/s    0:00:00 (xfr#12, to-chk=0/17)
+
+sent 1,609 bytes  received 1,480 bytes  2,059.33 bytes/sec
+total size is 139,218  speedup is 45.07
+#+end_example
+
