@@ -2,5 +2,5 @@
 title: Contact
 ---
 
-Email:  [tim@timput.com](mailto://tim@timput.com)  
-Github: [TimPut](https://github.com/timput)  
+Email:  [dan.girsh@gmail.com](mailto://dan.girsh@gmail.com)  
+Github: [dangirsh](https://github.com/dangirsh)  

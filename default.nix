@@ -14,7 +14,7 @@ in
 
 
 let generator = pkgs.stdenv.mkDerivation {
-      name = "timput-generator";
+      name = "dangirsh-generator";
       src = ./generator;
       phases = "unpackPhase buildPhase";
       buildInputs = [
@@ -26,7 +26,7 @@ let generator = pkgs.stdenv.mkDerivation {
       '';
     };
 in pkgs.stdenv.mkDerivation {
-     name = "timput_com-site";
+     name = "dangirsh_com-site";
      src = ./site;
      phases = "unpackPhase buildPhase";
      buildInputs = [ generator ];

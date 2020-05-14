@@ -1,0 +1,23 @@
+---
+title: Test
+date: 2020-05-13
+---
+
+Test post
+
+#+CAPTION: Belt Arrangement
+[[../img/belts.svg]]
+
+\[ \beta = sin^{-1} \frac{D_1 - D_2}{2cc} \]
+\[ S = \sqrt{CC^2 - \left(\frac{D_1 - D_2}{2}\right)^2} \]
+\[ L = 2S + \pi\frac{D_1}{2} + \pi\frac{D_2}{2} + 2\beta\frac{D_1}{2} - 2\beta\frac{D_2}{2} \]
+
+That is: the total belt length is the sum of two the straight parts, the half circumferences of each pulley, and the two arcs of arclength $\beta$ on the larger pulley, minus the two arcs of arclength $\beta$ on the small pulley.
+
+#+BEGIN_SRC haskell
+-- Haskell snippet
+beltLength d1 d2 cc = 2 * s + 0.5 * pi * (d1 + d2) + beta * (d1 - d2)
+  where
+    beta = asin ((d1 - d2) / (2*cc))
+    s = sqrt(cc**2 - 0.5 * (d1 - d2))
+#+END_SRC
