@@ -26,7 +26,7 @@ let generator = pkgs.stdenv.mkDerivation {
       '';
     };
 in pkgs.stdenv.mkDerivation {
-     name = "dangirsh_com-site";
+     name = "dangirsh_org-site";
      src = ./site;
      phases = "unpackPhase buildPhase";
      buildInputs = [ generator ];
