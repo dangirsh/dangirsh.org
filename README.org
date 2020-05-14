@@ -4,3 +4,13 @@
 This is the source of [[file:][dangirsh.org]]. It's based on the minimal and effective [[https://github.com/TimPut/timput.com][blog of Tim Put]].
 
 The posts are written in [[https://emacs.sexy/][Emacs]] with [[https://orgmode.org/][Org-mode]], generated with [[https://jaspervdj.be/hakyll/][Hakyll]], kept sane with [[https://nixos.org/nix/][Nix]], and hosted on [[Hear][NearlyFreeSpeech]].
+
+* Build + Publish
+
+Assuming Nix is setup, just run:
+
+#+begin_src sh
+./publi.sh
+#+end_src
+
+This runs =nix-build=, then =rsync=.
