@@ -2,5 +2,5 @@
 title: Contact
 ---
 
-Email:  [dan.girsh@gmail.com](mailto://dan.girsh@gmail.com)  
+Email:  dan.girsh at gmail
 Github: [dangirsh](https://github.com/dangirsh)  
