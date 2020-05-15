@@ -3,7 +3,7 @@ title: Foundations Journal Club.
 date: 2020-05-14
 ---
 
-I've been organizing the [[https://roamresearch.com/#/app/foundations-journal-club/page/TQMkZn6Ia][Foundations Journal Club]], which meets online every few weeks. If you'd like to be included, shoot me an email.
+I've been organizing the [[https://roamresearch.com/#/app/foundations-journal-club/page/TQMkZn6Ia][Foundations Journal Club]], which meets online every few weeks. If you'd like to be included, [[https://dangirsh.org/contact.html][shoot me an email]].
 
 I plan to periodically update this page with any insights / learnings I feel like sharing.
 
