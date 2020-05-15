@@ -1,0 +1,16 @@
+---
+title: Popularizing Quantum Contextuality
+date: 2020-05-14
+---
+
+I've found very few expositions of quantum contextuality that are accessible to a non-technical audience. So, I've been iterating on a game that exposes the key ideas. Behind the scenes, it uses [[https://www.quantiki.org/wiki/ghz][GHZ states]] and an implicit assumption of locality to generate a paradox. No physics / math background is required to play.
+
+After almost two years of showing it to friends, I'd like to post the details publicly. Check back here soon.
+
+You can get a feel of it from this photo:
+
+#+ATTR_HTML: width="800px"
+#+ATTR_ORG: :width 800
+[[../img/ghz_game.jpg]]
+
+If you know of any good explanations of contextuality, please get in touch!

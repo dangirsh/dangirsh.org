@@ -1,0 +1,19 @@
+---
+title: Foundations Journal Club.
+date: 2020-05-14
+---
+
+I've been organizing the [[https://roamresearch.com/#/app/foundations-journal-club/page/TQMkZn6Ia][Foundations Journal Club]], which meets online every few weeks. If you'd like to be included, shoot me an email.
+
+I plan to periodically update this page with any insights / learnings I feel like sharing.
+
+** Past Topics
+
+  - [[https://arxiv.org/abs/1310.1667][Information-Based Physics: An Observer-Centric Foundation]] with [[http://knuthlab.rit.albany.edu/index.php/People/Knuth][Kevin Knuth]].
+  - [[https://www.ams.org/notices/200902/rtx090200226p.pdf][The Strong Free Will Theorem]] - Commemorating [[https://en.wikipedia.org/wiki/John_Horton_Conway][John H. Conway]].
+
+** Coming up:
+
+  - [[https://www.motionmountain.net/research.html][The Strand Model]] with Christoph Schiller
+    - [[https://www.motionmountain.net/Strands-QED.pdf][A Conjecture On Quantum Electrodynamics]]
+    - [[https://www.motionmountain.net/Strands-Gravitation.pdf][A Conjecture on Gravitation]]

@@ -1,0 +1,30 @@
+---
+title: Zettelkasten
+date: 2020-05-14
+---
+
+I've jumped on the [[https://zettelkasten.de/posts/overview/][Zettelkasten]] hype-train, which has presumably been fueled by the well-deserved popularity of [[roamresearch.com/][Roam Research]].
+
+A Zettelkasten ("note box") is a method for effective note-taking. In this method, you produce a [[https://en.wikipedia.org/wiki/Heterarchy][heterarchy]] of concepts linked together in a directed graph. Since each note is contextualized via it's embedding in the graph, it's more likely to be discovered / made-useful in the future. The original Zettelkasten was a [[https://emvi.com/blog/luhmanns-zettelkasten-a-productivity-tool-that-works-like-your-brain-N9Gd2G4aPv][carefully curated set of physical notecards]], which seemingly enabled [[https://en.wikipedia.org/wiki/Niklas_Luhmann][Niklas Luhmann]]'s impressive career. Of course, today we have digital tools to generate, navigate, and manipulate the graph.
+
+As of this writing, I've generated over 300 nodes in my personal Zettelkasten over 5 weeks. I use [[https://org-roam.readthedocs.io/en/develop/tour/][org-roam]], which I strongly recommend to anyone already familiar with Emacs + Org Mode. For everyone else, well, [[https://www.gwern.net/][Gwern]] said it best:
+
+#+begin_quote
+"Friends don’t let friends use heroin or org-mode—are you ever really going to make back the time it takes to learn & customize org-mode?"
+#+end_quote
+
+For collaborative projects (like the [[https://dangirsh.org/posts/foundations_journal_club.html][Foundations Journal Club]]), [[http://roamresearch.com/][Roam]] has been working well.
+
+Some other interesting projects / resources in this space:
+
+- [[https://neuron.zettel.page/][Neuron]]
+- [[https://www.roambrain.com/][RoamBrain]]
+- [[https://beepb00p.xyz/exobrain/][Exobrain]]
+- [[https://notes.andymatuschak.org/About_these_notes][Andy Matuschak's Notes]]
+- [[https://braindump.jethro.dev/][Jethro Kuan's Braindump]]
+- [[https://blog.jethro.dev/posts/how_to_take_smart_notes_org/][Jethro Kuan's Post - How to Take Smart Notes]]
+- [[https://wiki.nikitavoloboev.xyz/][Nikita Voloboev's Wiki]] - Not really a Zettelkasten, but quite impressive.
+- [[https://cyberthal-docs.nfshost.com/textmind/][Textmind]]
+- [[https://medium.com/@WorldBrain/where-we-are-heading-with-worldbrain-65f244f540b8][WorldBrain.io Vision]]
+
+And don't miss the classic [[https://www.theatlantic.com/magazine/archive/1945/07/as-we-may-think/303881/]["As We May Think"]].

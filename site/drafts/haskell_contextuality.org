@@ -1,0 +1,8 @@
+---
+title: Contextuality in Haskell
+date: 2020-05-14
+---
+
+Something about monads and quantum contextuality.
+
+No hits on Google for the combo, but I think there's something interesting there.
