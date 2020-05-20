@@ -7,16 +7,16 @@
 
 * About
 
-The state of my neurosys includes configuraiton for:
+The state of my neurosys includes configuration for:
 
-- [[https://nixods.org/][NixOS]] ([[https://github.com/dangirsh/neurosys/tree/master/nixos][config]])
-- [[https://xmonad.org/][XMonad]] ([[https://github.com/dangirsh/neurosys/tree/master/home/.xmonad][config]])
-- [[https://github.com/hlissner/doom-emacs][Doom Emacs]] ([[https://github.com/dangirsh/.doom.d/tree/0c606144d9abc792280d82c742628f92cedbad41][config]])
+- [[https://nixods.org/][NixOS]] ([[#nixos-config][config]])
+- [[https://xmonad.org/][XMonad]] ([[#xmonad][config]])
+- [[https://github.com/hlissner/doom-emacs][Doom Emacs]] ([[#doom-emacs][config]])
   - Includes a [[https://github.com/dangirsh/.doom.d/tree/master/modules/personal/neurosys][neurosys module]] with utilities (e.g. remote deployment)
 
 Together, these fully define a *minimal and reproducible computing environment*.
 
-[[https://github.com/dangirsh/neurosys/blob/master/README.org][This]] [[https://orgmode.org/worg/org-contrib/babel/intro.html#literate-programming][literate org file]], along with [[https://github.com/dangirsh/.doom.d/blob/master/README.org][another for Doom]], are /the only two source files/. The rest are generated.
+[[https://github.com/dangirsh/neurosys/blob/master/README.org][This]] [[https://orgmode.org/worg/org-contrib/babel/intro.html#literate-programming][literate org file]], along with [[https://github.com/dangirsh/.doom.d/blob/master/README.org][another for Doom]], are /the only two source files/. The rest are generated via [[https://orgmode.org/manual/Extracting-Source-Code.html][tangling]].
 
 If you are viewing this in a browser, consider opening the [[https://github.com/dangirsh/neurosys/blob/master/README.org][original org file]] in Emacs for the full experience. *The HTML version is an imperfect rendering*.
 
@@ -35,18 +35,21 @@ If you are viewing this in a browser, consider opening the [[https://github.com/
 - https://www.nmattia.com/posts/2018-03-21-nix-reproducible-setup-linux-macos.html
 - https://christine.website/blog/nixos-desktop-flow-2020-04-25
 
-* Table of Contents :TOC_4:
+* Table of Contents :QUOTE:TOC_4:
+#+BEGIN_QUOTE
 - [[#about][About]]
   - [[#inspirations][Inspirations]]
   - [[#helpful-resources][Helpful Resources]]
-- [[#deployment][Deployment]]
-  - [[#rsync-script][Rsync Script]]
 - [[#host-setup][Host setup]]
   - [[#install-nixos][Install NixOS]]
   - [[#add-channels][Add channels]]
     - [[#stable][Stable]]
     - [[#unstable][Unstable]]
-- [[#emacs-config][Emacs Config]]
+- [[#deployment][Deployment]]
+  - [[#get-the-neurosys-source][Get the neurosys source]]
+  - [[#sync-to-host][Sync to host]]
+    - [[#rsync-script][Rsync Script]]
+- [[#doom-emacs][Doom Emacs]]
 - [[#xmonad][XMonad]]
   - [[#imports][Imports]]
   - [[#main][Main]]
@@ -58,24 +61,7 @@ If you are viewing this in a browser, consider opening the [[https://github.com/
   - [[#global-constants][Global Constants]]
   - [[#hardware-specific-config][Hardware-specific Config]]
   - [[#version-pinning][Version Pinning]]
-
-* Deployment
-
-Run [[elisp:(neurosys/deploy-to-host)][neurosys/deploy-to-host]], which will tangle this file and =rsync= the results to a specified host.
-
-** Rsync Script
-
-#+begin_src sh :tangle rsync.sh :tangle-mode (identity #o775)
-HOST=$1
-HOST_HOME=$2
-
-rsync -Pav --rsync-path="sudo rsync" nixos/ $HOST:/etc/nixos/
-rsync -Pav home/ $HOST:$HOST_HOME
-#+end_src
-
-** COMMENT Quick deploy links
-
-[[elisp:(neurosys/deploy-to-host "root@nixos-dev" "/home/dan/")][Deploy to nixos-dev]]
+#+END_QUOTE
 
 * Host setup
 
@@ -110,9 +96,38 @@ nix-channel update
 #+END_SRC
 
 
-* Emacs Config
+* Deployment
 
-My [[https://github.com/mindlike/.doom.d][Doom Emacs Configuration]] is [[file:home/.doom.d/][tracked here]] as a git submodules.
+** Get the neurosys source
+
+Don't forget to clone recursively, because of the submodules:
+
+#+begin_src sh
+git clone --recursive git@github.com:dangirsh/neurosys.git
+#+end_src
+
+** Sync to host
+
+Run [[elisp:(neurosys/deploy-to-host)][neurosys/deploy-to-host]], which will tangle this file and =rsync= the results to a specified host.
+
+*** Rsync Script
+
+#+begin_src sh :tangle rsync.sh :tangle-mode (identity #o775)
+HOST=$1
+HOST_HOME=$2
+
+rsync -Pav --rsync-path="sudo rsync" nixos/ $HOST:/etc/nixos/
+rsync -Pav home/ $HOST:$HOST_HOME
+#+end_src
+
+*** COMMENT Quick deploy links
+
+[[elisp:(neurosys/deploy-to-host "root@nixos-dev" "/home/dan/")][Deploy to nixos-dev]]
+
+
+* Doom Emacs
+
+[[https://github.com/mindlike/.doom.d][My Doom Emacs Configuration]] is tracked in the [[file:home/][home folder]] as a git submodule.
 
 Until projects like [[https://github.com/vlaci/nix-doom-emacs][nix-doom-emacs]] are stable, I'm *not yet* tracking my Emacs packages / config in Nix. For now, I track known-good commits via submodules / [[https://github.com/raxod502/straight.el][straight.el]], and tie them to external dependencies (all managed by Nix) in this repo. If you know a better way to do this, please [[https://dangirsh.org/contact.html][let me know]].
 
@@ -474,7 +489,8 @@ in {
 
     # direnv
 
-    julia_13
+    # Upstream failing
+    # julia_11
 
     ## Doom dependencies
 
@@ -498,8 +514,8 @@ in {
     historyFile = "${syncDir}/.config/bash/.bash_history";
     # FIXME: Document and reduce these
     shellOptions = [
-      "autocd" "cdspell" "dirspell" "globstar" # bash >= 4
-      "cmdhist" "nocaseglob" "histappend" "extglob"];
+    "autocd" "cdspell" "dirspell" "globstar" # bash >= 4
+    "cmdhist" "nocaseglob" "histappend" "extglob"];
   };
 
   programs.git = {
@@ -681,27 +697,27 @@ These are generated via [[This was ][niv]].
 
 # A record, from name to path, of the third-party packages
 with rec
-  {
-    pkgs =
-      if hasNixpkgsPath
-      then
+{
+  pkgs =
+    if hasNixpkgsPath
+    then
         if hasThisAsNixpkgsPath
         then import (builtins_fetchTarball { inherit (sources_nixpkgs) url sha256; }) {}
         else import <nixpkgs> {}
-      else
+    else
         import (builtins_fetchTarball { inherit (sources_nixpkgs) url sha256; }) {};
 
-    sources_nixpkgs =
-      if builtins.hasAttr "nixpkgs" sources
-      then sources.nixpkgs
-      else abort
-        ''
+  sources_nixpkgs =
+    if builtins.hasAttr "nixpkgs" sources
+    then sources.nixpkgs
+    else abort
+    ''
         Please specify either <nixpkgs> (through -I or NIX_PATH=nixpkgs=...) or
         add a package called "nixpkgs" to your sources.json.
     '';
 
-    # fetchTarball version that is compatible between all the versions of Nix
-    builtins_fetchTarball =
+  # fetchTarball version that is compatible between all the versions of Nix
+  builtins_fetchTarball =
       { url, sha256 }@attrs:
       let
         inherit (builtins) lessThan nixVersion fetchTarball;
@@ -711,8 +727,8 @@ with rec
         else
           fetchTarball attrs;
 
-    # fetchurl version that is compatible between all the versions of Nix
-    builtins_fetchurl =
+  # fetchurl version that is compatible between all the versions of Nix
+  builtins_fetchurl =
       { url, sha256 }@attrs:
       let
         inherit (builtins) lessThan nixVersion fetchurl;
@@ -722,42 +738,42 @@ with rec
         else
           fetchurl attrs;
 
-    # A wrapper around pkgs.fetchzip that has inspectable arguments,
-    # annoyingly this means we have to specify them
-    fetchzip = { url, sha256 }@attrs: pkgs.fetchzip attrs;
+  # A wrapper around pkgs.fetchzip that has inspectable arguments,
+  # annoyingly this means we have to specify them
+  fetchzip = { url, sha256 }@attrs: pkgs.fetchzip attrs;
 
-    # A wrapper around pkgs.fetchurl that has inspectable arguments,
-    # annoyingly this means we have to specify them
-    fetchurl = { url, sha256 }@attrs: pkgs.fetchurl attrs;
+  # A wrapper around pkgs.fetchurl that has inspectable arguments,
+  # annoyingly this means we have to specify them
+  fetchurl = { url, sha256 }@attrs: pkgs.fetchurl attrs;
 
-    hasNixpkgsPath = (builtins.tryEval <nixpkgs>).success;
-    hasThisAsNixpkgsPath =
-      (builtins.tryEval <nixpkgs>).success && <nixpkgs> == ./.;
+  hasNixpkgsPath = (builtins.tryEval <nixpkgs>).success;
+  hasThisAsNixpkgsPath =
+    (builtins.tryEval <nixpkgs>).success && <nixpkgs> == ./.;
 
-    sources = builtins.fromJSON (builtins.readFile ./sources.json);
+  sources = builtins.fromJSON (builtins.readFile ./sources.json);
 
-    mapAttrs = builtins.mapAttrs or
-      (f: set: with builtins;
-        listToAttrs (map (attr: { name = attr; value = f attr set.${attr}; }) (attrNames set)));
+  mapAttrs = builtins.mapAttrs or
+    (f: set: with builtins;
+      listToAttrs (map (attr: { name = attr; value = f attr set.${attr}; }) (attrNames set)));
 
-    # borrowed from nixpkgs
-    functionArgs = f: f.__functionArgs or (builtins.functionArgs f);
-    callFunctionWith = autoArgs: f: args:
-      let auto = builtins.intersectAttrs (functionArgs f) autoArgs;
-      in f (auto // args);
+  # borrowed from nixpkgs
+  functionArgs = f: f.__functionArgs or (builtins.functionArgs f);
+  callFunctionWith = autoArgs: f: args:
+    let auto = builtins.intersectAttrs (functionArgs f) autoArgs;
+    in f (auto // args);
 
-    getFetcher = spec:
-      let fetcherName =
-            if builtins.hasAttr "type" spec
-            then builtins.getAttr "type" spec
-            else "builtin-tarball";
-      in builtins.getAttr fetcherName {
-        "tarball" = fetchzip;
-        "builtin-tarball" = builtins_fetchTarball;
-        "file" = fetchurl;
-        "builtin-url" = builtins_fetchurl;
-      };
-  };
+  getFetcher = spec:
+    let fetcherName =
+      if builtins.hasAttr "type" spec
+      then builtins.getAttr "type" spec
+      else "builtin-tarball";
+    in builtins.getAttr fetcherName {
+      "tarball" = fetchzip;
+      "builtin-tarball" = builtins_fetchTarball;
+      "file" = fetchurl;
+      "builtin-url" = builtins_fetchurl;
+    };
+};
 # NOTE: spec must _not_ have an "outPath" attribute
 mapAttrs (_: spec:
   if builtins.hasAttr "outPath" spec
@@ -769,5 +785,5 @@ mapAttrs (_: spec:
       spec //
       { outPath = callFunctionWith spec (getFetcher spec) { }; }
     else spec
-) sources
+  ) sources
 #+end_src
