@@ -47,6 +47,8 @@ main = do
     match "projects/*" $ do
         route $ setExtension "html"
         compile $ pandocMathCompiler
+            >>= loadAndApplyTemplate "templates/project.html" defaultContext
+            >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls
 
     match "drafts/*" $ do
