@@ -44,6 +44,11 @@ main = do
             >>= loadAndApplyTemplate "templates/default.html" postCtx
             >>= relativizeUrls
 
+    match "projects/*" $ do
+        route $ setExtension "html"
+        compile $ pandocMathCompiler
+            >>= relativizeUrls
+
     match "drafts/*" $ do
         route $ setExtension "html"
         compile $ pandocMathCompiler
