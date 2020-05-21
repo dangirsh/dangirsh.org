@@ -4,7 +4,6 @@
 #+email: dan.girsh@gmail.com
 #+startup: hideblocks align entitiespretty
 #+options: toc:2
-#+setupfile: https://fniessen.github.io/org-html-themes/setup/theme-readtheorg.setup
 
 * About
 
