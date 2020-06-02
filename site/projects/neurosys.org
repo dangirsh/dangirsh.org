@@ -2,40 +2,52 @@
 #+subtitle: A neurotically minimal and reproducible computing environment.
 #+author: Dan Girshovich
 #+email: dan.girsh@gmail.com
-#+startup: hideblocks align entitiespretty
+#+startup: align entitiespretty
 #+options: toc:2
 
 * About
 
-The state of my neurosys includes configuration for:
+My neurosys encompasses configuration for:
 
 - [[https://nixods.org/][NixOS]] ([[#nixos-config][config]])
 - [[https://xmonad.org/][XMonad]] ([[#xmonad][config]])
 - [[https://github.com/hlissner/doom-emacs][Doom Emacs]] ([[#doom-emacs][config]])
   - Includes a [[https://github.com/dangirsh/.doom.d/tree/master/modules/personal/neurosys][neurosys module]] with utilities (e.g. remote deployment)
 
-Together, these fully define a *minimal and reproducible computing environment*.
+These define a my computing environment, which strives to be
+
+- *Effective*: interactions with code/data should occur at the speed of thought.
+- *Extensible*: otherwise, it's not really mine.
+- *Long-lived*: resist entropy/bitrot/bankruptcy until the end of the keyboard + screen era.
+- *Minimal*: less is more for the base configuration - Nix enables project-level dependency management.
+- *Reproducible*: enabled by the content-based hashes of Nix + Git. No fear of hitting un-recoverable states.
 
 [[https://github.com/dangirsh/neurosys/blob/master/README.org][This]] [[https://orgmode.org/worg/org-contrib/babel/intro.html#literate-programming][literate org file]], along with [[https://github.com/dangirsh/.doom.d/blob/master/README.org][another for Doom]], are /the only two source files/. The rest are generated via [[https://orgmode.org/manual/Extracting-Source-Code.html][tangling]].
 
 If you are viewing this in a browser, consider opening the [[https://github.com/dangirsh/neurosys/blob/master/README.org][original org file]] in Emacs for the full experience. *The HTML version is an imperfect rendering*.
 
+The name /neurosys/ is used half-jokingly.
+
 ** Inspirations
 
-- https://github.com/willbush/system
-- https://github.com/malloc47/config
-- https://github.com/jwiegley/nix-config
-- https://github.com/hlissner/dotfiles
-- https://matthewbauer.us/bauer/
+In no particular order, I found the following configurations especially helpful:
+
+- [[https://github.com/jwiegley/nix-config][jwiegley/nix-config: My local Nix configuration]]
+- [[https://github.com/IvanMalison/dotfiles][IvanMalison/dotfiles: Configuration files for XMonad, Emacs, NixOS, ...]]
+- [[https://github.com/willbush/system][willbush/system: System configuration]]
+- [[https://github.com/malloc47/config][malloc47/config: personal config files, cannibalized from a number o...]]
+- [[https://github.com/hlissner/dotfiles][hlissner/dotfiles: NixOS dotfiles for veteran bike shedders]]
+- [[https://matthewbauer.us/bauer/][bauer: an Emacs+Nix IDE]]
+
 
 ** Helpful Resources
 
-- https://www.gwern.net/Choosing-Software
-- https://www.malloc47.com/migrating-to-nixos/
-- https://www.nmattia.com/posts/2018-03-21-nix-reproducible-setup-linux-macos.html
-- https://christine.website/blog/nixos-desktop-flow-2020-04-25
+- [[https://www.nmattia.com/posts/2018-03-21-nix-reproducible-setup-linux-macos.html][Nicolas Mattia – Nix: A Reproducible Setup for Linux and macOS]]
+- [[https://www.malloc47.com/migrating-to-nixos/][malloc47/Migrating to NixOS]]
+- [[https://christine.website/blog/nixos-desktop-flow-2020-04-25][My NixOS Desktop Flow - Christine Dodrill]]
+- [[https://www.gwern.net/Choosing-Software][Choosing Software · Gwern.net]]
 
-* Table of Contents :QUOTE:TOC_4:
+* Table of Contents :QUOTE:TOC_3:
 #+BEGIN_QUOTE
 - [[#about][About]]
   - [[#inspirations][Inspirations]]
@@ -56,32 +68,40 @@ If you are viewing this in a browser, consider opening the [[https://github.com/
   - [[#keybindings][Keybindings]]
     - [[#default][Default]]
     - [[#custom][Custom]]
-      - [[#rebooting--restarting][Rebooting / Restarting]]
-      - [[#launcher--window-switcher][Launcher / Window Switcher]]
-      - [[#running-emacs][Running Emacs]]
-      - [[#lock-screen][Lock Screen]]
-      - [[#horizontal-resizing][Horizontal Resizing]]
-      - [[#window-minimization--restoration][Window Minimization / Restoration]]
-      - [[#fullscreen][Fullscreen]]
-      - [[#workspace-swapping][Workspace Swapping]]
-      - [[#changing-number-of-master-windows][Changing number of master windows]]
-      - [[#easier-kill-binding][Easier Kill Binding]]
-      - [[#volume-control][Volume Control]]
-      - [[#screenshots][Screenshots]]
-      - [[#add-workspace-0][Add Workspace 0]]
-      - [[#arandr][Arandr]]
-      - [[#multiple-monitors][Multiple Monitors]]
-  - [[#management][Management]]
   - [[#asthetics][Asthetics]]
   - [[#screenshot][Screenshot]]
 - [[#nixos-config][Nixos Config]]
   - [[#system-level-config][System-level Config]]
+    - [[#nix][Nix]]
+    - [[#timezone][Timezone]]
+    - [[#boot][Boot]]
+    - [[#networking][Networking]]
+    - [[#services][Services]]
+    - [[#packages][Packages]]
+    - [[#fonts][Fonts]]
+    - [[#user-definition][User Definition]]
+    - [[#ssh][SSH]]
+    - [[#x2go-client][X2Go Client]]
+    - [[#end][End]]
   - [[#user-level-config][User-level Config]]
-    - [[#to-add-03][To add]]
+    - [[#environment-variables][Environment Variables]]
+    - [[#packages-1][Packages]]
+    - [[#programs][Programs]]
+    - [[#services-1][Services]]
+    - [[#end-1][End]]
+    - [[#to-test-05][To test]]
+    - [[#to-add-01][To add]]
   - [[#global-constants][Global Constants]]
   - [[#hardware-specific-config][Hardware-specific Config]]
+    - [[#disk-mounts][Disk Mounts]]
   - [[#version-pinning][Version Pinning]]
-- [[#custom-1][Custom]]
+- [[#future-work][Future Work]]
+  - [[#floating-emacs-popup-for-quick-commands][Floating Emacs popup for quick commands]]
+  - [[#hidpi-autotoggle][HiDPI autotoggle]]
+  - [[#consistent-copypaste-bindings][Consistent copy/paste bindings]]
+  - [[#consolidate-xmonad-and-emacs-window-management][Consolidate XMonad and Emacs window management]]
+  - [[#fix-indentation-in-tangled-files][Fix indentation in tangled files]]
+- [[#autoloads][Autoloads]]
 #+END_QUOTE
 
 * Host setup
@@ -116,7 +136,6 @@ nix-channel --add "https://nixos.org/channels/nixpkgs-unstable" nixpkgs-unstable
 nix-channel update
 #+END_SRC
 
-
 * Deployment
 
 ** Get the neurosys source
@@ -145,42 +164,45 @@ rsync -Pav home/ $HOST:$HOST_HOME
 
 [[elisp:(neurosys/deploy-to-host "root@nixos-dev" "/home/dan/")][Deploy to nixos-dev]]
 
-
 * Doom Emacs
 
 [[https://github.com/mindlike/.doom.d][My Doom Emacs Configuration]] is tracked in the [[file:home/][home folder]] as a git submodule.
 
 Until projects like [[https://github.com/vlaci/nix-doom-emacs][nix-doom-emacs]] are stable, I'm *not yet* tracking my Emacs packages / config in Nix. For now, I track known-good commits via submodules / [[https://github.com/raxod502/straight.el][straight.el]], and tie them to external dependencies (all managed by Nix) in this repo. If you know a better way to do this, please [[https://dangirsh.org/contact.html][let me know]].
 
-Emacs itself is tracked via the [[https://github.com/nix-community/emacs-overlay][emacs-overlay]], which is version pinned via [[https://github.com/nmattia/niv][niv]] in [[file:nixos/nix/sources.json][sources.json]].
+Emacs itself is tracked via the [[https://github.com/nix-community/emacs-overlay][emacs-overlay]], which is version pinned via [[https://github.com/nmattia/niv][niv]] in [[file:nixos/nix/sources.json][sources.json]]. See the [[*Emacs][nix delaration]].
 
 * XMonad
 :PROPERTIES:
 :header-args: :tangle home/.xmonad/xmonad.hs :comments link
 :END:
 
-I use XMonad as a window manager and minimal desktop environment. I don't run any additional desktop environment (e.g. XFCE). Insstead, I have the interface to the few things I need configred here in Haskell.
+I use XMonad as a window manager and minimal desktop environment. I don't run any additional desktop environment (e.g. XFCE). Insstead, I have the interface to the few things I need configured here in Haskell, or elsewhere ([[*Doom Emacs][Emacs]]).
 
-I've don't use any system trays / status bars / panels, since the Emacs modeline is already enough. This choice reduces the complexity of the XMonad configuration, and obviates depending on things like xmobar or polybar.
+I've don't use any system trays / status bars / panels, since the Emacs modeline is enough for me. This choice reduces the complexity of the XMonad configuration, and obviates depending on things like xmobar or polybar.
 
 ** Imports
 
 #+begin_src haskell
 import XMonad
+
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.EwmhDesktops
-import XMonad.Layout.Grid
-import XMonad.Layout.ResizableTile
-import XMonad.Layout.NoBorders
-import XMonad.Layout.Fullscreen
-import XMonad.Actions.CycleWS (toggleWS)
-import XMonad.Layout.Minimize
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.UrgencyHook
-import qualified XMonad.StackSet as W
+
+import XMonad.Layout.Grid
+import XMonad.Layout.Fullscreen
+import XMonad.Layout.Minimize
+import XMonad.Layout.NoBorders
 import XMonad.Layout.NoFrillsDecoration (noFrillsDeco, shrinkText,
                                          inactiveBorderColor, inactiveColor, inactiveTextColor, activeBorderColor,
                                          activeColor, activeTextColor, urgentBorderColor, urgentTextColor, decoHeight)
+import XMonad.Layout.Tabbed (simpleTabbed)
+import XMonad.Layout.ResizableTile
+
+import XMonad.Actions.CycleWS (toggleWS)
+import qualified XMonad.StackSet as W
 
 import XMonad.Prompt
 import XMonad.Prompt.AppLauncher as AL
@@ -208,10 +230,13 @@ main = xmonad $
                  (ResizableTall 1 (3/100) (1/2) []
                    ||| Mirror (ResizableTall 1 (3/100) (1/2) [])
                    ||| noBorders Full
+                   ||| simpleTabbed
                    ||| Grid)
+
   , workspaces = map show $ [1..9] ++ [0 :: Int]
   , modMask = mod4Mask  -- super key as modifier
   , keys = \c -> myKeys c `M.union` keys def c
+  -- , manageHook = myManageHook
   , handleEventHook = ewmhDesktopsEventHook
   , startupHook = do
       -- http://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Hooks-SetWMName.html
@@ -273,6 +298,13 @@ myKeys XConfig {modMask = m, terminal = term} = M.fromList $ [
 #+begin_src haskell
     ((m .|. shiftMask .|. mod1Mask, xK_r), spawn "reboot")
   , ((m .|. shiftMask .|. mod1Mask, xK_i), spawn "xmonad --recompile && xmonad --restart")
+#+end_src
+
+**** Add Workspace 0
+
+#+begin_src haskell
+  , ((m, xK_0), windows $ W.greedyView "0")
+  , ((m .|. shiftMask, xK_0), windows $ W.shift "0")
 #+end_src
 
 **** Launcher / Window Switcher
@@ -367,16 +399,9 @@ I don't run a desktop environment...
   , ((m, xK_Print), myScreenshotClipboard)
 #+end_src
 
-**** Add Workspace 0
-
-#+begin_src haskell
-  , ((m, xK_0), windows $ W.greedyView "0")
-  , ((m .|. shiftMask, xK_0), windows $ W.shift "0")
-#+end_src
-
 **** Arandr
 
-The ~main.sh~ is a symlink to an Arandr script that sets up my current monitor configuration.
+I have =main.sh= and =laptop.sh= symlinked to whatever the current xrandr scripts are for my desk / laptop.
 
 #+begin_src haskell
   , ((m, xK_s), spawn "/home/dan/.screenlayout/main.sh" )
@@ -398,25 +423,7 @@ The functionality here is a primary reason for choosing XMonad: a natural, keybo
        , (f, nilOrShift) <- [(W.view, 0), (W.shift, shiftMask)]]
 #+end_src
 
-***** TODO Figure out why this is here
-
-Since that functionality seems to be default.
-
-[[file:~/repos/xmonad/man/xmonad.hs::\[((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))]]
-
-** Management
-
-#+begin_src
-#+end_src
-#+begin_src haskell
-myManageHook :: ManageHook
-myManageHook = composeAll . concat $
-    [
-      [ title =? t --> doFloat | t <- ["Helm"] ],
-      [ className =? c --> doFloat | c <- ["Tk"]]
-    ]
-#+end_src
-
+***** TODO Try XMonad.Actions.PhysicalScreens to order =mod-{w, e, r}= based on physical screen layout
 
 ** Asthetics
 
@@ -449,6 +456,12 @@ myShellPrompt = def
        }
 #+end_src
 
+** COMMENT Float certain apps
+
+#+begin_src haskell
+myManageHook = composeAll [ className =? "Pidgin" --> doFloat]
+#+end_src
+
 ** Screenshot
 
 #+begin_src haskell
@@ -463,11 +476,13 @@ myScreenshotClipboard :: X ()
 myScreenshotClipboard = spawn  "maim -s | xclip -selection clipboard -t image/png"
 #+end_src
 
-
 * Nixos Config
 ** System-level Config
+:PROPERTIES:
+:header-args: :tangle nixos/configuration.nix :comments link
+:END:
 
-#+BEGIN_SRC nix :tangle nixos/configuration.nix :comments link
+#+BEGIN_SRC nix
 { config, pkgs, ... }:
 let
   sources = import ./nix/sources.nix;
@@ -485,148 +500,260 @@ in {
     # Allow unfree, which is required for some drivers.
     allowUnfree = true;
   };
+  #+END_SRC
 
-  nix = {
-    useSandbox = true;
-    autoOptimiseStore = true;
-    maxJobs = 3; # should be 1 per CPU logical core
-    binaryCaches = [
-      "https://cache.nixos.org/"
-      "https://ghcide-nix.cachix.org"
-      "https://hercules-ci.cachix.org"
-      "https://iohk.cachix.org"
-      "https://nix-tools.cachix.org"
-    ];
-    binaryCachePublicKeys = [
-      "ghcide-nix.cachix.org-1:ibAY5FD+XWLzbLr8fxK6n8fL9zZe7jS+gYeyxyWYK5c="
-      "hercules-ci.cachix.org-1:ZZeDl9Va+xe9j+KqdzoBZMFJHVQ42Uu/c/1/KMC5Lw0="
-      "iohk.cachix.org-1:DpRUyj7h7V830dp/i6Nti+NEO2/nhblbov/8MW7Rqoo="
-      "nix-tools.cachix.org-1:ebBEBZLogLxcCvipq2MTvuHlP7ZRdkazFSQsbs0Px1A="
-    ];
-    gc = {
-      automatic = true;
-      dates = "23:00";
-      options = "--delete-older-than 30d";
-    };
+*** Nix
+
+#+BEGIN_SRC nix
+nix = {
+  useSandbox = true;
+  autoOptimiseStore = true;
+  maxJobs = 3; # should be 1 per CPU logical core
+  binaryCaches = [
+    "https://cache.nixos.org/"
+    "https://ghcide-nix.cachix.org"
+    "https://hercules-ci.cachix.org"
+    "https://iohk.cachix.org"
+    "https://nix-tools.cachix.org"
+  ];
+  binaryCachePublicKeys = [
+    "ghcide-nix.cachix.org-1:ibAY5FD+XWLzbLr8fxK6n8fL9zZe7jS+gYeyxyWYK5c="
+    "hercules-ci.cachix.org-1:ZZeDl9Va+xe9j+KqdzoBZMFJHVQ42Uu/c/1/KMC5Lw0="
+    "iohk.cachix.org-1:DpRUyj7h7V830dp/i6Nti+NEO2/nhblbov/8MW7Rqoo="
+    "nix-tools.cachix.org-1:ebBEBZLogLxcCvipq2MTvuHlP7ZRdkazFSQsbs0Px1A="
+  ];
+  gc = {
+    automatic = true;
+    dates = "23:00";
+    options = "--delete-older-than 30d";
   };
+};
+#+END_SRC
 
-  time.timeZone = "America/Los_Angeles";
+*** Timezone
 
-  boot = {
-    cleanTmpDir = true;
+#+BEGIN_SRC nix
+time.timeZone = "America/Los_Angeles";
+#+END_SRC
 
-    loader = {
-      timeout = 1; # Timeout (in seconds) until loader boots the default menu item.
-      grub = {
-        enable = true;
-        version = 2;
-        device = "nodev";
-        copyKernels = true;
-        fsIdentifier = "provided";
-        extraConfig = "serial; terminal_input serial; terminal_output serial";
-      };
-      systemd-boot.enable = false;
-      efi.canTouchEfiVariables = false;
+*** Boot
 
-    };
-  };
+#+BEGIN_SRC nix
+boot = {
+  cleanTmpDir = true;
 
-  networking.useDHCP = false;
-  networking.usePredictableInterfaceNames = false;
-  networking.interfaces.eth0.useDHCP = true;
-  networking.firewall.enable = true;
-  # networking.networkmanager.enable = true;
-  networking.hostName = "nixos-dev";
-
-  services = {
-
-    xserver = {
+  loader = {
+    timeout = 1; # Timeout (in seconds) until loader boots the default menu item.
+    grub = {
       enable = true;
-      layout = "us";
+      version = 2;
+      device = "nodev";
+      copyKernels = true;
+      fsIdentifier = "provided";
+      extraConfig = "serial; terminal_input serial; terminal_output serial";
+    };
+    systemd-boot.enable = false;
+    efi.canTouchEfiVariables = false;
 
-      windowManager.xmonad = {
-        enable = true;
-        enableContribAndExtras = true;
-        extraPackages = haskellPackges: [
-          haskellPackges.xmonad-contrib
-          haskellPackges.xmonad-extras
-          haskellPackges.xmonad
-        ];
-      };
+  };
+};
+#+END_SRC
 
-      displayManager = {
-        defaultSession = "none+xmonad";
-        lightdm.enable = true;
+*** Networking
+
+#+BEGIN_SRC nix
+
+networking.useDHCP = false;
+networking.usePredictableInterfaceNames = false;
+networking.interfaces.eth0.useDHCP = true;
+networking.firewall.enable = true;
+# networking.networkmanager.enable = true;
+networking.hostName = "nixos-dev";
+#+END_SRC
+
+*** Services
+
+#+BEGIN_SRC nix
+
+services = {
+
+  xserver = {
+    enable = true;
+    layout = "us";
+
+    windowManager.xmonad = {
+      enable = true;
+      enableContribAndExtras = true;
+      extraPackages = haskellPackges: [
+        haskellPackges.xmonad-contrib
+        haskellPackges.xmonad-extras
+        haskellPackges.xmonad
+      ];
+    };
+
+    displayManager = {
+      defaultSession = "none+xmonad";
+      lightdm.enable = true;
+    };
+    desktopManager.xterm.enable = false;
+  };
+#+END_SRC
+
+**** Syncthing
+#+BEGIN_SRC nix
+
+  # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/services/networking/syncthing.nix
+  syncthing = {
+    enable = true;
+    openDefaultPorts = true;
+    user = "${config.settings.username}";
+    configDir = "/home/${config.settings.username}/.config/syncthing";
+    dataDir = "/home/${config.settings.username}/.local/share/syncthing";
+    declarative = {
+      devices = {
+        nixos-dev.id = "EEMRJQE-TBONTUL-UBGJ6FT-AAUS25K-COP3VHE-WERN7IN-PTNZ63Z-GZZX2AY";
+        x1carbon.id = "IOINCUM-QKL34MC-RSPJETE-CUW5D2Y-3CMDSLD-72HNXZI-7U3TN44-35CLKQN";
+        pixel3a-2.id = "NT5ZJ55-JBWGL4D-WIK57V3-T3RXF2Q-HLMHV7U-DLGAZ5U-ZSHSPYZ-M5NLQAC";
       };
-      desktopManager.xterm.enable = false;
+      folders = {
+        sync = rec {
+          id = "at23u-zmxto";
+          devices = [ "nixos-dev" "x1carbon"  "pixel3a-2"];
+          path = "/bkp/Sync";
+          watch = false;
+          rescanInterval = 3600 * 1;
+          type = "receiveonly"; # sendreceive
+          enable = true;
+          versioning.type = "simple";
+          versioning.params.keep = "5";
+        };
+        media = rec {
+          id = "media";
+          devices = [ "nixos-dev"  "x1carbon" ];
+          path = "/bkp/Media";
+          watch = false;
+          rescanInterval = 3600 * 6;
+          type = "receiveonly"; # sendreceive
+          enable = true;
+          versioning.type = "simple";
+          versioning.params.keep = "5";
+        };
+        work = rec {
+          id = "work";
+          devices = [ "nixos-dev" "x1carbon" ];
+          path = "/bkp/Work";
+          watch = false;
+          rescanInterval = 3600 * 6;
+          type = "receiveonly"; # sendreceive
+          enable = true;
+          versioning.type = "simple";
+          versioning.params.keep = "5";
+        };
+      };
     };
   };
 
-  # virtualisation.docker.enable = true;
+};
 
-  environment.systemPackages = with pkgs; [
-    coreutils binutils
-    curl wget
-    zip unzip
-    git
-    killall
-    sshfs
-    mtr # traceroute
-    sysstat
-    htop
+# virtualisation.docker.enable = true;
+#+END_SRC
+
+*** Packages
+
+#+BEGIN_SRC nix
+environment.systemPackages = with pkgs; [
+  coreutils binutils
+  curl wget
+  zip unzip
+  git
+  killall
+  syncthing-cli
+  sshfs
+  mtr # traceroute
+  sysstat
+  htop
+];
+#+END_SRC
+
+*** Fonts
+
+#+BEGIN_SRC nix
+
+fonts = {
+  enableFontDir = true;
+  enableGhostscriptFonts = true;
+  fonts = with pkgs; [
+    corefonts
+    hack-font
   ];
+};
+#+END_SRC
 
-  fonts = {
-    enableFontDir = true;
-    enableGhostscriptFonts = true;
-    fonts = with pkgs; [
-      corefonts
-      hack-font
-    ];
-  };
+*** User Definition
 
-  security.sudo.wheelNeedsPassword = false;
+#+BEGIN_SRC nix
 
-  users.mutableUsers = false;
+security.sudo.wheelNeedsPassword = false;
 
-  users.extraUsers.${config.settings.username} = {
-    isNormalUser = true;
-    uid = 1000;
-    createHome = true;
-    home = "/home/${config.settings.username}";
-    description = "${config.settings.name}";
-    extraGroups = [
-      "audio"
-      "networkmanager"
-      "systemd-journal"
-      "vboxusers"
-      "video"
-      "wheel"
-    ];
-  };
+users.mutableUsers = false;
 
-  home-manager.users.dan = import ./home.nix ;
-
-  services.openssh = {
-    enable = true;
-    forwardX11 = true;
-    permitRootLogin = "without-password";
-    passwordAuthentication = false;
-  };
-
-  users.users.${config.settings.username}.openssh.authorizedKeys.keys = [
-    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+yJ5sv7iO9PBuozfmitR0JJfqDsJ7w+rlryq5CwdatO3tkRdR5dMYdFTFCeHbmeakPTC/uys08fziEUXh3DL206jDKQEMBoMGXNowZHyYzr25nIogHbveqeNTgP8jsTw5uBaJu8LFzHHey4Sw9WlRrvIqguUT5jB3omZh8yDWcxTrTJlTsN2TM3HILvirfVwBkD2uNTDdd5LplbZhx6x87VCs6ZNYhBjJ4CPcO4zTQuEdyyxUHEgtMkYgrS4Jb/Kl6Tleftlh55E74SZ3XXnw3lWdH9ra8ewH265iqNr/RwysagnalslBZDLl8yJcrMsCVi4tPrZZc4vaeCsIWK4X dan@x1carbon"
+users.extraUsers.${config.settings.username} = {
+  isNormalUser = true;
+  uid = 1000;
+  createHome = true;
+  home = "/home/${config.settings.username}";
+  description = "${config.settings.name}";
+  extraGroups = [
+    "audio"
+    "networkmanager"
+    "systemd-journal"
+    "vboxusers"
+    "video"
+    "wheel"
   ];
+};
 
-  programs.ssh.startAgent = true;
+home-manager.users.dan = import ./home.nix ;
+#+END_SRC
+
+*** SSH
+
+#+BEGIN_SRC nix
+
+services.openssh = {
+  enable = true;
+  forwardX11 = true;
+  permitRootLogin = "without-password";
+  passwordAuthentication = false;
+};
+
+users.users.${config.settings.username}.openssh.authorizedKeys.keys = [
+  "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+yJ5sv7iO9PBuozfmitR0JJfqDsJ7w+rlryq5CwdatO3tkRdR5dMYdFTFCeHbmeakPTC/uys08fziEUXh3DL206jDKQEMBoMGXNowZHyYzr25nIogHbveqeNTgP8jsTw5uBaJu8LFzHHey4Sw9WlRrvIqguUT5jB3omZh8yDWcxTrTJlTsN2TM3HILvirfVwBkD2uNTDdd5LplbZhx6x87VCs6ZNYhBjJ4CPcO4zTQuEdyyxUHEgtMkYgrS4Jb/Kl6Tleftlh55E74SZ3XXnw3lWdH9ra8ewH265iqNr/RwysagnalslBZDLl8yJcrMsCVi4tPrZZc4vaeCsIWK4X dan@x1carbon"
+];
+
+programs.ssh.startAgent = true;
+#+END_SRC
+
+*** X2Go Client
+
+#+BEGIN_SRC nix
 
   # programs.x2goserver.enable = true;
+#+END_SRC
+
+*** End
+
+#+BEGIN_SRC nix
 }
 #+END_SRC
 
 ** User-level Config
 
-#+BEGIN_SRC nix :tangle nixos/home.nix :comments link
+:PROPERTIES:
+:header-args: :tangle nixos/home.nix :comments link
+:END:
+
+#+BEGIN_SRC nix
 { config, pkgs, ... }:
 
 let
@@ -649,91 +776,144 @@ in {
 
   nixpkgs.overlays = [ emacs-overlay ];
 
-  services.emacs.enable = true;
-  programs.emacs = {
-    enable = true;
-    # Compile with imagemagick support so I can resize images.
-    package = pkgs.emacsGit.override { inherit (pkgs) imagemagick; };
-  };
+  #+END_SRC
 
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
+*** Environment Variables
 
-  home.sessionVariables = {
-    EDITOR = "emacsclient --create-frame --alternate-editor emacs";
-    PASSWORD_STORE_DIR = "${syncDir}/.password-store";
-    GNUPGHOME = "${syncDir}/.gnupg/";
-    # GTK2_RC_FILES="${homeDir}/.gtkrc-2.0";
-    # https://github.com/xmonad/xmonad/issues/126
-    _JAVA_AWT_WM_NONREPARENTING = "1";
-  };
+#+BEGIN_SRC nix
+home.sessionVariables = {
+  EDITOR = "emacsclient --create-frame --alternate-editor emacs";
+  PASSWORD_STORE_DIR = "${syncDir}/.password-store";
+  GNUPGHOME = "${syncDir}/.gnupg/";
+  # GTK2_RC_FILES="${homeDir}/.gtkrc-2.0";
+  # https://github.com/xmonad/xmonad/issues/126
+  _JAVA_AWT_WM_NONREPARENTING = "1";
+};
 
-  # gtk = {
-  #   enable = true;
-  #   iconTheme = {
-  #     name = "Adwaita";
-  #     package = pkgs.gnome3.adwaita-icon-theme;
-  #   };
-  #   theme = {
-  #     name = "Adwaita-dark";
-  #     package = pkgs.gnome3.gnome_themes_standard;
-  #   };
-  # };
+# gtk = {
+#   enable = true;
+#   iconTheme = {
+#     name = "Adwaita";
+#     package = pkgs.gnome3.adwaita-icon-theme;
+#   };
+#   theme = {
+#     name = "Adwaita-dark";
+#     package = pkgs.gnome3.gnome_themes_standard;
+#   };
+# };
 
-  xdg.enable = true;
+xdg.enable = true;
+#+END_SRC
 
-  home.packages = with pkgs; [
-    rofi
-    gnupg
-    # syncthing-cli # provides stcli
+*** Packages
+#+BEGIN_SRC nix
 
-    (pass.withExtensions (exts: [
-      exts.pass-otp
-      exts.pass-genphrase
-    ]))
+home.packages = with pkgs; [
+  rofi
+  gnupg
 
-    firefox-beta-bin
+  (pass.withExtensions (exts: [
+    exts.pass-otp
+    exts.pass-genphrase
+  ]))
 
-    # direnv
+  xtrlock-pam  # screen locking
+  maim  # screenshots
+  rofi-pass  # interface to password manager
+  xclip  # programmatic access to clipbaord
+  arandr  # gui for xrandr (monitor layout)
 
-    # Upstream failing
-    # julia_13
+  # direnv
 
-    ## Doom dependencies
+  # Upstream failing :(
+  # julia_13
 
-    (ripgrep.override {withPCRE2 = true;})
-    gnutls              # for TLS connectivity
+  ## Doom dependencies
 
-    ## Optional dependencies
-    fd                  # faster projectile indexing
-    imagemagick         # for image-dired
-    pinentry_emacs
+  (ripgrep.override {withPCRE2 = true;})
+  gnutls              # for TLS connectivity
 
-    ## Module dependencies
-    # :tools lookup & :lang org +roam
-    sqlite
-    # :lang latex & :lang org (latex previews)
-    texlive.combined.scheme-tetex
-  ];
+  ## Optional dependencies
+  fd                  # faster projectile indexing
+  imagemagick         # for image-dired
+  pinentry_emacs
 
-  programs.bash = {
-    enable = true;
-    historyFile = "${syncDir}/.config/bash/.bash_history";
-    # FIXME: Document and reduce these
-    shellOptions = [
+  ## Module dependencies
+  # :tools lookup & :lang org +roam
+  sqlite
+  # :lang latex & :lang org (latex previews)
+  texlive.combined.scheme-tetex
+
+  firefox-beta-bin
+];
+#+END_SRC
+
+*** Programs
+
+#+BEGIN_SRC nix
+programs = {
+#+END_SRC
+
+**** Home Manager
+
+#+BEGIN_SRC nix
+# Let Home Manager install and manage itself.
+home-manager.enable = true;
+#+END_SRC
+
+**** Emacs
+
+#+BEGIN_SRC nix
+emacs = {
+  enable = true;
+  # Compile with imagemagick support so I can resize images.
+  package = pkgs.emacsGit.override { inherit (pkgs) imagemagick; };
+};
+#+END_SRC
+
+**** Bash
+
+#+BEGIN_SRC nix
+bash = {
+  enable = true;
+  historyFile = "${syncDir}/.config/bash/.bash_history";
+  # FIXME: Document and reduce these
+  shellOptions = [
     "autocd" "cdspell" "dirspell" "globstar" # bash >= 4
     "cmdhist" "nocaseglob" "histappend" "extglob"];
-  };
+  # TODO: Test this
+  # https://github.com/akermu/emacs-libvterm#directory-tracking-and-prompt-tracking
+  initExtra = [
+    ''
+    vterm_prompt_end(){
+      vterm_printf \"51;A$(whoami)@$(hostname):$(pwd)\"
+    }
+    PS1=$PS1'\\[$(vterm_prompt_end)\\]'
+    ''
+  ]
+};
+#+END_SRC
 
-  programs.git = {
-    enable = true;
-    userName = "${config.settings.name}";
-    userEmail = "${config.settings.email}";
-  };
+**** Git
 
-  # programs.direnv.enable = true;
+#+BEGIN_SRC nix
+git = {
+  enable = true;
+  userName = "${config.settings.name}";
+  userEmail = "${config.settings.email}";
+};
+#+END_SRC
 
-  programs.ssh = {
+**** Direnv
+
+#+BEGIN_SRC nix
+# direnv.enable = true;
+#+END_SRC
+
+**** SSH
+
+#+BEGIN_SRC nix
+  ssh = {
     enable = true;
 
     controlMaster  = "auto";
@@ -765,8 +945,20 @@ in {
       };
     };
   };
+#+END_SRC
 
-  # services.redshift = {
+**** End
+#+begin_src nix
+};
+#+end_src
+
+*** Services
+
+#+BEGIN_SRC nix
+services = {
+  emacs.enable = true;
+
+  # redshift = {
   #   enable = true;
   #   latitude = "33";
   #   longitude = "-97";
@@ -776,7 +968,7 @@ in {
 
   # https://www.reddit.com/r/emacsporn/comments/euf7m8/doomoutrunelectric_theme_xmonad_nixos/
   # https://github.com/willbush/system/blob/371cfa9933f24bca585a3c6c952c41c864d97aa0/nixos/home.nix#L178
-  # services.compton = {
+  # compton = {
   #     enable = true;
   #     fade = true;
   #     backend = "xrender";
@@ -790,21 +982,45 @@ in {
   #     ];
   #   };
 
-  # services.syncthing.enable = true;
-  # services.lorri.enable = true;
+  # lorri.enable = true;
+};
+#+END_SRC
+
+*** End
+
+#+BEGIN_SRC nix 
 }
 #+END_SRC
 
-*** TODO To add [0/3]
+*** TODO To test [0/5]
 
-- [ ] xtrlock
+- [ ] xtrlock-pam
 - [ ] maim
-- [ ] rofi-pass
+- [ ] rofi-pass (see [[*Floating Emacs popup for quick commands][Floating Emacs popup for quick commands]])
 - [ ] xclip
 - [ ] arandr
 
-** Global Constants
+*** TODO To add [0/1]
 
+- [ ] Messenging
+  - unified messenger (if it exists) for dealing with the madness of:
+    - sms
+    - signal
+    - fb
+    - whatsapp
+    - +keybase+
+    - slack
+    - irc
+    - riot
+  - To try
+    - [X] pidgin - just bad. no hidpi, things like signal don't sync with mobile state, clunky ui.
+  - Otherwise:
+    - Browser tabs for everything sans signal
+    - Signal-destop
+    - maybe slack desktop
+
+
+** Global Constants
 #+BEGIN_SRC nix :tangle nixos/settings.nix :comments link
 {config, pkgs, lib, ...}:
 
@@ -849,17 +1065,30 @@ with lib;
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
 
+  nix.maxJobs = lib.mkDefault 1;
+#+end_src
+
+*** Disk Mounts
+
+From [[https://nixos.org/nixos/manual/#ch-file-systems][Chapter 8. File Systems]]: "Mount points are created automatically if they don’t already exist."
+
+#+begin_src nix :tangle nixos/hardware-configuration.nix :comments link
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/bf38bdde-34dd-4d57-9bfe-07de465f0f29";
+      fsType = "ext4";
+    };
+
+  # Linode Volume "bkp". Targetted by syncthing.
+  fileSystems."/bkp" =
+    { device = "/dev/disk/by-id/scsi-0Linode_Volume_bkp";
       fsType = "ext4";
     };
 
   swapDevices =
     [ { device = "/dev/disk/by-uuid/7596d600-d2c6-4d77-b138-7f595283af00"; }
     ];
-
-  nix.maxJobs = lib.mkDefault 1;
 }
+
 #+end_src
 ** Version Pinning
 
@@ -1003,9 +1232,66 @@ mapAttrs (_: spec:
   ) sources
 #+end_src
 
-* Custom
+* Future Work
 
-* COMMENT Local Variables :noexport:
-# local variables:
-# backup-by-copying: t
-# end:
+** TODO [#A] Floating Emacs popup for quick commands
+
+It's usually most convenient to use/implement functions in Emacs than other tools. This was a huge draw towards EXWM, and I got used to that workflow.
+
+For example, generating / getting passwords stored in =pass= has a nice Emacs interface. Currently, this often means switching from Firefox to Emacs to run a command, then back to Firefox. In this situation, a common solution seems to be eschewing Emacs for things like =rofi= (e.g. =rofi-pass=).
+
+However, if I could popup a fast, floating Emacs window (similar to Rofi), I'd be able to leverage Elisp for most tasks like this. This might fully obviate =Rofi= and the XMonad prompt.
+
+The floating window would default to a =counsel-M-x= fuzzy search over all incremental commands, and be bound to =s-x= in XMonad.
+
+Examples:
+
+- screenshotting
+- pass interface
+- redshift / brightness controls
+- (maybe) finding windows / launching programs
+- clipboard management (helm kill ring)
+
+As a small added benefit, I'd have the full Emacs bindings available in the input area.
+
+** TODO [#B] HiDPI autotoggle
+
+I'm occasionally lucky enough to plug into a 4k screen, which is not yet a seamless experience in linux.
+
+For now I manually do the following on HiDPI screens:
+
+#+begin_src sh
+export GDK_SCALE=2
+#+end_src
+
+and change =layout.css.devPixelsPerPx= in Firefox about:config from -1 to 2.
+
+tweak font size in Firefox and Emacs.
+
+** TODO [#B] Consistent copy/paste bindings
+
+In EXWM, I used the simulation keys to have consistent Emacs copy/paste bindings everywhere. Need a solution for XMonad. Setting the GTK bindings to "emacs" didn't seem to affect for Firefox, which is (by far) my primary non-Emacs window.
+
+** TODO [#B] Consolidate XMonad and Emacs window management
+
+Ideally, XMonad could manage all windows, including Emacs windows.
+
+Possible solutions:
+
+- frames-only-mode
+- frame-mode
+
+These seemed to cause more problems than they fixed for me.
+
+** TODO [#C] Fix indentation in tangled files
+
+Even with =org-src-preserve-indentation= set to =t=, files like [[file:nixos/home.nix][home.nix]] aren't properly indented. This is because they are split across several org blocks, and in each on I use the =nix-mode= auto-indent to fixup the indentation /within th block/. This removes the leading whitespace, so each block is tangled without leading indentation. Thankfully, Nix doesn't care, so this is purely for the aesthetics of the generated files.
+
+Quickfix is to auto-indent the tangled files, then detangle. 
+
+Using noweb references seems to be the best option: https://orgmode.org/manual/Noweb-Reference-Syntax.html. See "This feature can also be used for management of indentation in exported code snippets".
+
+* Autoloads
+# Local Variables:
+# eval: (add-hook 'after-save-hook #'org-babel-tangle nil 'local)
+# End:
