@@ -382,7 +382,7 @@ They are bound by default to ~mod+~, and ~mod+.~, but ~mod+,~ is much more usefu
 
 **** Volume Control
 
-I don't run a desktop environment...
+I don't run a desktop environment, so the volume buttons on my keyboard don't do anything.
 
 #+begin_src haskell
   , ((m .|. shiftMask, xK_Up), spawn "amixer sset Master 5%+")
@@ -392,12 +392,20 @@ I don't run a desktop environment...
 **** Screenshots
 
 #+begin_src haskell
-  , ((0, xK_Print), myScreenshot)
+    ,((0, xK_Print), myScreenshot)
 #+end_src
 
 #+begin_src haskell
-  , ((m, xK_Print), myScreenshotClipboard)
+    ,((m, xK_Print), myScreenshotClipboard)
 #+end_src
+
+
+**** Keyboard
+
+#+begin_src haskell
+  , ((m .|. shiftMask, xK_i), spawn "setxkbmap -option 'ctrl:nocaps' && xset r rate 160 60")
+#+end_src
+
 
 **** Arandr
 
@@ -443,7 +451,7 @@ topBarTheme = def
     , activeTextColor       = active
     , urgentBorderColor     = red
     , urgentTextColor       = yellow
-    , decoHeight            = 5
+    , decoHeight            = 10
     }
 
 
@@ -1001,7 +1009,7 @@ services = {
 - [ ] arandr
 
 *** TODO To add [0/1]
-
+- keyboard config: currently requires xset & setxbmap
 - [ ] Messenging
   - unified messenger (if it exists) for dealing with the madness of:
     - sms
@@ -1018,6 +1026,7 @@ services = {
     - Browser tabs for everything sans signal
     - Signal-destop
     - maybe slack desktop
+    - caprine for fb is nice on ubuntu
 
 
 ** Global Constants

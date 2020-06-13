@@ -5,19 +5,18 @@
 
 * About
 
-This is a submodule of [[https://github.com/dangirsh/neurosys][neurosys]], my complete computing environment.
+#+begin_quote
+“I'm rarely happier than when spending an entire day programming my computer to perform automatically a task that would otherwise take me a good ten seconds to do by hand.” - Douglas Adams
+#+end_quote
 
-I use [[emacs.sexy][Emacs]] as the primary interface to my machine and remote machines. In many
-situations, it replaces CLIs or GUIs with well-designed keyboard-driven
-interfaces (e.g. [[https://magit.vc/][magit]]). There's no going back.
+This is the =.doom.d= submodule of [[https://github.com/dangirsh/neurosys][neurosys]], my complete computing environment.
 
-I use [[https://github.com/hlissner/doom-emacs/][Doom Emacs]] as a base Emacs configuration. This is a literate org file,
-which specifies and documents the entirety of my Doom configuration. If you link
-this file to =~/.doom.d/config.org=, Doom will automatically tangle it on startup
-and whenever it changes.
+I use [[emacs.sexy][Emacs]] as the primary interface to my machine and remote machines. In many situations, it replaces CLIs or GUIs with well-designed keyboard-driven interfaces (e.g. [[https://magit.vc/][magit]]). There's no going back.
 
-If you're reading this in a browser, consider opening it in Emacs Org mode for
-the full experience.
+I use [[https://github.com/hlissner/doom-emacs/][Doom Emacs]] as a base Emacs configuration. This is a literate org file, which specifies and documents the entirety of my Doom configuration. If you link this file to =~/.doom.d/config.org=, Doom will automatically tangle it on startup and whenever it changes.
+
+If you're reading this in a browser, consider opening it in Emacs Org mode for the full experience.
+
 
 ** Inspirations:
 
@@ -29,7 +28,7 @@ the full experience.
 - [[https://zzamboni.org/post/my-emacs-configuration-with-commentary/][Diego Zamboni's Literate Emacs Config]]
 - [[https://justin.abrah.ms/dotfiles/emacs.html][Justin Abrahms' Literate Emacs Config]]
 
-* Table of Contents :QUOTE:TOC_4:
+* Table of Contents :QUOTE:TOC_3:
 #+BEGIN_QUOTE
 - [[#about][About]]
   - [[#inspirations][Inspirations:]]
@@ -39,7 +38,6 @@ the full experience.
   - [[#global-constants][Global Constants]]
     - [[#contact-info][Contact info]]
     - [[#directories][Directories]]
-      - [[#org][Org]]
   - [[#load-helper-functions][Load helper functions]]
   - [[#visual-settings][Visual Settings]]
     - [[#theme][Theme]]
@@ -47,20 +45,16 @@ the full experience.
     - [[#enable-the-key-chord-package][Enable the key chord package]]
     - [[#setup-for-binding-chords-as-leaders][Setup for binding chords as leaders]]
     - [[#define-global-key-chords][Define global key-chords]]
-      - [[#add-keymaps-and-bind-them-to-keychords][Add keymaps and bind them to keychords]]
-      - [[#the-dk-map][the "dk" map]]
-      - [[#global-bindings][Global bindings]]
   - [[#hardware-settings][Hardware Settings]]
     - [[#keyboard][Keyboard]]
     - [[#toggle-touchpad][Toggle Touchpad]]
     - [[#display-brightness][Display Brightness]]
-      - [[#switch-to-interfacing-with-a-brightness-manager][Switch to interfacing with a brightness manager.]]
-  - [[#org-1][Org]]
+  - [[#org][Org]]
     - [[#org-noter-syncing-notes-to-pdfs][org-noter: Syncing notes to PDFs]]
+    - [[#org-recoll-interface-to-recoll---pdf-content-search][org-recoll: Interface to Recoll - PDF content search]]
     - [[#org-ref-managing-citations][org-ref: Managing citations]]
     - [[#org-journal-managing-daily-journal-files][org-journal: Managing daily journal files]]
-    - [[#org-roam-a-zettelkasten-based-on-roamresearch][org-roam: A Zettelkasten based on RoamResearch]]
-      - [[#capture-templates][Capture Templates]]
+    - [[#org-roam-graph-layer-on-top-of-org][org-roam: Graph layer on top of Org]]
     - [[#org-download-inserting-images-into-org-mode][org-download: Inserting images into org-mode]]
     - [[#org-cliplink-better-external-links][org-cliplink: Better external links]]
     - [[#org-drill-spaced-repetition][org-drill: Spaced Repetition]]
@@ -84,13 +78,14 @@ the full experience.
   - [[#better-pdf-support][Better PDF support]]
   - [[#lauching-external-programs][Lauching External Programs]]
   - [[#jumping-between-windows][Jumping between windows]]
+  - [[#autosave][Autosave]]
   - [[#performance-tweaks][Performance Tweaks]]
     - [[#swiper][Swiper]]
   - [[#misc-keybindings][Misc Keybindings]]
   - [[#misc][Misc]]
 - [[#utility-functions][Utility functions.]]
   - [[#resume][Resume]]
-  - [[#org-2][Org]]
+  - [[#org-1][Org]]
 - [[#neurosys-module][Neurosys Module]]
   - [[#globals][Globals]]
   - [[#helpers][Helpers]]
@@ -121,6 +116,7 @@ Remember to run =doom sync= or =doom/reload=  after modifying it.
 	     (ivy +prescient +childframe)
 
 	     :ui
+       deft
        doom
 	     hl-todo
 	     modeline
@@ -147,6 +143,7 @@ Remember to run =doom sync= or =doom/reload=  after modifying it.
 	     :tools
 	     ;; direnv
 	     (eval +overlay)
+       docker
 	     lookup
 	     (magit +forge)
 	     pass
@@ -248,10 +245,6 @@ clients, file templates and snippets.
 (set-face-foreground 'vertical-border (face-background 'vertical-border))
 #+end_src
 
-#+begin_src elisp
-(message "")
-#+end_src
-
 *** Theme
 
 #+begin_src emacs-lisp
@@ -300,7 +293,7 @@ Set hardware-specific delay. Tweak this if:
   :config
   (key-chord-mode 1)
   (setq key-chord-one-keys-delay 0.02
-        key-chord-two-keys-delay 0.03))
+        key-chord-two-keys-delay 0.02))
 #+end_src
 
 *** Setup for binding chords as leaders
@@ -373,43 +366,53 @@ https://gist.github.com/dangirsh/86c001351c02b42321d20f462a66da6b
        ("t" . +vterm/here)
        ("w" . google-this-noconfirm)
        ("x" . sp-splice-sexp)
-       ("/" . find-name-dired)
+       ("/" . counsel-recoll)
        ("." . pop-global-mark)))
 #+end_src
 
 **** Global bindings
 
 #+begin_src emacs-lisp
-    (key-chord-define-global ",." 'end-of-buffer)
-    (key-chord-define-global "xz" 'beginning-of-buffer)
-    (key-chord-define-global "xc" 'beginning-of-buffer)
+(key-chord-define-global ",." 'end-of-buffer)
+(key-chord-define-global "xz" 'beginning-of-buffer)
+(key-chord-define-global "xc" 'beginning-of-buffer)
 
-    (key-chord-define-global "qw" 'delete-window)
-    (key-chord-define-global "qp" 'delete-other-windows)
+(key-chord-define-global "qw" 'delete-window)
+(key-chord-define-global "qp" 'delete-other-windows)
 
-    (key-chord-define-global "fk" 'other-window)
+(key-chord-define-global "fk" 'other-window)
+(key-chord-define-global "jd" 'rev-other-window)
 
-    (key-chord-define-global "jd" 'rev-other-window)
+(key-chord-define-global "JJ" 'previous-buffer)
+(key-chord-define-global "KK" 'next-buffer)
 
-    (key-chord-define-global "hh" 'helpful-at-point)
-    (key-chord-define-global "hk" 'helpful-key)
-    (key-chord-define-global "hv" 'helpful-variable)
 
-    ;; no bueno: e.g. "pathfinder", "highfidelity"
-    ;; (key-chord-define-global "hf" 'helpful-function)
+(key-chord-define-global "hh" 'helpful-at-point)
+(key-chord-define-global "hk" 'helpful-key)
+(key-chord-define-global "hv" 'helpful-variable)
 
-    (key-chord-define-global "vn" 'split-window-vertically-and-switch)
-    (key-chord-define-global "hj" 'split-window-horizontally-and-switch)
+;; no bueno: e.g. "pathfinder", "highfidelity"
+;; (key-chord-define-global "hf" 'helpful-function)
 
-    (key-chord-define-global "jm" 'my/duplicate-line-or-region)
-    (key-chord-define-global "fv" 'comment-line)
+(key-chord-define-global "vn" 'split-window-vertically-and-switch)
+(key-chord-define-global "vm" 'split-window-vertically-and-switch)  ; ergodox
+(key-chord-define-global "hj" 'split-window-horizontally-and-switch)
 
-    (key-chord-define-global "kl" 'er/expand-region)
+(key-chord-define-global "jm" 'my/duplicate-line-or-region)
+(key-chord-define-global "fv" 'comment-line)
 
-    (key-chord-define-global "a;" 'execute-extended-command)
-    (key-chord-define-global "xf" 'find-file)
+(key-chord-define-global "kl" 'er/expand-region)
 
-    (key-chord-define-global "l;" 'repeat))
+(key-chord-define-global "xx" 'execute-extended-command)
+(key-chord-define-global "xf" 'find-file)
+
+(key-chord-define-global "l;" 'repeat)
+#+end_src
+
+**** End
+
+#+begin_src emacs-lisp
+)
 #+end_src
 
 ** Hardware Settings
@@ -494,8 +497,7 @@ I use org as a primary interface. It currently manages:
         org-catch-invisible-edits 'show
         ;; Use with consel-org-goto (gh .)
         org-goto-interface 'outline-path-completion
-        org-preview-latex-image-directory "/tmp/ltximg/"
-        org-capture-templates '()))
+        org-preview-latex-image-directory "/tmp/ltximg/"))
 
 
 (after! org
@@ -507,7 +509,14 @@ I use org as a primary interface. It currently manages:
   ;;              ;; (setq inferior-julia-program-name "/home/dan/cms-stack/home/julia")
   ;;              ))
 
+  (add-to-list 'org-capture-templates `("l" "Listen" entry (file ,(concat org-directory "listen.org"))
+                                        "* TODO %?\n%i"))
+
   (add-to-list 'org-latex-packages-alist "\\usepackage{braket}")
+
+  ;; http://kitchingroup.cheme.cmu.edu/blog/2015/01/04/Redirecting-stderr-in-org-mode-shell-blocks/
+  (setq org-babel-default-header-args:sh
+        '((:prologue . "exec 2>&1") (:epilogue . ":")))
 
   (setq org-babel-default-header-args:jupyter-julia '((:kernel . "julia-1.5")
                                                       (:display . "text/plain")
@@ -561,7 +570,7 @@ I use org as a primary interface. It currently manages:
 
   (setq org-todo-keywords
         '((sequence "TODO(t)" "In-Progress(p)" "|" "DONE(d)")
-          (sequence "WAITING(w)" "HOLD(h)" "|" "CANCELLED(c)")))
+          (sequence "WAITING(w)" "BLOCKED(b)" "HOLD(h)" "|" "CANCELLED(c)")))
 
   ;; Colorize org babel output. Without this color codes are left in the output.
   (defun my/display-ansi-colors ()
@@ -585,11 +594,20 @@ I use org as a primary interface. It currently manages:
   :config
   ;; helpful in EXWM, where there are no frames
   ;; (customize-set-variable 'org-noter-always-create-frame nil)
-  (setq org-noter-notes-window-location 'vertical-split
+  (setq org-noter-notes-window-location 'other-frame
         org-noter-notes-search-path '("~/Sync")
         org-noter-auto-save-last-location t
         org-noter-default-notes-file-names '("~/Sync/pdf_notes.org")))
 #+END_SRC
+
+*** org-recoll: Interface to Recoll - PDF content search
+
+[[https://github.com/alraban/org-recoll][GitHub - alraban/org-recoll: A lightweight emacs org-mode wrapper for the rec...]]
+
+#+begin_src emacs-lisp
+(use-package! org-recoll
+  :after org)
+#+end_src
 
 *** org-ref: Managing citations
 
@@ -670,7 +688,7 @@ I use org as a primary interface. It currently manages:
 
 #+END_SRC
 
-*** org-roam: A Zettelkasten based on RoamResearch
+*** org-roam: Graph layer on top of Org
 
 aka my exocortex
 
@@ -694,7 +712,19 @@ aka my exocortex
   (key-chord-define-global "[[" #'org-roam-insert)
   (setq org-roam-db-location "/home/dan/Sync/org-roam/org-roam.db"
         org-roam-graph-exclude-matcher "private"))
+#+end_src
 
+**** Deft: Note search
+
+#+begin_src emacs-lisp
+(setq deft-directory org-roam-directory)
+(setq deft-recursive t)
+
+#+end_src
+
+**** org-roam-server: Graph visualization / navigation
+
+#+begin_src emacs-lisp
 (use-package! org-roam-server
   :config
   (setq org-roam-server-host "127.0.0.1"
@@ -703,12 +733,27 @@ aka my exocortex
         org-roam-server-label-truncate t
         org-roam-server-label-truncate-length 60
         org-roam-server-label-wrap-length 20))
+#+end_src
 
-(use-package company-org-roam
+**** company-org-roam: Completions
+
+#+begin_src emacs-lisp
+(use-package! company-org-roam
   :when (featurep! :completion company)
   :after org-roam
   :config
   (set-company-backend! 'org-roam-mode 'company-org-roam))
+#+end_src
+
+**** org-roam-bibtex: Manage PDFs, notes, & citations.
+
+#+begin_src emacs-lisp
+(use-package! org-roam-bibtex
+  :after org-roam
+  :hook (org-roam-mode . org-roam-bibtex-mode)
+  :bind (:map org-mode-map
+         (("C-c n a" . orb-note-actions))))
+
 #+end_src
 
 **** Capture Templates
@@ -740,17 +785,17 @@ The =org-capture-templates= templates used here:
 
 | Template | Doc                          |
 |----------+------------------------------|
-| %?       | Heading                      |
-| %T       | Timestamp                    |
+| %?       | Initial cursor position      |
 | %F       | File path of original buffer |
 | %i       | Body                         |
+| %a       | Link back to context         |
 
 
 #+begin_src emacs-lisp
 (after! org-roam
   (setq my/org-roam-files (directory-files org-roam-directory  t ".*.org"))
   (setq my/org-roam-todo-file (concat org-roam-directory "todo.org"))
-  (setq org-refile-targets `((,(append (my/open-org-files-list) my/org-roam-files) :maxlevel . 7)))
+  (setq org-refile-targets `((,(append (my/open-org-files-list) (directory-files org-directory  t ".*.org")) :maxlevel . 7)))
   (setq org-agenda-files `(,my/org-roam-todo-file))
 
   (defun my/org-roam-get-title (path)
@@ -762,9 +807,8 @@ The =org-capture-templates= templates used here:
         (car (org-roam--extract-titles-title)))))
 
   (add-to-list 'org-capture-templates '("t" "org-roam todo" entry (file my/org-roam-todo-file)
-                                      "* TODO %?  #[[%F][%(my/org-roam-get-title \"%F\")]]\n%i\n%a")))
+                                        "* TODO %?  #[[%F][%(my/org-roam-get-title \"%F\")]]\n%i\n%a")))
 #+end_src
-
 
 *** org-download: Inserting images into org-mode
 
@@ -1139,6 +1183,15 @@ to ace-window.
   (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
 #+end_src
 
+** Autosave
+
+#+begin_src emacs-lisp
+(use-package! real-auto-save
+  :hook
+  (prog-mode . real-auto-save-mode)
+  (org-mode . real-auto-save-mode))
+#+end_src
+
 ** Performance Tweaks
 
 *** Swiper
@@ -1398,11 +1451,15 @@ text.
 
 (defun my/night-mode ()
   (interactive)
+  (load-theme 'doom-one t)
+  (doom/reload-theme)
   (my/set-brightness 10)
   (my/set-redshift 1500))
 
 (defun my/day-mode ()
   (interactive)
+  (load-theme 'doom-solarized-light t)
+  (doom/reload-theme)
   (my/set-brightness 1000)
   (my/set-redshift 6000))
 
@@ -1674,11 +1731,14 @@ Any desired package not declared in a Doom module must be declared here. This se
 (package! org-download)
 (package! org-drill)
 (package! org-noter)
+(package! org-recoll :recipe (:host github :repo "alraban/org-recoll"))
 (package! org-ref)
 (package! org-roam :recipe (:host github :repo "jethrokuan/org-roam"))
+(package! org-roam-bibtex)
 (package! org-roam-server)
 (package! phi-search)
 (package! ob-rust)
+(package! real-auto-save)
 (package! smartscan)
 (package! toc-org)
 (package! undo-tree)
