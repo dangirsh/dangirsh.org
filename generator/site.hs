@@ -44,6 +44,13 @@ main = do
             >>= loadAndApplyTemplate "templates/default.html" postCtx
             >>= relativizeUrls
 
+    match "misc/*" $ do
+        route $ setExtension "html"
+        compile $ pandocMathCompiler
+            >>= loadAndApplyTemplate "templates/misc.html"    postCtx
+            >>= loadAndApplyTemplate "templates/default.html" postCtx
+            >>= relativizeUrls
+
     match "projects/*" $ do
         route $ setExtension "html"
         compile $ pandocMathCompiler
@@ -77,6 +84,7 @@ main = do
         route idRoute
         compile $ do
             posts <- recentFirst =<< loadAll "posts/*"
+            miscs <- recentFirst =<< loadAll "misc/*"
             let indexCtx =
                     listField "posts" postCtx (return posts) `mappend`
                     constField "title" "Home"                `mappend`
