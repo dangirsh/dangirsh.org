@@ -87,6 +87,7 @@ main = do
             miscs <- recentFirst =<< loadAll "misc/*"
             let indexCtx =
                     listField "posts" postCtx (return posts) `mappend`
+                    listField "miscs" defaultContext (return miscs) `mappend`
                     constField "title" "Home"                `mappend`
                     defaultContext
 
@@ -103,6 +104,7 @@ postCtx :: Context String
 postCtx =
     dateField "date" "%B %e, %Y" `mappend`
     defaultContext
+
 
 -- From http://travis.athougies.net/posts/2013-08-13-using-math-on-your-hakyll-blog.html
 pandocMathCompiler =
