@@ -17,15 +17,18 @@ main = do
 
   hakyllWith conf $ do
 
-    static ".htacess"
+    static ".htaccess"
+    static "keybase.txt"
+    static "img/*"
+    static "doc/*"
 
-    match "img/*" $ do
-        route   idRoute
-        compile copyFileCompiler
+    -- match "img/*" $ do
+    --     route   idRoute
+    --     compile copyFileCompiler
 
-    match "doc/*" $ do
-        route   idRoute
-        compile copyFileCompiler
+    -- match "doc/*" $ do
+    --     route   idRoute
+    --     compile copyFileCompiler
 
     match "css/*" $ do
         route   idRoute

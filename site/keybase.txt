@@ -1,0 +1,56 @@
+==================================================================
+https://keybase.io/dangirsh
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://dangirsh.org
+  * I am dangirsh (https://keybase.io/dangirsh) on keybase.
+  * I have a public key ASAS9-Ssxj4KgJIXm4J4EJ7emqR_A5j0Q4-ygqy3oxVMNwo
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "01203a0e32c95c44469da1f469477e131b940d530490f26f4d021cef876eb6a6ace10a",
+      "host": "keybase.io",
+      "kid": "012012f7e4acc63e0a8092179b8278109ede9aa47f0398f4438fb282acb7a3154c370a",
+      "uid": "9507624d1f6a894492b98b9c189f9819",
+      "username": "dangirsh"
+    },
+    "merkle_root": {
+      "ctime": 1602954609,
+      "hash": "0be9ad39d6bcc4a5f00edc9d5f1f3d76b0d759a99d2aa6a24aff903a1b905e1e49a2f69b03814c511a18cdd4818e61604c4d972e44b36d3b47cc349609e903aa",
+      "hash_meta": "f75a8c4b84d2d97547fe3525a55b26362e28324d447259bb8884da2ca90a01d1",
+      "seqno": 17854350
+    },
+    "service": {
+      "entropy": "Bs6d+/31RsVX6+n0o2yZtEbH",
+      "hostname": "dangirsh.org",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 2
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "5.5.1"
+  },
+  "ctime": 1602954668,
+  "expire_in": 504576000,
+  "prev": "b670b6b25334e593388006b9e0b3b1b59f0ff2be0aac915bc9f2a3e5380ee72c",
+  "seqno": 18,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgEvfkrMY+CoCSF5uCeBCe3pqkfwOY9EOPsoKst6MVTDcKp3BheWxvYWTESpcCEsQgtnC2slM05ZM4gAa54LOxtZ8P8r4KrJFbyfKj5TgO5yzEILu/0pK1W7NitG2GL+2eHqsdGSnwiHQnnwPkw77DlTfQAgHCo3NpZ8RAWcFXHYzVyWWJ57Urs3jpzYc2YDDl0K4LToPSwI8TnOvURgHGqCsKwwi9DMroAeomwl4W39a7KWhO9Xy3U+9lAqhzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEIGN1HxXhCd5JNFod2PLA+kQHHSzMAGnK4QYmo8Gg1Qxjo3RhZ80CAqd2ZXJzaW9uAQ==
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/dangirsh
+
+==================================================================

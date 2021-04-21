@@ -3,7 +3,7 @@ title: Popularizing Quantum Contextuality
 date: 2020-05-14
 ---
 
-I've found very few expositions of quantum contextuality that are accessible to a non-technical audience. So, I've been iterating on a game that exposes the key ideas. Behind the scenes, it uses [[https://www.quantiki.org/wiki/ghz][GHZ states]] and an implicit assumption of locality to generate a paradox. No physics / math background is required to play.
+I've found very few expositions of quantum contextuality that are accessible to a non-technical audience. So, I've been iterating on a game that exposes the key ideas. Behind the scenes, it uses [[https://www.quantiki.org/wiki/ghz][GHZ states]] and an implicit assumption of locality to generate a paradox. No physics / math background is required to play. It's based on a [[http://www.physics.smu.edu/scalise/P5382fa15/Mermin1990a.pdf][beautiful exposition by David Mermin]].
 
 After almost two years of showing it to friends, I'd like to post the details publicly. Check back here soon.
 
@@ -14,3 +14,19 @@ You can get a feel of it from this photo:
 [[../img/ghz_game.jpg]]
 
 If you know of any good explanations of contextuality, please get in touch!
+
+
+Related resources:
+
+- [[https://arxiv.org/pdf/1709.00013.pdf][Logical paradoxes in quantum computation]]
+  + Includes a good definition of “contextuality”
+- [[https://www.perimeterinstitute.ca/videos/negativity-contextuality-magic-and-power-quantum-computation][Negativity, Contextuality, Magic and the Power of Quantum Computation]]
+  + Discusses the relationship between contextuality and the quantum speedup
+- [[https://arxiv.org/abs/1401.4174][Contextuality supplies the magic for quantum computation]]
+  + Relates contextual states to magic states
+- [[https://arxiv.org/abs/0805.1002][Computational power of correlations]]
+  + It’s shown that access to a 3Q GHZ state (which is “contextual”) lifts a classical parity computer (gate set = {XOR, NOT}) to a complexity class that classicaly requires an imbalanced gate (e.g. NAND). I find the boundary between P and BQP much harder to reason about than the one considered in this paper (between L and P).
+- [[https://iopscience.iop.org/article/10.1088/1367-2630/aae3ad][Contextuality as a resource for measurement-based quantum computation beyond qubits]]
+- [[https://arxiv.org/abs/1802.06121][Contextuality and The Single-Qubit Stabilizer Formalism]]
+  + Discusses “generalized contextuality”
+- [[https://arxiv.org/abs/1903.02563][Contextuality Provides Quantum Advantage in Postselected Metrology]]

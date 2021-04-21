@@ -3,7 +3,7 @@ title: Zettelkasten
 date: 2020-05-14
 ---
 
-You may have noticed the recent [[https://en.wikipedia.org/wiki/Zettelkasten][Zettelkasten]] hype, amplified by well-deserved popularity of [[https://roamresearch.com/][Roam Research]]. I've been following the tools emerging the space, and outline my personal explorations in this post. Note: I'm using tools designed for the Zettelkasten method, but not trying to faithfully implement the method itself.
+You may have noticed the recent [[https://en.wikipedia.org/wiki/Zettelkasten][Zettelkasten]] hype, amplified by well-deserved popularity of [[https://roamresearch.com/][Roam Research]]. I've been following the tools emerging in the space, and outline my personal explorations in this post. Note: I'm using tools designed for the Zettelkasten method, but not trying to faithfully implement the method itself.
 
 Here's a simple model I'm trying for my digital brain: a [[https://en.wikipedia.org/wiki/Heterarchy][heterarchy]] of text entities, linked together in a graph. A node represents any concept that I care enough about to take notes on: a person, place, company, book, paper, technology, field, etc. An edge is automatically generated whenever the notes of one node reference another node, which enables the graph structure to grow passively and organically.
 

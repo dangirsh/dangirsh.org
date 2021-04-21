@@ -63,13 +63,14 @@ In no particular order, I found the following configurations especially helpful:
     - [[#rsync-script][Rsync Script]]
 - [[#doom-emacs][Doom Emacs]]
 - [[#xmonad][XMonad]]
-  - [[#imports][Imports]]
-  - [[#main][Main]]
-  - [[#keybindings][Keybindings]]
-    - [[#default][Default]]
-    - [[#custom][Custom]]
-  - [[#asthetics][Asthetics]]
-  - [[#screenshot][Screenshot]]
+  - [[#haskell-configuration][Haskell Configuration]]
+    - [[#imports][Imports]]
+    - [[#main][Main]]
+    - [[#keybindings][Keybindings]]
+    - [[#asthetics][Asthetics]]
+    - [[#screenshot][Screenshot]]
+  - [[#start-script][Start Script]]
+    - [[#desktop-entry-pointing-to-start-script][Desktop Entry Pointing to Start Script]]
 - [[#nixos-config][Nixos Config]]
   - [[#system-level-config][System-level Config]]
     - [[#nix][Nix]]
@@ -98,6 +99,7 @@ In no particular order, I found the following configurations especially helpful:
 - [[#future-work][Future Work]]
   - [[#floating-emacs-popup-for-quick-commands][Floating Emacs popup for quick commands]]
   - [[#hidpi-autotoggle][HiDPI autotoggle]]
+    - [[#keybase-tweak][Keybase Tweak]]
   - [[#consistent-copypaste-bindings][Consistent copy/paste bindings]]
   - [[#consolidate-xmonad-and-emacs-window-management][Consolidate XMonad and Emacs window management]]
   - [[#fix-indentation-in-tangled-files][Fix indentation in tangled files]]
@@ -151,6 +153,9 @@ git clone --recursive git@github.com:dangirsh/neurosys.git
 Run [[elisp:(neurosys/deploy-to-host)][neurosys/deploy-to-host]], which will tangle this file and =rsync= the results to a specified host.
 
 *** Rsync Script
+:PROPERTIES:
+:ID:       09e08700-edbb-454f-9ce0-09caed2b1cbd
+:END:
 
 #+begin_src sh :tangle rsync.sh :tangle-mode (identity #o775)
 HOST=$1
@@ -173,15 +178,19 @@ Until projects like [[https://github.com/vlaci/nix-doom-emacs][nix-doom-emacs]] 
 Emacs itself is tracked via the [[https://github.com/nix-community/emacs-overlay][emacs-overlay]], which is version pinned via [[https://github.com/nmattia/niv][niv]] in [[file:nixos/nix/sources.json][sources.json]]. See the [[*Emacs][nix delaration]].
 
 * XMonad
+
+I use XMonad as a window manager and minimal desktop environment. I don't run any additional desktop environment (e.g. XFCE). Instead, I have the interface to the few things I need configured here in Haskell, or elsewhere ([[*Doom Emacs][Emacs]]).
+
+I've don't use any system trays / status bars / panels, since the Emacs modeline is enough for me. This choice reduces the complexity of the XMonad configuration, and avoids dependening on xmobar/polybar.
+
+** Haskell Configuration
 :PROPERTIES:
 :header-args: :tangle home/.xmonad/xmonad.hs :comments link
 :END:
-
-I use XMonad as a window manager and minimal desktop environment. I don't run any additional desktop environment (e.g. XFCE). Insstead, I have the interface to the few things I need configured here in Haskell, or elsewhere ([[*Doom Emacs][Emacs]]).
-
-I've don't use any system trays / status bars / panels, since the Emacs modeline is enough for me. This choice reduces the complexity of the XMonad configuration, and obviates depending on things like xmobar or polybar.
-
-** Imports
+*** Imports
+:PROPERTIES:
+:ID:       f103b573-5fe1-4ebd-ae35-e6f1a73ecdad
+:END:
 
 #+begin_src haskell
 import XMonad
@@ -194,12 +203,14 @@ import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.Grid
 import XMonad.Layout.Fullscreen
 import XMonad.Layout.Minimize
+import XMonad.Actions.Minimize
 import XMonad.Layout.NoBorders
 import XMonad.Layout.NoFrillsDecoration (noFrillsDeco, shrinkText,
                                          inactiveBorderColor, inactiveColor, inactiveTextColor, activeBorderColor,
                                          activeColor, activeTextColor, urgentBorderColor, urgentTextColor, decoHeight)
 import XMonad.Layout.Tabbed (simpleTabbed)
 import XMonad.Layout.ResizableTile
+import XMonad.Layout.MultiColumns
 
 import XMonad.Actions.CycleWS (toggleWS)
 import qualified XMonad.StackSet as W
@@ -213,7 +224,10 @@ import Data.Default (def)
 import Data.Map as M (fromList,union, Map())
 #+end_src
 
-** Main
+*** Main
+:PROPERTIES:
+:ID:       099e2205-fc29-41c0-86d4-ce9ac62437c3
+:END:
 
 #+begin_src haskell
 main :: IO ()
@@ -223,12 +237,13 @@ main = xmonad $
   fullscreenSupport def {
     borderWidth = 1
   , focusedBorderColor = blue
-  , terminal = "emacsclient -c -e \"(vterm)\""  --assumes emacs server running
+  , terminal = "alacritty"
   , layoutHook = smartBorders $  -- no borders for sole windows
                  noFrillsDeco shrinkText topBarTheme $   -- visually mark the focused window with a top bar
                  minimize
                  (ResizableTall 1 (3/100) (1/2) []
                    ||| Mirror (ResizableTall 1 (3/100) (1/2) [])
+                   ||| multiCol [1] 1 0.01 (-0.5)
                    ||| noBorders Full
                    ||| simpleTabbed
                    ||| Grid)
@@ -245,9 +260,9 @@ main = xmonad $
   }
 #+end_src
 
-** Keybindings
+*** Keybindings
 
-*** Default
+**** Default
 
 From https://xmonad.org/manpage.html#default-keyboard-bindings
 
@@ -286,50 +301,74 @@ From https://xmonad.org/manpage.html#default-keyboard-bindings
 | mod-button2       | Raise the window to the top of the stack                                      |
 | mod-button3       | Set the window to floating mode and resize by dragging                        |
 
-*** Custom
+**** Custom
+:PROPERTIES:
+:ID:       bdb34094-5606-4b90-9659-27f2cc21831a
+:END:
 
 #+begin_src haskell
 myKeys :: XConfig t -> M.Map (KeyMask, KeySym) (X ())
 myKeys XConfig {modMask = m, terminal = term} = M.fromList $ [
 #+end_src
 
-**** Rebooting / Restarting
+***** Rebooting / Restarting
+:PROPERTIES:
+:ID:       a4300d94-b7ee-46c8-8649-83003a920e9a
+:END:
 
 #+begin_src haskell
     ((m .|. shiftMask .|. mod1Mask, xK_r), spawn "reboot")
   , ((m .|. shiftMask .|. mod1Mask, xK_i), spawn "xmonad --recompile && xmonad --restart")
 #+end_src
 
-**** Add Workspace 0
+***** Add Workspace 0
+:PROPERTIES:
+:ID:       0e983f1b-4867-4ae1-bdd7-0eb1fd599656
+:END:
 
 #+begin_src haskell
   , ((m, xK_0), windows $ W.greedyView "0")
   , ((m .|. shiftMask, xK_0), windows $ W.shift "0")
 #+end_src
 
-**** Launcher / Window Switcher
+***** Launcher / Window Switcher
+:PROPERTIES:
+:ID:       4a65a200-4d49-4b70-8261-c420289f1d68
+:END:
 
 I currently use [[https://github.com/davatorium/rofi][rofi]] to run programs or switch between open windows. It's simple, fast, and supports fuzzy search.
 
 #+begin_src haskell
   , ((m, xK_p), spawn "rofi -show drun -modi drun -show-icons -matching fuzzy")
+  , ((m .|. mod1Mask, xK_p), spawn "GDK_SCALE=2 rofi -show drun -modi drun -show-icons -matching fuzzy")
   , ((m, xK_b), spawn "rofi -show window -show-icons -matching fuzzy")
+  -- Like M-y for helm-show-kill-ring in Emacs
+  , ((m, xK_y), spawn "rofi -modi \"clipboard:greenclip print\" -show clipboard -run-command '{cmd}'")
 #+end_src
 
-**** Running Emacs
+***** Running Emacs
+:PROPERTIES:
+:ID:       03709ef1-9ca7-4593-a5a1-973ed3354cb2
+:END:
 
 #+begin_src haskell
   , ((m, xK_n), spawn "emacsclient -c")
   , ((m .|. shiftMask, xK_n), spawn "~/.emacs.d/bin/doom run")
 #+end_src
 
-**** Lock Screen
+***** Lock Screen
+:PROPERTIES:
+:ID:       1e954aa0-dc30-40a2-88a4-dd94bd92ba32
+:END:
 
 #+begin_src haskell
   , ((m .|. shiftMask .|. mod1Mask, xK_o), spawn "xtrlock -b")
 #+end_src
 
-**** Horizontal Resizing
+***** Horizontal Resizing
+:PROPERTIES:
+:ID:       634eac8e-780e-459c-9048-2b4a86a03d58
+:END:
 
 An obvious missing default...
 
@@ -338,20 +377,29 @@ An obvious missing default...
   , ((m .|. shiftMask, xK_l), sendMessage MirrorExpand)
 #+end_src
 
-**** Window Minimization / Restoration
+***** Window Minimization / Restoration
+:PROPERTIES:
+:ID:       52db6918-73ac-4ea0-97fa-e2d687579ecf
+:END:
 
 #+begin_src haskell
   , ((m, xK_m), withFocused minimizeWindow)
-  , ((m .|. shiftMask, xK_m), sendMessage RestoreNextMinimizedWin)
+  , ((m .|. shiftMask, xK_m), withLastMinimized maximizeWindowAndFocus)
 #+end_src
 
-**** Fullscreen
+***** Fullscreen
+:PROPERTIES:
+:ID:       24dace8c-4205-4956-b4c5-5223bd999826
+:END:
 
 #+begin_src haskell
   , ((m .|. shiftMask, xK_f), withFocused $ \f -> windows =<< appEndo `fmap` runQuery doFullFloat f)
 #+end_src
 
-**** Workspace Swapping
+***** Workspace Swapping
+:PROPERTIES:
+:ID:       c3bb35a1-49b5-481d-b6a3-42d0fdae5114
+:END:
 
 Using ~mod+comma~ quickly swap between workspaces is /very handy/.
 
@@ -359,7 +407,10 @@ Using ~mod+comma~ quickly swap between workspaces is /very handy/.
   , ((m, xK_comma), toggleWS)
 #+end_src
 
-**** Changing number of master windows
+***** Changing number of master windows
+:PROPERTIES:
+:ID:       076000a3-93de-41f3-8768-616f43e6d6bc
+:END:
 
 Some layouts, like ~ResizableTall~, have a "master" area, with 1 window initially assigned there. These commands enable incrementing or decrementing that number.
 
@@ -370,7 +421,10 @@ They are bound by default to ~mod+~, and ~mod+.~, but ~mod+,~ is much more usefu
   , ((m .|. shiftMask, xK_period), sendMessage (IncMasterN (-1)))
 #+end_src
 
-**** Easier Kill Binding
+***** Easier Kill Binding
+:PROPERTIES:
+:ID:       f67e9d5b-2ff4-4200-8fde-dd3a0871ea05
+:END:
 
 - I find the default =mod+shift+c= binding to be clumbsy for killing windows.
 - =mod+q= is easier / more natural.
@@ -380,7 +434,10 @@ They are bound by default to ~mod+~, and ~mod+.~, but ~mod+,~ is much more usefu
   , ((m, xK_q), kill)
 #+end_src
 
-**** Volume Control
+***** Volume Control
+:PROPERTIES:
+:ID:       49308b27-b641-4e31-b811-b4bad6e740dd
+:END:
 
 I don't run a desktop environment, so the volume buttons on my keyboard don't do anything.
 
@@ -389,7 +446,10 @@ I don't run a desktop environment, so the volume buttons on my keyboard don't do
   , ((m .|. shiftMask, xK_Down),spawn "amixer sset Master 5%-")
 #+end_src
 
-**** Screenshots
+***** Screenshots
+:PROPERTIES:
+:ID:       be6141e6-18de-4dff-9445-51c2635f5c93
+:END:
 
 #+begin_src haskell
     ,((0, xK_Print), myScreenshot)
@@ -400,14 +460,20 @@ I don't run a desktop environment, so the volume buttons on my keyboard don't do
 #+end_src
 
 
-**** Keyboard
+***** Keyboard
+:PROPERTIES:
+:ID:       af2e9701-ee14-4de2-b9e7-4944c53e1017
+:END:
 
 #+begin_src haskell
   , ((m .|. shiftMask, xK_i), spawn "setxkbmap -option 'ctrl:nocaps' && xset r rate 160 60")
 #+end_src
 
 
-**** Arandr
+***** Arandr
+:PROPERTIES:
+:ID:       9e55a839-1bcc-4442-a6b8-98b33f6d39c3
+:END:
 
 I have =main.sh= and =laptop.sh= symlinked to whatever the current xrandr scripts are for my desk / laptop.
 
@@ -416,7 +482,10 @@ I have =main.sh= and =laptop.sh= symlinked to whatever the current xrandr script
   , ((m .|. shiftMask, xK_s), spawn "/home/dan/.screenlayout/laptop.sh" )
 #+end_src
 
-**** Multiple Monitors
+***** Multiple Monitors
+:PROPERTIES:
+:ID:       f8ac74cc-5ca6-424f-bb20-f4fe05750b65
+:END:
 
 The functionality here is a primary reason for choosing XMonad: a natural, keyboard-driven way for coordinating workspaces across multiple monitors. I'm genuinely curious to know if others have found something on-par/better elsewhere. Please [[https://dangirsh.org/contact.html][contact me]] if you do.
 
@@ -427,13 +496,16 @@ The functionality here is a primary reason for choosing XMonad: a natural, keybo
   ] ++
   [((m .|. nilOrShift, key), screenWorkspace sc
           >>= flip whenJust (windows . f))
-       | (key, sc) <- zip [xK_e, xK_w, xK_r] [0..]
+       | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
        , (f, nilOrShift) <- [(W.view, 0), (W.shift, shiftMask)]]
 #+end_src
 
-***** TODO Try XMonad.Actions.PhysicalScreens to order =mod-{w, e, r}= based on physical screen layout
+****** TODO Try XMonad.Actions.PhysicalScreens to order =mod-{w, e, r}= based on physical screen layout
 
-** Asthetics
+*** Asthetics
+:PROPERTIES:
+:ID:       b7cecd28-8036-4451-8700-e19d5e5335cc
+:END:
 
 #+begin_src haskell 
 red     = "#dc322f"
@@ -464,13 +536,16 @@ myShellPrompt = def
        }
 #+end_src
 
-** COMMENT Float certain apps
+*** COMMENT Float certain apps
 
 #+begin_src haskell
 myManageHook = composeAll [ className =? "Pidgin" --> doFloat]
 #+end_src
 
-** Screenshot
+*** Screenshot
+:PROPERTIES:
+:ID:       0d76798f-6aa5-4d7d-89f7-455289a146b2
+:END:
 
 #+begin_src haskell
 myScreenshot = do
@@ -484,10 +559,69 @@ myScreenshotClipboard :: X ()
 myScreenshotClipboard = spawn  "maim -s | xclip -selection clipboard -t image/png"
 #+end_src
 
+** Start Script
+:PROPERTIES:
+:ID:       2d6a5556-05d8-4d89-b88f-678a69647de9
+:END:
+
+This is currently only used by when on non-NixOS systems (e.g. Ubuntu).
+
+#+begin_src sh :tangle home/.xmonad/start-xmonad :tangle-mode (identity #o775)
+#!/bin/bash
+
+# Identify the home of our gtkrc file, important for setting styles of
+# gtk-based applications
+export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
+
+# enable for hidpi displays
+# export GDK_SCALE=2
+
+setxkbmap -option 'ctrl:nocaps'
+
+# set keyboard rate
+xset r rate 160 40
+
+sudo timedatectl set-timezone Europe/Berlin
+
+# Ensure Zoom output volume stays constant
+# /home/dan/my-config/scripts/fuck_zoom.sh 100 &
+
+# Clipboard manager
+greenclip daemon &
+
+# set trackball rate
+# xinput --set-prop "Primax Kensington Eagle Trackball" "Device Accel Constant Deceleration" 3 || true
+
+# eye breaks
+# safeeyes &
+
+# xsetroot -solid black
+
+# Now, finally, start xmonad
+exec xmonad
+#+end_src
+
+*** Desktop Entry Pointing to Start Script
+:PROPERTIES:
+:ID:       679f4869-7950-466a-b0d1-8f0cbbd172e1
+:END:
+
+[[file:/usr/share/xsessions/xmonad.desktop]]
+
+#+begin_src conf
+[Desktop Entry]
+Name=XMonad
+Comment=Lightweight tiling window manager
+Exec=/home/dan/.xmonad/start-xmonad
+Icon=xmonad.png
+Type=XSession
+#+end_src
+
 * Nixos Config
 ** System-level Config
 :PROPERTIES:
 :header-args: :tangle nixos/configuration.nix :comments link
+:ID:       d206e175-97f3-485c-a580-c3b502578ffc
 :END:
 
 #+BEGIN_SRC nix
@@ -511,6 +645,9 @@ in {
   #+END_SRC
 
 *** Nix
+:PROPERTIES:
+:ID:       ac54d86b-9aad-4d35-af3e-663a45da9c88
+:END:
 
 #+BEGIN_SRC nix
 nix = {
@@ -539,12 +676,18 @@ nix = {
 #+END_SRC
 
 *** Timezone
+:PROPERTIES:
+:ID:       2753468b-59cf-4cb5-bd79-02b25d9ec2fd
+:END:
 
 #+BEGIN_SRC nix
 time.timeZone = "America/Los_Angeles";
 #+END_SRC
 
 *** Boot
+:PROPERTIES:
+:ID:       7e999695-84f9-4ce5-8b6e-c7465686a100
+:END:
 
 #+BEGIN_SRC nix
 boot = {
@@ -568,18 +711,27 @@ boot = {
 #+END_SRC
 
 *** Networking
+:PROPERTIES:
+:ID:       a56040d6-f62f-48d6-be30-93604accde6b
+:END:
 
 #+BEGIN_SRC nix
 
 networking.useDHCP = false;
 networking.usePredictableInterfaceNames = false;
 networking.interfaces.eth0.useDHCP = true;
-networking.firewall.enable = true;
+networking.firewall.enable = false;
+networking.firewall.allowPing = true;
 # networking.networkmanager.enable = true;
 networking.hostName = "nixos-dev";
+
+networking.interfaces.eth0.tempAddress = "disabled";
 #+END_SRC
 
 *** Services
+:PROPERTIES:
+:ID:       73de180a-03a8-49b3-a052-3c98bb5c2bd2
+:END:
 
 #+BEGIN_SRC nix
 
@@ -608,6 +760,9 @@ services = {
 #+END_SRC
 
 **** Syncthing
+:PROPERTIES:
+:ID:       b7028333-4e79-4020-a79d-8becefb7f430
+:END:
 #+BEGIN_SRC nix
 
   # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/services/networking/syncthing.nix
@@ -660,13 +815,40 @@ services = {
       };
     };
   };
+#+END_SRC
 
+**** Tarsnap
+:PROPERTIES:
+:ID:       58f00c2f-1aa2-4d67-88a1-8674b5a676fe
+:END:
+
+[[https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/services/backup/tarsnap.nix][nixpkgs/tarsnap.nix at master · NixOS/nixpkgs · GitHub]]
+
+#+begin_src nix
+tarsnap.enable = true;
+tarsnap.keyfile = "/bkp/Sync/nixos-dev-tarsnap.key";
+tarsnap.archives = {
+  main = {
+    keyfile = "/bkp/Sync/nixos-dev-tarsnap.key";
+    directories = ["/bkp/Sync" "/bkp/Work" "/bkp/Media"];
+  };
 };
+#+end_src
 
+**** End
+:PROPERTIES:
+:ID:       cf0131f7-bad4-4a4d-a622-71fefc111d82
+:END:
+
+#+BEGIN_SRC nix
+};
 # virtualisation.docker.enable = true;
 #+END_SRC
 
 *** Packages
+:PROPERTIES:
+:ID:       367b0c5b-a853-49f2-839f-e26f554a1f5c
+:END:
 
 #+BEGIN_SRC nix
 environment.systemPackages = with pkgs; [
@@ -684,6 +866,9 @@ environment.systemPackages = with pkgs; [
 #+END_SRC
 
 *** Fonts
+:PROPERTIES:
+:ID:       2ae32431-9f9a-447e-a27c-1fde8ed52a71
+:END:
 
 #+BEGIN_SRC nix
 
@@ -698,6 +883,9 @@ fonts = {
 #+END_SRC
 
 *** User Definition
+:PROPERTIES:
+:ID:       b525bfc9-8a31-4247-baf1-c1ff9125e97a
+:END:
 
 #+BEGIN_SRC nix
 
@@ -725,6 +913,9 @@ home-manager.users.dan = import ./home.nix ;
 #+END_SRC
 
 *** SSH
+:PROPERTIES:
+:ID:       c427e0b1-ff8d-4cce-b01a-e1102b41c906
+:END:
 
 #+BEGIN_SRC nix
 
@@ -743,6 +934,9 @@ programs.ssh.startAgent = true;
 #+END_SRC
 
 *** X2Go Client
+:PROPERTIES:
+:ID:       193aada6-fd41-4ec5-9d51-c7964419621f
+:END:
 
 #+BEGIN_SRC nix
 
@@ -750,6 +944,9 @@ programs.ssh.startAgent = true;
 #+END_SRC
 
 *** End
+:PROPERTIES:
+:ID:       3606c19d-4d09-4c08-8539-fb993b9ed3b9
+:END:
 
 #+BEGIN_SRC nix
 }
@@ -1030,6 +1227,9 @@ services = {
 
 
 ** Global Constants
+:PROPERTIES:
+:ID:       55b66861-0727-404b-b10b-f9adb7151e5e
+:END:
 #+BEGIN_SRC nix :tangle nixos/settings.nix :comments link
 {config, pkgs, lib, ...}:
 
@@ -1057,6 +1257,9 @@ with lib;
 #+END_SRC
 
 ** Hardware-specific Config
+:PROPERTIES:
+:ID:       0d98f7cd-b560-49b0-8ad5-bea88b3e9903
+:END:
 
 #+begin_src nix :tangle nixos/hardware-configuration.nix :comments link
 # Do not modify this file!  It was generated by ‘nixos-generate-config’
@@ -1078,6 +1281,9 @@ with lib;
 #+end_src
 
 *** Disk Mounts
+:PROPERTIES:
+:ID:       25461683-44fb-4181-af1e-8c5f4d9de5e5
+:END:
 
 From [[https://nixos.org/nixos/manual/#ch-file-systems][Chapter 8. File Systems]]: "Mount points are created automatically if they don’t already exist."
 
@@ -1100,6 +1306,9 @@ From [[https://nixos.org/nixos/manual/#ch-file-systems][Chapter 8. File Systems]
 
 #+end_src
 ** Version Pinning
+:PROPERTIES:
+:ID:       fa3d2e90-aa51-4f50-9b96-e5b9e8a453ef
+:END:
 
 These are generated via [[This was ][niv]].
 
@@ -1277,7 +1486,19 @@ and change =layout.css.devPixelsPerPx= in Firefox about:config from -1 to 2.
 
 tweak font size in Firefox and Emacs.
 
-** TODO [#B] Consistent copy/paste bindings
+*** Keybase Tweak
+
+Per [[https://github.com/keybase/client/issues/5797#issuecomment-321387944][keybase/client#5797 increase font size in client]], edit the [[file:/sudo:root@localhost:/usr/lib/systemd/user/keybase.gui.service::ExecStart=/opt/keybase/Keybase --force-device-scale-factor=2][ExecStart line]] to have =--force-device-scale-factor=2=. Then, reload with:
+
+#+begin_src sh
+systemctl --user daemon-reload
+systemctl --user restart keybase.gui.service
+#+end_src
+
+#+RESULTS:
+
+
+** DONE [#B] Consistent copy/paste bindings
 
 In EXWM, I used the simulation keys to have consistent Emacs copy/paste bindings everywhere. Need a solution for XMonad. Setting the GTK bindings to "emacs" didn't seem to affect for Firefox, which is (by far) my primary non-Emacs window.
 

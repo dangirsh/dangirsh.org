@@ -3,6 +3,21 @@ title: Quotes
 date: 2020-06-16
 ---
 
-WIP
+** Physics
 
+- "Physics is experience, arranged in economical order." - Ernst Mach
+- "Time exists in order that everything doesn’t happen all at once... and space exists so that it doesn’t all happen to you." - Susan Sontag
+- "Our present QM formalism is not purely epistemological; it is a peculiar mixture describing in part realities of Nature, in part incomplete human information about Nature — all scrambled up by Heisenberg and Bohr into an omelette that nobody has seen how to unscramble. Yet we think that the unscrambling is a prerequisite for any further advance in basic physical theory. For, if we cannot separate the subjective and objective aspects of the formalism, we cannot know what we are talking about; it is just that simple." - E. T. Jaynes
+
+** Other
+
+- "The role of the artist is to make the revolution irresistible." - Toni Cade Bambara
+- "A world constitution that takes no account of the mental apparatus by which we perceive it is an empty abstraction." - Sigmund Freud
+- "Mystery is not traveling to new places, but looking with new eyes." - Marcel Proust
+- One of the only scientific things we know about consciousness is that it's soluble in chloroform. - Luca Turin
 - "Specialization is for insects." -  Robert Heinlein (Time Enough for Love)
+- "Do not be so open-minded that your brains fall out" - Walter Kotschnig (often attributed to Carl Sagan)
+- "Who looks outside, dreams; Who looks inside, awakens." — Carl Jung
+- "Notes aren’t a record of my thinking process. They are my thinking process." – Richard Feynman
+- "Many neuroscientists are unaware that the discovery of LSD led to the idea that neurochemicals might play a role in cognitive processes" - [[https://www.biorxiv.org/content/10.1101/578435v2.full][Christopher Germann]]
+- My favorite Soviet joke involves a man standing in the Moscow train station, handing out leaflets to everyone who passes by.  Eventually, of course, the KGB arrests him—but they discover to their surprise that the leaflets are just blank pieces of paper.  “What’s the meaning of this?” they demand.  “What is there to write?” replies the man.  “It’s so obvious!”  Note that this is precisely a situation where the man is trying to make common knowledge something he assumes his “readers” already know. - [[https://www.scottaaronson.com/blog/?p=2410][Scott Aaronson]]
