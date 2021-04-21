@@ -11,8 +11,6 @@ Here's my [resume](../doc/resume.pdf).
 
 Here's my [Github](https://github.com/dangirsh/).
 
-Here's an [anonymous feedback form](http://freesuggestionbox.com/pub/tudsprm).
-
 Here's my face:
 
 ![](../img/fey_headshot.jpeg "Oh hai!")
