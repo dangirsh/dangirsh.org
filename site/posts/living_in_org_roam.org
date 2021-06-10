@@ -1,0 +1,53 @@
+---
+title: Living in Org-roam
+date: 2020-05-14
+---
+
+I've been eagerly following developments in tools for thought, most notably [[https://roamresearch.com/][Roam Research]]. After extensively using an [[https://emacs.sexy/][Emacs]]-based implementation called
+[[https://www.orgroam.com/][Org-roam]], I thought I'd summarize my thoughts here. See the links at the bottom for more examples / info.
+
+If you're already familiar with [[https://emacs.sexy/][Emacs]] + [[https://orgmode.org/][Org-mode]], [[https://www.orgroam.com/][Org-roam]] is a must-try package. For everyone else, [[https://www.gwern.net/][Gwern]] said it best:
+
+#+begin_quote
+"Friends don’t let friends use heroin or org-mode — are you ever really going to make back the time it takes to learn & customize org-mode?"
+#+end_quote
+
+Well, Gwern, I'm working on it. If you go down this rabbit hole, I've documented my configuration [[https://github.com/dangirsh/.doom.d#org-roam-graph-layer-on-top-of-org][here]].
+
+Org-roam enables building and leveraging an /emergent/ graph structure on top of Org-mode. Each node is an Org file, which is usually an entity or concept that I care about, like a person, place, company, book, paper, codebase, technology, etc... A bi-directional graph edge is generated whenever the contents of one node reference another node, enabling structure to form incrementally. Edges can also be pinned to specific sub-sections of a node, for more specificity. Critically, Org-roam enables generating nodes and links with minimal overhead, friction, or cognitive load. It's joyfully streamlined.
+
+Here are some things I currently find useful to augment with this graph structure:
+
+1. Notes on my engineering work / personal research
+2. Notebooks with executable code blocks (see [[https://orgmode.org/worg/org-contrib/babel/][Org babel]] and [[https://github.com/dzop/emacs-jupyter][emacs-jupyter]])
+3. PDFs, references, and annotations (see my [[https://github.com/weirdNox/org-noter][org-noter]] [[https://github.com/dangirsh/.doom.d#org-noter-syncing-notes-to-pdfs][config]] and [[https://github.com/org-roam/org-roam-bibtex][org-roam-bibtex]] [[https://github.com/dangirsh/.doom.d#org-roam-bibtex-manage-pdfs-notes--citations][config]])
+4. Tasks (see my [[http://cachestocaches.com/2016/9/my-workflow-org-agenda/][org-agenda]] config [[https://github.com/dangirsh/.doom.d#org-agenda][here]])
+5. Daily journal entries
+
+Here's a realistic example how I leverage the graph structure. I create a journal entry describing my learnings about a computational method, which I recently used for a work task. The journal entry links to the task description, and the task description links to the implementation (emacs-jupyter notebook). The inline documentation of the notebook links to an equation in a paper (PDF) describing the computational method. A year later, I go back to the same paper for a different project and immediately see the backlinks attached to the equation. The related code, task, and journal entry are now at my fingertips to review, and would likely otherwise be forgotten.
+
+Here's a bird's-eye view of part of my graph (courtesy of [[https://github.com/org-roam/org-roam-server][org-roam-server]]):
+
+#+ATTR_HTML: width="800px"
+#+ATTR_ORG: :width 800
+[[../img/org-roam-server.png]]
+
+
+Some interesting projects / resources in this space:
+
+- [[https://roamresearch.com/][Roam Research]]
+- [[https://github.com/athensresearch/athens/][Athens]]
+- [[https://logseq.com/][Logseq]]
+  + [[https://www.youtube.com/watch?v=MEZc2nW09Ns][A scattered mind meets the Zettelkasten]]
+- [[https://obsidian.md/][Obsidian]]
+- [[https://neuron.zettel.page/][Neuron]]
+- [[https://www.roambrain.com/][RoamBrain]]
+- [[https://beepb00p.xyz/exobrain/][Exobrain]]
+- [[https://notes.andymatuschak.org/About_these_notes][Andy Matuschak's Notes]]
+- [[https://braindump.jethro.dev/][Jethro Kuan's Braindump]]
+- [[https://blog.jethro.dev/posts/how_to_take_smart_notes_org/][Jethro Kuan's Post - How to Take Smart Notes]]
+- [[https://wiki.nikitavoloboev.xyz/][Nikita Voloboev's Wiki]]
+- [[https://cyberthal-docs.nfshost.com/textmind/][Textmind]]
+- [[https://medium.com/@WorldBrain/where-we-are-heading-with-worldbrain-65f244f540b8][WorldBrain.io Vision]]
+
+And don't miss the classic [[https://www.theatlantic.com/magazine/archive/1945/07/as-we-may-think/303881/]["As We May Think"]].
