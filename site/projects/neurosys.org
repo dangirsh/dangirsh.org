@@ -68,6 +68,7 @@ In no particular order, I found the following configurations especially helpful:
     - [[#main][Main]]
     - [[#keybindings][Keybindings]]
     - [[#asthetics][Asthetics]]
+    - [[#float-certain-apps][Float certain apps]]
     - [[#screenshot][Screenshot]]
   - [[#start-script][Start Script]]
     - [[#desktop-entry-pointing-to-start-script][Desktop Entry Pointing to Start Script]]
@@ -183,6 +184,7 @@ I use XMonad as a window manager and minimal desktop environment. I don't run an
 
 I've don't use any system trays / status bars / panels, since the Emacs modeline is enough for me. This choice reduces the complexity of the XMonad configuration, and avoids dependening on xmobar/polybar.
 
+
 ** Haskell Configuration
 :PROPERTIES:
 :header-args: :tangle home/.xmonad/xmonad.hs :comments link
@@ -251,7 +253,7 @@ main = xmonad $
   , workspaces = map show $ [1..9] ++ [0 :: Int]
   , modMask = mod4Mask  -- super key as modifier
   , keys = \c -> myKeys c `M.union` keys def c
-  -- , manageHook = myManageHook
+  , manageHook = myManageHook
   , handleEventHook = ewmhDesktopsEventHook
   , startupHook = do
       -- http://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Hooks-SetWMName.html
@@ -344,7 +346,6 @@ I currently use [[https://github.com/davatorium/rofi][rofi]] to run programs or 
   , ((m, xK_b), spawn "rofi -show window -show-icons -matching fuzzy")
   -- Like M-y for helm-show-kill-ring in Emacs
   , ((m, xK_y), spawn "rofi -modi \"clipboard:greenclip print\" -show clipboard -run-command '{cmd}'")
-  , ((m, xK_u), spawn "/home/dan/my-config/scripts/yubi-clipboard.sh")
 #+end_src
 
 ***** Running Emacs
@@ -354,7 +355,7 @@ I currently use [[https://github.com/davatorium/rofi][rofi]] to run programs or 
 
 #+begin_src haskell
   , ((m, xK_n), spawn "emacsclient -c")
-  , ((m .|. shiftMask, xK_n), spawn "~/.emacs.d/bin/doom run")
+  , ((m .|. shiftMask, xK_n), spawn "~/scripts/run_emacs.sh")
 #+end_src
 
 ***** Lock Screen
@@ -467,7 +468,7 @@ I don't run a desktop environment, so the volume buttons on my keyboard don't do
 :END:
 
 #+begin_src haskell
-  , ((m .|. shiftMask, xK_i), spawn "setxkbmap -option 'ctrl:nocaps' && xset r rate 160 60")
+  , ((m .|. shiftMask, xK_i), spawn "setxkbmap -option 'ctrl:nocaps' && xset r rate 160 200")
 #+end_src
 
 
@@ -479,8 +480,9 @@ I don't run a desktop environment, so the volume buttons on my keyboard don't do
 I have =main.sh= and =laptop.sh= symlinked to whatever the current xrandr scripts are for my desk / laptop.
 
 #+begin_src haskell
-  , ((m, xK_s), spawn "/home/dan/.screenlayout/main.sh" )
-  , ((m .|. shiftMask, xK_s), spawn "/home/dan/.screenlayout/laptop.sh" )
+  , ((m, xK_s), spawn "/home/dan/.screenlayout/main.sh && feh --bg-fill --randomize ~/HubbleImages/* &" )
+  , ((m .|. shiftMask, xK_s), spawn "/home/dan/.screenlayout/laptop.sh && feh --bg-fill --randomize ~/HubbleImages/* &" )
+  , ((m .|. shiftMask .|. mod1Mask, xK_s), spawn "/home/dan/.screenlayout/secondary.sh && feh --bg-fill --randomize ~/HubbleImages/* &" )
 #+end_src
 
 ***** Multiple Monitors
@@ -497,7 +499,7 @@ The functionality here is a primary reason for choosing XMonad: a natural, keybo
   ] ++
   [((m .|. nilOrShift, key), screenWorkspace sc
           >>= flip whenJust (windows . f))
-       | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
+       | (key, sc) <- zip [xK_e, xK_w, xK_r] [0..]
        , (f, nilOrShift) <- [(W.view, 0), (W.shift, shiftMask)]]
 #+end_src
 
@@ -537,10 +539,13 @@ myShellPrompt = def
        }
 #+end_src
 
-*** COMMENT Float certain apps
+*** Float certain apps
+:PROPERTIES:
+:ID:       92898604-cb43-4368-938f-a390ab65bbc3
+:END:
 
 #+begin_src haskell
-myManageHook = composeAll [ className =? "Pidgin" --> doFloat]
+myManageHook = composeAll [ className =? "zoom" --> doFloat, appName =? "Open File" --> doFloat]
 #+end_src
 
 *** Screenshot
@@ -550,7 +555,7 @@ myManageHook = composeAll [ className =? "Pidgin" --> doFloat]
 
 #+begin_src haskell
 myScreenshot = do
-  -- init takes kare of the trailing newline character returned by date
+  -- init takes care of the trailing newline character returned by date
   date <- init <$> runProcessWithInput "date" ["+%Y-%m-%d-%H:%M:%S"] []
   AL.launchApp myShellPrompt { defaultText = "~/screenshots/" ++ date ++ ".png"} "maim -s"
 #+end_src
@@ -580,20 +585,19 @@ export GDK_SCALE=1
 setxkbmap -option 'ctrl:nocaps'
 
 # set keyboard rate
-xset r rate 160 40
+xset r rate 160 80
 
 sudo timedatectl set-timezone Europe/Berlin
+# sudo timedatectl set-timezone America/New_York
 
 # Ensure Zoom output volume stays constant
-/home/dan/my-config/scripts/fuck_zoom.sh 100 &
+/home/dan/scripts/fuck_zoom.sh 100 &
 
 # Clipboard manager (used with rofi)
 greenclip daemon &
 
-# Tresorit daemon
-# ~/.local/share/tresorit/tresorit-cli start
-
-ssh-add gitlab21_protonmail_id_rsa
+# Start espanso
+espanso restart
 
 # set trackball rate
 # xinput --set-prop "Primax Kensington Eagle Trackball" "Device Accel Constant Deceleration" 3 || true
@@ -601,7 +605,12 @@ ssh-add gitlab21_protonmail_id_rsa
 # eye breaks
 # safeeyes &
 
+# Wallpaper
+feh --bg-fill --randomize ~/HubbleImages/* &
 # xsetroot -solid black
+
+# Config in ~/.config/redshift/redshift.conf
+redshift &
 
 # Now, finally, start xmonad
 exec xmonad
@@ -781,14 +790,13 @@ services = {
     declarative = {
       devices = {
         nixos-dev.id = "EEMRJQE-TBONTUL-UBGJ6FT-AAUS25K-COP3VHE-WERN7IN-PTNZ63Z-GZZX2AY";
-        x1carbon.id = "IOINCUM-QKL34MC-RSPJETE-CUW5D2Y-3CMDSLD-72HNXZI-7U3TN44-35CLKQN";
-        lebobo.id = "PX4LTUE-H2ROD4V-LMWPTJC-JZ4DEEP-UI5XKL7-RKW4AYD-KCITAZN-23R3ZQS";
+        x1carbon9.id = "EIZV5LR-F3JILKF-7MD5UMZ-KYRW37L-RVJ2WI4-7LQD7VC-U5BSEBD-YMGQPQ3";
         pixel3a-2.id = "NT5ZJ55-JBWGL4D-WIK57V3-T3RXF2Q-HLMHV7U-DLGAZ5U-ZSHSPYZ-M5NLQAC";
       };
       folders = {
         sync = rec {
           id = "at23u-zmxto";
-          devices = [ "nixos-dev" "x1carbon" "lebobo" "pixel3a-2"];
+          devices = [ "nixos-dev" "x1carbon9" "pixel3a-2"];
           path = "/bkp/Sync";
           watch = false;
           rescanInterval = 3600 * 1;
@@ -799,7 +807,7 @@ services = {
         };
         media = rec {
           id = "media";
-          devices = [ "nixos-dev"  "x1carbon" "lebobo" ];
+          devices = [ "nixos-dev"  "x1carbon9" ];
           path = "/bkp/Media";
           watch = false;
           rescanInterval = 3600 * 6;
@@ -810,7 +818,7 @@ services = {
         };
         work = rec {
           id = "d7svv-zjsz2";
-          devices = [ "nixos-dev" "x1carbon" "lebobo" ];
+          devices = [ "nixos-dev" "x1carbon9" ];
           path = "/bkp/Work";
           watch = false;
           rescanInterval = 3600 * 6;
@@ -833,10 +841,11 @@ services = {
 
 #+begin_src nix
 tarsnap.enable = true;
-tarsnap.keyfile = "/bkp/Sync/nixos-dev-tarsnap.key";
+tarsnap.keyfile = "/bkp/Sync/keys/nixos-dev-tarsnap.key";
+tarsnap.cachedir = "/var/cache/tarsnap/nixos-dev"
 tarsnap.archives = {
   main = {
-    keyfile = "/bkp/Sync/nixos-dev-tarsnap.key";
+    keyfile = "/bkp/Sync/keys/nixos-dev-tarsnap.key";
     directories = ["/bkp/Sync" "/bkp/Work" "/bkp/Media"];
   };
 };
