@@ -9,7 +9,7 @@
 
 My neurosys encompasses configuration for:
 
-- [[https://nixods.org/][NixOS]] ([[#nixos-config][config]])
+- [[https://nixos.org/][NixOS]] ([[#nixos-config][config]])
 - [[https://xmonad.org/][XMonad]] ([[#xmonad][config]])
 - [[https://github.com/hlissner/doom-emacs][Doom Emacs]] ([[#doom-emacs][config]])
   - Includes a [[https://github.com/dangirsh/.doom.d/tree/master/modules/personal/neurosys][neurosys module]] with utilities (e.g. remote deployment)
@@ -182,7 +182,7 @@ Emacs itself is tracked via the [[https://github.com/nix-community/emacs-overlay
 
 I use XMonad as a window manager and minimal desktop environment. I don't run any additional desktop environment (e.g. XFCE). Instead, I have the interface to the few things I need configured here in Haskell, or elsewhere ([[*Doom Emacs][Emacs]]).
 
-I've don't use any system trays / status bars / panels, since the Emacs modeline is enough for me. This choice reduces the complexity of the XMonad configuration, and avoids dependening on xmobar/polybar.
+I've don't use any system trays / status bars / panels, since the Emacs modeline is enough for me. This choice reduces the complexity of the XMonad configuration, and avoids depending on xmobar/polybar.
 
 
 ** Haskell Configuration
@@ -215,6 +215,7 @@ import XMonad.Layout.ResizableTile
 import XMonad.Layout.MultiColumns
 
 import XMonad.Actions.CycleWS (toggleWS)
+import XMonad.Actions.CycleRecentWS (cycleRecentWS)
 import qualified XMonad.StackSet as W
 
 import XMonad.Prompt
@@ -355,7 +356,8 @@ I currently use [[https://github.com/davatorium/rofi][rofi]] to run programs or 
 
 #+begin_src haskell
   , ((m, xK_n), spawn "emacsclient -c")
-  , ((m .|. shiftMask, xK_n), spawn "~/scripts/run_emacs.sh")
+  , ((m .|. shiftMask .|. mod1Mask, xK_n), spawn "~/scripts/run_emacs.sh")
+  , ((m .|. shiftMask, xK_n), spawn "EMACS_WORK_MODE=1 ~/scripts/run_emacs.sh")
 #+end_src
 
 ***** Lock Screen
@@ -468,7 +470,7 @@ I don't run a desktop environment, so the volume buttons on my keyboard don't do
 :END:
 
 #+begin_src haskell
-  , ((m .|. shiftMask, xK_i), spawn "setxkbmap -option 'ctrl:nocaps' && xset r rate 160 200")
+  , ((m .|. shiftMask, xK_i), spawn "setxkbmap -option 'ctrl:nocaps' && xset r rate 160 80")
 #+end_src
 
 
@@ -484,6 +486,13 @@ I have =main.sh= and =laptop.sh= symlinked to whatever the current xrandr script
   , ((m .|. shiftMask, xK_s), spawn "/home/dan/.screenlayout/laptop.sh && feh --bg-fill --randomize ~/HubbleImages/* &" )
   , ((m .|. shiftMask .|. mod1Mask, xK_s), spawn "/home/dan/.screenlayout/secondary.sh && feh --bg-fill --randomize ~/HubbleImages/* &" )
 #+end_src
+
+***** Cycle Recent Workspace
+
+#+begin_src haskell
+  , ((m .|. shiftMask, xK_Tab), cycleRecentWS [xK_Super_L] xK_Tab xK_BackSpace)
+#+end_src
+
 
 ***** Multiple Monitors
 :PROPERTIES:
@@ -510,7 +519,7 @@ The functionality here is a primary reason for choosing XMonad: a natural, keybo
 :ID:       b7cecd28-8036-4451-8700-e19d5e5335cc
 :END:
 
-#+begin_src haskell 
+#+begin_src haskell
 red     = "#dc322f"
 blue    = "#268bd2"
 yellow  = "#b58900"
@@ -589,6 +598,7 @@ xset r rate 160 80
 
 sudo timedatectl set-timezone Europe/Berlin
 # sudo timedatectl set-timezone America/New_York
+# sudo timedatectl set-timezone America/Los_Angeles
 
 # Ensure Zoom output volume stays constant
 /home/dan/scripts/fuck_zoom.sh 100 &
@@ -791,12 +801,12 @@ services = {
       devices = {
         nixos-dev.id = "EEMRJQE-TBONTUL-UBGJ6FT-AAUS25K-COP3VHE-WERN7IN-PTNZ63Z-GZZX2AY";
         x1carbon9.id = "EIZV5LR-F3JILKF-7MD5UMZ-KYRW37L-RVJ2WI4-7LQD7VC-U5BSEBD-YMGQPQ3";
-        pixel3a-2.id = "NT5ZJ55-JBWGL4D-WIK57V3-T3RXF2Q-HLMHV7U-DLGAZ5U-ZSHSPYZ-M5NLQAC";
+        pixel6-pro.id = "DISECZT-3ILXZ2S-B7BTYBI-R6KKLH2-YYIDZGD-4LP2OEF-NAURN57-ZPR6XAD";
       };
       folders = {
         sync = rec {
           id = "at23u-zmxto";
-          devices = [ "nixos-dev" "x1carbon9" "pixel3a-2"];
+          devices = [ "nixos-dev" "x1carbon9" "pixel6-pro"];
           path = "/bkp/Sync";
           watch = false;
           rescanInterval = 3600 * 1;
@@ -807,7 +817,7 @@ services = {
         };
         media = rec {
           id = "media";
-          devices = [ "nixos-dev"  "x1carbon9" ];
+          devices = [ "nixos-dev"  "x1carbon9" "pixel6-pro"];
           path = "/bkp/Media";
           watch = false;
           rescanInterval = 3600 * 6;
@@ -818,7 +828,7 @@ services = {
         };
         work = rec {
           id = "d7svv-zjsz2";
-          devices = [ "nixos-dev" "x1carbon9" ];
+          devices = [ "nixos-dev" "x1carbon9" "pixel6-pro"];
           path = "/bkp/Work";
           watch = false;
           rescanInterval = 3600 * 6;
@@ -842,7 +852,6 @@ services = {
 #+begin_src nix
 tarsnap.enable = true;
 tarsnap.keyfile = "/bkp/Sync/keys/nixos-dev-tarsnap.key";
-tarsnap.cachedir = "/var/cache/tarsnap/nixos-dev"
 tarsnap.archives = {
   main = {
     keyfile = "/bkp/Sync/keys/nixos-dev-tarsnap.key";
@@ -1209,7 +1218,7 @@ services = {
 
 *** End
 
-#+BEGIN_SRC nix 
+#+BEGIN_SRC nix
 }
 #+END_SRC
 
@@ -1514,7 +1523,7 @@ systemctl --user restart keybase.gui.service
 #+RESULTS:
 
 
-** DONE [#B] Consistent copy/paste bindings
+** TODO [#B] Consistent copy/paste bindings
 
 In EXWM, I used the simulation keys to have consistent Emacs copy/paste bindings everywhere. Need a solution for XMonad. Setting the GTK bindings to "emacs" didn't seem to affect for Firefox, which is (by far) my primary non-Emacs window.
 
@@ -1531,9 +1540,9 @@ These seemed to cause more problems than they fixed for me.
 
 ** TODO [#C] Fix indentation in tangled files
 
-Even with =org-src-preserve-indentation= set to =t=, files like [[file:nixos/home.nix][home.nix]] aren't properly indented. This is because they are split across several org blocks, and in each on I use the =nix-mode= auto-indent to fixup the indentation /within th block/. This removes the leading whitespace, so each block is tangled without leading indentation. Thankfully, Nix doesn't care, so this is purely for the aesthetics of the generated files.
+Even with =org-src-preserve-indentation= set to =t=, files like [[file:nixos/home.nix][home.nix]] aren't properly indented. This is because they are split across several org blocks, and in each on I use the =nix-mode= auto-indent to fixup the indentation /within the block/. This removes the leading whitespace, so each block is tangled without leading indentation. Thankfully, Nix doesn't care, so this is purely for the aesthetics of the generated files.
 
-Quickfix is to auto-indent the tangled files, then detangle. 
+Quickfix is to auto-indent the tangled files, then detangle.
 
 Using noweb references seems to be the best option: https://orgmode.org/manual/Noweb-Reference-Syntax.html. See "This feature can also be used for management of indentation in exported code snippets".
 
