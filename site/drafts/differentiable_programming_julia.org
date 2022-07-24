@@ -1,6 +1,0 @@
----
-title: Differentiable Programming in Julia
-date: 2020-05-14
----
-
-Coming soon.
