@@ -450,11 +450,12 @@ They are bound by default to ~mod+~, and ~mod+.~, but ~mod+,~ is much more usefu
 :ID:       49308b27-b641-4e31-b811-b4bad6e740dd
 :END:
 
-I don't run a desktop environment, so the volume buttons on my keyboard don't do anything.
+I don't run a desktop environment, so the volume buttons on my keyboard don't do anything by default.
+
 
 #+begin_src haskell
-  , ((m .|. shiftMask, xK_Up), spawn "amixer sset Master 5%+")
-  , ((m .|. shiftMask, xK_Down),spawn "amixer sset Master 5%-")
+  , ((m .|. shiftMask, xK_Up), spawn "amixer -c 1 -q set Master 2dB+ unmute")
+  , ((m .|. shiftMask, xK_Down),spawn "amixer -c 1 -q set Master 2dB- unmute")
 #+end_src
 
 ***** Screenshots
@@ -621,7 +622,7 @@ This is currently only used by when on non-NixOS systems (e.g. Ubuntu).
 export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 
 # enable for hidpi displays
-export GDK_SCALE=1
+# export GDK_SCALE=1
 
 setxkbmap -option 'ctrl:nocaps'
 
@@ -630,16 +631,16 @@ xset r rate 160 80
 
 sudo timedatectl set-timezone Europe/Berlin
 # sudo timedatectl set-timezone America/New_York
-# sudo timedatectl set-timezone America/Los_Angeles
+#_sudo timedatectl set-timezone America/Los_Angeles
+
+# Config in ~/.config/redshift/redshift.conf
+redshift &
 
 # Ensure Zoom output volume stays constant
-/home/dan/scripts/fuck_zoom.sh 100 &
+# /home/dan/scripts/fuck_zoom.sh 100 &
 
 # Clipboard manager (used with rofi)
 greenclip daemon &
-
-# Start espanso
-# espanso restart  # broken in Ubuntu 22
 
 # set trackball rate
 # xinput --set-prop "Primax Kensington Eagle Trackball" "Device Accel Constant Deceleration" 3 || true
@@ -649,12 +650,16 @@ greenclip daemon &
 
 # Wallpaper
 feh --bg-fill --no-xinerama --randomize ~/Media/images/wallpaper/*
-# xsetroot -solid black
+# mxsetroot -solid black
 
-# Config in ~/.config/redshift/redshift.conf
-redshift &
+#picom -b
 
-picom -b
+# Start the SSH agent
+eval `ssh-agent -s`
+ssh-add
+
+# enable desktop notifications
+systemctl --user start xfce4-notifyd.service
 
 # Now, finally, start xmonad
 exec xmonad

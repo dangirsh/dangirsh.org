@@ -52,6 +52,7 @@ If you're reading this in a browser, consider opening it in Emacs Org mode for t
     - [[#bluetooth][Bluetooth]]
   - [[#org][Org]]
     - [[#org-noter-syncing-notes-to-pdfs][org-noter: Syncing notes to PDFs]]
+    - [[#org-ref-managing-citations][org-ref: Managing citations]]
     - [[#org-roam-graph-layer-on-top-of-org][org-roam: Graph layer on top of Org]]
     - [[#org-download-inserting-images-into-org-mode][org-download: Inserting images into org-mode]]
     - [[#org-cliplink-better-external-links][org-cliplink: Better external links]]
@@ -142,7 +143,7 @@ Remember to run =doom sync= or =doom/reload=  after modifying it.
        snippets
 
        :emacs
-       dired
+       ;; dired
        electric
        vc
 
@@ -269,7 +270,7 @@ clients, file templates and snippets.
 
 #+begin_src emacs-lisp
 (setq
- doom-font (font-spec :family "Iosevka" :size 22)
+ doom-font (font-spec :family "Iosevka" :size 24)
  doom-variable-pitch-font (font-spec :family "Libre Baskerville")
  doom-serif-font (font-spec :family "Libre Baskerville"))
 
@@ -347,8 +348,11 @@ Set hardware-specific delay. Tweak this if:
   :config
   (key-chord-mode 1)
   (setq key-chord-one-key-delay 0.20 ; same key (e.g. xx)
-        key-chord-two-keys-delay 0.05))
+        key-chord-two-keys-delay 0.075))
 #+end_src
+
+#+RESULTS:
+: t
 
 *** Setup for binding chords as leaders
 :PROPERTIES:
@@ -454,7 +458,7 @@ https://gist.github.com/dangirsh/86c001351c02b42321d20f462a66da6b
   (key-chord-define-global "kl" 'er/expand-region)
 
   (key-chord-define-global "xx" 'execute-extended-command)
-  (key-chord-define-global "xf" 'find-file)
+  (key-chord-define-global "xf" 'ffap)
 
   (key-chord-define-global "jp" 'my/insert-jupyter-python-block))
 #+end_src
@@ -893,7 +897,7 @@ I largely live inside Org. It currently manages:
   :after org)
 #+end_src
 
-*** COMMENT org-ref: Managing citations
+*** org-ref: Managing citations
 :PROPERTIES:
 :ID:       ed41ebd3-68bb-4f8d-95a4-7785c2e507c3
 :END:
@@ -961,12 +965,16 @@ I largely live inside Org. It currently manages:
 aka my exocortex
 
 #+begin_src emacs-lisp
+(defun my/org-roam-capture-new-node-hook ()
+  (org-entry-put (point) "header-args" ":noweb yes"))
+
 (after! org-roam
   (setq +org-roam-open-buffer-on-find-file nil
         org-id-link-to-org-use-id t
         org-roam-mode-section-functions (list #'org-roam-backlinks-section
                                               #'org-roam-reflinks-section
-                                              #'org-roam-unlinked-references-section)))
+                                              #'org-roam-unlinked-references-section))
+  (add-hook 'org-roam-capture-new-node-hook 'my/org-roam-capture-new-node-hook))
 #+end_src
 
 #+RESULTS:
@@ -1249,6 +1257,8 @@ I tried integrating with Anki first, since I thought it would be useful to go ov
 #+begin_src emacs-lisp
 (after! tramp
   (add-to-list 'tramp-remote-path 'tramp-own-remote-path))
+
+(setq password-cache-expiry nil)
 #+end_src
 
 
@@ -1257,37 +1267,19 @@ I tried integrating with Anki first, since I thought it would be useful to go ov
 :ID:       cd0e64f7-a8fe-494b-b2f1-498e0c973359
 :END:
 
-This wrapper is necessary to workaround the limitations of the =tramp-methods= specifications + the quirks of =tsh ssh=.
-
-#+begin_src sh :tangle /sudo:root@localhost:/usr/local/bin/tsh-tramp-wrapper :tangle-mode (identity #o775)
-#!/bin/sh
-set -eu
-
-TELEPORT_USER=$1
-TELEPORT_NODE=$2
-
-tsh ssh ${TELEPORT_USER}@${TELEPORT_NODE}
-#+end_src
-
-#+begin_src sh :tangle /sudo:root@localhost:/usr/local/bin/tsh-scp-tramp-wrapper :tangle-mode (identity #o775)
-#!/bin/sh
-set -eu
-
-LOCAL_FILE=$1
-SPEC=$2
-
-tsh scp ${LOCAL_FILE} ${SPEC}
-#+end_src
-
 #+begin_src emacs-lisp :results verbatim
 (defun teleport-tramp-add-method ()
   "Add teleport tramp method."
+  ;; For debugging remove the old method
+  (setf tramp-methods (assoc-delete-all "tsh" tramp-methods))
   (add-to-list 'tramp-methods `("tsh"
-                                (tramp-login-program "tsh-tramp-wrapper")
+                                (tramp-login-program "tsh ssh")
                                 (tramp-login-args
-                                 (("%u")
+                                 (("-l" "%u")
                                   ("%h")))
-                                (tramp-copy-program "tsh-scp-tramp-wrapper")
+                                (tramp-copy-program "tsh")
+                                (tramp-copy-args (("scp")))
+                                (tramp-copy-recursive t)
                                 (tramp-remote-shell       "/bin/sh")
                                 (tramp-remote-shell-args  ("-i" "-c")))))
 
@@ -1349,12 +1341,14 @@ To eventually make everything else in this project obsolete...
 #+RESULTS:
 : openai-api
 
-***** COMMENT copilot.el
+***** copilot.el
 
 #+begin_src emacs-lisp
-(use-package! copilot
-  :hook (prog-mode . copilot-mode))
+(use-package! copilot)
 #+end_src
+
+#+RESULTS:
+: copilot
 
 *** Structure Editing
 :PROPERTIES:
@@ -1624,8 +1618,9 @@ Put cursor at beginning of =```julia= line and run =jmd-block-to-jupyter-julia=.
   (delete 'rust flycheck-checkers))
 
 (after! lsp-rust
-  (setq lsp-rust-analyzer-cargo-watch-command "clippy"))
+  (setq lsp-rust-analyzer-cargo-watch-command "check"))
 #+end_src
+
 
 #+RESULTS:
 : clippy
@@ -1652,7 +1647,7 @@ Config thanks to: [[https://robert.kra.hn/posts/2021-02-07_rust-with-emacs/][Con
   (setq lsp-enable-symbol-highlighting nil)
   (setq rustic-format-trigger nil)
   (add-hook 'rustic-mode-hook 'my/rustic-mode-hook)
-  (setq lsp-rust-analyzer-server-display-inlay-hints t)
+  (setq lsp-rust-analyzer-server-display-inlay-hints nil)
   (customize-set-variable 'lsp-ui-doc-enable nil)
   (add-hook 'lsp-ui-mode-hook #'(lambda () (lsp-ui-sideline-enable nil))))
 
@@ -1683,49 +1678,12 @@ sudo curl -L https://github.com/rust-analyzer/rust-analyzer/releases/latest/down
 sudo chmod +x /usr/local/bin/rust-analyzer
 #+end_example
 
-**** Over TRAMP
-:PROPERTIES:
-:ID:       c8b5cd73-81fd-4f01-9bc2-ebbdfc55f168
-:END:
-
-[[https://github.com/brotzeit/rustic#lsp--tramp][GitHub - brotzeit/rustic: Rust development environment for Emacs]]
-
-#+begin_src emacs-lisp
-(defun start-file-process-shell-command@around (start-file-process-shell-command name buffer &rest args)
-  "Start a program in a subprocess.  Return the process object for it. Similar to `start-process-shell-command', but calls `start-file-process'."
-  ;; On remote hosts, the local `shell-file-name' might be useless.
-  (let ((command (mapconcat 'identity args " ")))
-    (funcall start-file-process-shell-command name buffer command)))
-
-(advice-add 'start-file-process-shell-command :around #'start-file-process-shell-command@around)
-#+end_src
-
-#+RESULTS:
-
-#+begin_src emacs-lisp
-(with-eval-after-load "lsp-rust"
-  (lsp-register-client
-   (make-lsp-client
-    :new-connection (lsp-tramp-connection "rust-analyzer")
-    :remote? t
-    :major-modes '(rust-mode rustic-mode)
-    :initialization-options 'lsp-rust-analyzer--make-init-options
-    :notification-handlers (ht<-alist lsp-rust-notification-handlers)
-    :action-handlers (ht ("rust-analyzer.runSingle" #'lsp-rust--analyzer-run-single))
-    :library-folders-fn (lambda (_workspace) lsp-rust-library-directories)
-    :after-open-fn (lambda ()
-                     (when lsp-rust-analyzer-server-display-inlay-hints
-                       (lsp-rust-analyzer-inlay-hints-mode)))
-    :ignore-messages nil
-    :server-id 'rust-analyzer-remote)))
-#+end_src
-
 ** Jupyter
 :PROPERTIES:
 :ID:       f909e8c0-e43d-44d6-810f-757cd509ff62
 :END:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package! jupyter
   :init
   (setq jupyter-eval-use-overlays t)
@@ -1759,7 +1717,7 @@ sudo chmod +x /usr/local/bin/rust-analyzer
     :desc "Remove overlays"  "O" #'jupyter-eval-remove-overlays
     :desc "Eval string"      "w" #'jupyter-eval-string
     :desc "Inspect at point" "d" #'jupyter-inspect-at-point)))
-#+END_SRC
+#+end_src
 
 ** Selectrum etc...
 :PROPERTIES:
@@ -1857,13 +1815,14 @@ sudo chmod +x /usr/local/bin/rust-analyzer
 
 (use-package! consult-projectile)
 
-;; (consult-customize consult-buffer consult-ripgrep
-;;                    consult-git-grep consult-grep consult-bookmark
-;;                    consult-recent-file consult--source-project-file
-;;                    consult-xref consult--source-bookmark
-;;                    consult-theme
-;;                    :preview-key
-;;                    (list (kbd "M-.") ))
+(consult-customize
+ consult-ripgrep consult-git-grep consult-grep
+ consult-bookmark consult-recent-file consult-xref
+ consult--source-bookmark consult--source-recent-file
+ consult--source-project-recent-file
+ ;; :preview-key '(:debounce 0.2 any) ;; Option 1: Delay preview
+ :preview-key (kbd "M-."))
+
 
 ;; (consult-customize
 ;;  consult--source-file consult--source-project-file consult--source-bookmark
@@ -1939,11 +1898,7 @@ sudo chmod +x /usr/local/bin/rust-analyzer
         ;; Directly edit permisison bits!
         wdired-allow-to-change-permissions t))
 
-(use-package! dired-narrow
-              :commands (dired-narrow-fuzzy)
-              :init
-              (map! :map dired-mode-map
-                    :desc "narrow" "/" #'dired-narrow-fuzzy))
+(use-package! dired-x)
 
 ;; Directly edit permission bits!
 (setq wdired-allow-to-change-permissions t)
@@ -2261,9 +2216,16 @@ When a file has lines longer than so-long-threshold, so-long mode is enabled. Th
 :PROPERTIES:
 :ID:       84c57526-9ea1-4c89-b247-084651330d97
 :END:
-
-
 #+begin_src emacs-lisp
+(doom/open-scratch-buffer nil nil t)
+
+(set-company-backend! 'text-mode nil)
+
+(defun my/file-local-p (f)
+  (not (file-remote-p f)))
+
+(after! recentf
+  (add-to-list 'recentf-keep `my/file-local-p))
 ;; (setq warning-minimum-level :emergency)
 
 ;; (when doom-debug-p
@@ -2621,10 +2583,10 @@ narrowed."
 
 (defun my/set-timezone ()
   (interactive)
-  (shell-command "sudo timedatectl set-timezone America/Los_Angeles")
+  ;; (shell-command "sudo timedatectl set-timezone America/Los_Angeles")
   ;; (shell-command "sudo timedatectl set-timezone America/New_York")
   ;; (shell-command "sudo timedatectl set-timezone Europe/Paris")
-  ;; ;; (shell-command "sudo timedatectl set-timezone Europe/Berlin")
+  (shell-command "sudo timedatectl set-timezone Europe/Berlin")
   )
 
 ;; (my/set-timezone)
@@ -3000,7 +2962,7 @@ Any desired package not declared in a Doom module must be declared here. This se
 ;; (package! org-gcal)
 (package! org-noter)
 ;; (package! org-recoll :recipe (:host github :repo "alraban/org-recoll"))
-;; (package! org-ref)
+(package! org-ref)
 (package! org-roam :recipe (:host github :repo "jethrokuan/org-roam"))
 ;; (package! org-roam-bibtex)
 (package! websocket)
