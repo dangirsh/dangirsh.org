@@ -492,7 +492,7 @@ I have =main.sh= and =laptop.sh= symlinked to whatever the current xrandr script
 #+begin_src haskell
   , ((m, xK_s), spawn "/home/dan/.screenlayout/main.sh && feh --bg-fill --no-xinerama --randomize ~/Media/images/wallpaper/* &" )
   , ((m .|. shiftMask, xK_s), spawn "/home/dan/.screenlayout/laptop.sh && feh --bg-fill --no-xinerama --randomize ~/Media/images/wallpaper/*" )
-  , ((m .|. shiftMask .|. mod1Mask, xK_s), spawn "/home/dan/.screenlayout/secondary.sh && feh --bg-fill --no-xinerama --randomize ~/Media/images/wallpaper/*" )
+  , ((m .|. shiftMask .|. mod1Mask, xK_s), spawn "/home/dan/.screenlayout/bsecondary.sh && feh --bg-fill --no-xinerama --randomize ~/Media/images/wallpaper/*" )
 #+end_src
 
 ***** Cycle Recent Workspace
@@ -516,7 +516,7 @@ The functionality here is a primary reason for choosing XMonad: a natural, keybo
   ] ++
   [((m .|. nilOrShift, key), screenWorkspace sc
           >>= flip whenJust (windows . f))
-       | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
+       | (key, sc) <- zip [xK_e, xK_w, xK_r] [0..]
        , (f, nilOrShift) <- [(W.view, 0), (W.shift, shiftMask)]]
 #+end_src
 
@@ -599,7 +599,8 @@ myManageHook = composeAll [ appName =? "Open Files" --> doFloat,
 myScreenshot = do
   -- init takes care of the trailing newline character returned by date
   date <- init <$> runProcessWithInput "date" ["+%Y-%m-%d-%H:%M:%S"] []
-  AL.launchApp myShellPrompt { defaultText = "~/screenshots/" ++ date ++ ".png"} "maim -s"
+  _ <- spawn "maim -s /tmp/last.png"
+  return ()
 #+end_src
 
 #+begin_src haskell
