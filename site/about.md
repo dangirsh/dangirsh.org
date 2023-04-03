@@ -15,5 +15,5 @@ Here's my [Github](https://github.com/dangirsh/).
 
 Here's my face:
 
-![](../img/mallorca_face.jpg "Oh hai!")
+![](../img/mallorca_face.png "Oh hai!")
 
