@@ -344,15 +344,14 @@ myKeys XConfig {modMask = m, terminal = term} = M.fromList $ [
 I currently use [[https://github.com/davatorium/rofi][rofi]] to run programs or switch between open windows. It's simple, fast, and supports fuzzy search.
 
 #+begin_src haskell
-  , ((m, xK_p), spawn "rofi -show drun -modi drun -show-icons -matching fuzzy")
-  , ((m .|. shiftMask, xK_p), spawn "GDK_SCALE=2 rofi -show drun -modi drun -show-icons -matching fuzzy")
-  , ((m, xK_b), spawn "rofi -show window -show-icons -matching fuzzy")
+  , ((m, xK_p), spawn "rofi -show drun -modi drun -show-icons -matching fuzzy -sort")
+  , ((m .|. shiftMask, xK_p), spawn "GDK_SCALE=2 rofi -show drun -modi drun -show-icons -matching fuzzy -sort")
+  , ((m, xK_b), spawn "rofi -show window -show-icons -matching fuzzy -sort")
   -- Like M-y for helm-show-kill-ring in Emacs
   , ((m, xK_y), spawn "rofi -modi \"clipboard:greenclip print\" -show clipboard -run-command '{cmd}'")
   -- Text espander
 
   , ((m .|. shiftMask .|. mod1Mask, xK_j), spawn "texpander.sh")
-  , ((m .|. shiftMask .|. mod1Mask, xK_p), spawn "rofipass")
 #+end_src
 
 
@@ -454,8 +453,8 @@ I don't run a desktop environment, so the volume buttons on my keyboard don't do
 
 
 #+begin_src haskell
-  , ((m .|. shiftMask, xK_Up), spawn "amixer -c 1 -q set Master 2dB+ unmute")
-  , ((m .|. shiftMask, xK_Down),spawn "amixer -c 1 -q set Master 2dB- unmute")
+  , ((m .|. shiftMask, xK_Up), spawn "amixer -c 0 -q set Master 2dB+ unmute")
+  , ((m .|. shiftMask, xK_Down),spawn "amixer -c 0 -q set Master 2dB- unmute")
 #+end_src
 
 ***** Screenshots
@@ -492,10 +491,12 @@ I have =main.sh= and =laptop.sh= symlinked to whatever the current xrandr script
 #+begin_src haskell
   , ((m, xK_s), spawn "/home/dan/.screenlayout/main.sh && feh --bg-fill --no-xinerama --randomize ~/Media/images/wallpaper/* &" )
   , ((m .|. shiftMask, xK_s), spawn "/home/dan/.screenlayout/laptop.sh && feh --bg-fill --no-xinerama --randomize ~/Media/images/wallpaper/*" )
-  , ((m .|. shiftMask .|. mod1Mask, xK_s), spawn "/home/dan/.screenlayout/bsecondary.sh && feh --bg-fill --no-xinerama --randomize ~/Media/images/wallpaper/*" )
 #+end_src
 
 ***** Cycle Recent Workspace
+:PROPERTIES:
+:ID:       922f15e3-b35f-4949-a379-36f70a3dfd3d
+:END:
 
 #+begin_src haskell
   , ((m .|. shiftMask, xK_Tab), cycleRecentWS [xK_Super_L] xK_Tab xK_BackSpace)
@@ -516,9 +517,10 @@ The functionality here is a primary reason for choosing XMonad: a natural, keybo
   ] ++
   [((m .|. nilOrShift, key), screenWorkspace sc
           >>= flip whenJust (windows . f))
-       | (key, sc) <- zip [xK_e, xK_w, xK_r] [0..]
+       | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
        , (f, nilOrShift) <- [(W.view, 0), (W.shift, shiftMask)]]
 #+end_src
+
 
 ****** TODO Try XMonad.Actions.PhysicalScreens to order =mod-{w, e, r}= based on physical screen layout
 
@@ -599,8 +601,7 @@ myManageHook = composeAll [ appName =? "Open Files" --> doFloat,
 myScreenshot = do
   -- init takes care of the trailing newline character returned by date
   date <- init <$> runProcessWithInput "date" ["+%Y-%m-%d-%H:%M:%S"] []
-  _ <- spawn "maim -s /tmp/last.png"
-  return ()
+  AL.launchApp myShellPrompt { defaultText = "~/screenshots/" ++ date ++ ".png"} "maim -s"
 #+end_src
 
 #+begin_src haskell
@@ -623,44 +624,34 @@ This is currently only used by when on non-NixOS systems (e.g. Ubuntu).
 export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 
 # enable for hidpi displays
-# export GDK_SCALE=1
+export GDK_SCALE=1
 
-setxkbmap -option 'ctrl:nocaps'
-
-# set keyboard rate
-xset r rate 160 80
-
-sudo timedatectl set-timezone Europe/Berlin
-# sudo timedatectl set-timezone America/New_York
-#_sudo timedatectl set-timezone America/Los_Angeles
-
-# Config in ~/.config/redshift/redshift.conf
-redshift &
+# sudo timedatectl set-timezone Europe/Berlin
+#sudo timedatectl set-timezone America/New_York
+sudo timedatectl set-timezone America/Los_Angeles
 
 # Ensure Zoom output volume stays constant
-# /home/dan/scripts/fuck_zoom.sh 100 &
+/home/dan/scripts/fuck_zoom.sh 100 &
+$HOME/scripts/configure_laptop_keeboard.sh
 
 # Clipboard manager (used with rofi)
 greenclip daemon &
 
 # set trackball rate
-# xinput --set-prop "Primax Kensington Eagle Trackball" "Device Accel Constant Deceleration" 3 || true
-
-# eye breaks
-# safeeyes &
+xinput --set-prop "Primax Kensington Eagle Trackball" "libinput Accel Speed" 1 || true
 
 # Wallpaper
 feh --bg-fill --no-xinerama --randomize ~/Media/images/wallpaper/*
-# mxsetroot -solid black
+# xsetroot -solid black
 
-#picom -b
+# Config in ~/.config/redshift/redshift.conf
+redshift &
 
-# Start the SSH agent
-eval `ssh-agent -s`
-ssh-add
+picom -b
 
-# enable desktop notifications
-systemctl --user start xfce4-notifyd.service
+eval $(ssh-agent)
+
+syncthing serve &
 
 # Now, finally, start xmonad
 exec xmonad

@@ -11,6 +11,7 @@ date: 2020-06-16
 
 ** Other
 
+- "'Real' is a word we made up in here to mean 'this'" - Teafaerie
 - "The role of the artist is to make the revolution irresistible." - Toni Cade Bambara
 - "A world constitution that takes no account of the mental apparatus by which we perceive it is an empty abstraction." - Sigmund Freud
 - "Mystery is not traveling to new places, but looking with new eyes." - Marcel Proust
