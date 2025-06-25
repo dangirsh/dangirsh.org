@@ -1,8 +1,0 @@
----
-title: Observer-Centric Physics
-date: 2020-05-19
----
-
-More coming.
-
-For now, see: [[https://arxiv.org/abs/1310.1667][Information-Based Physics: An Observer-Centric Foundation]].

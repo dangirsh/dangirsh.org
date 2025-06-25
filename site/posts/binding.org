@@ -35,10 +35,10 @@ Most of the work is carefully specifying a set of assumptions about consciousnes
 The three assumption are:
 
 1. *Conscious Computation*: certain computations have conscious experience as an intrinsic property.
-2. *Substrate Independence*: all intrinsic properties of a computation can be derived from its /causal structure/.
+2. *Substrate Independence*: all intrinsic properties of a computation can be derived from its /causal structure/ [fn:25].
 3. *Objectivity of Conscious States*: the information content of a conscious experience is /objective/ [fn:19].
 
-Together, they imply *the contents of a computation's experience must be objectively determined by the computation's /causal structure/.*
+Together, these imply that *the contents of a computation's experience must be objectively determined by the computation's /causal structure/.*
 
 We'll see why this can't be true, implying at least one assumption is false.
 
@@ -50,17 +50,19 @@ We'll see why this can't be true, implying at least one assumption is false.
 “Dave, stop. Stop, will you? Stop, Dave. Will you stop, Dave? Stop, Dave. I'm afraid. I'm afraid, Dave. Dave, my mind is going. I can feel it. I can feel it. My mind is going. There is no question about it. I can feel it. I can feel it. I can feel it. I'm a... fraid.” - HAL9000, 2001: A Space Odyssey
 #+end_quote
 
-The *Conscious Computation* assumption says that HAL (an AI) wasn't necessarily faking its feeling of fear. That is, it's in principle possible that HAL could have experienced its death, that maybe there's "something it's like" to have been HAL, and that our emotional response to the text is not necessarily misplaced.
+The *Conscious Computation* assumption says that HAL (an AI) wasn't necessarily faking its feeling of fear. That is, it's in principle possible that HAL could have experienced its death, that maybe there's "something it's like" to have been HAL, and that an emotional response to the text is not necessarily misplaced.
 
-Note that this assumption makes no restrictions on how complex the computation must be to support consciousness. A physics-perfect simulation of a brain is still fair-game.
+Note that this assumption makes no restrictions on how complex the computation must be to support consciousness. A physics-perfect simulation of a brain is fair-game. It also says nothing about what physical system implements the computation, which brings us to...
 
 *** Substrate Independence
 
 Imagine you want to test how HAL would behave in a certain situation, so you run HAL in a virtual world with no interface to the physical world. Could HAL do an experiment in the virtual world to learn anything about the physical? For example, can it determine any physical properties of the computer it's running on?
 
-*Substrate Independence* [fn:20] says the answer is "no" [fn:22]. The reason is that the HAL's experiments can only determine the /causal structure/ (defined later) of the computation and the same causal structure can be implemented by many different substrates (i.e physical systems). The causal structure captures all /intrinsic/ properties of a computation, pulling them away from details of how that structure is instantiated on a physical substrate.
+*Substrate Independence* [fn:20] says the answer is "no" [fn:22]. The reason is that the HAL's experiments can only determine the /causal structure/ (defined later) of the computation and the same causal structure can be implemented by many different physical systems, or "substrates". This causal structure captures all /intrinsic/ properties of a computation, in contrast to the implementation details of the substrate (e.g. how electrons flow through silicon).
 
-We benefit from substrate independence all the time: it's what makes the concept of "software" meaningful. We generally write code without worrying about the layout of the transistors, the temperature of the chip, etc... As long as we have sufficient computational resources, we expect the code to always produce the same output. This works because the software specifies a causal structure that is independent of the substrate running it. If you think you have a counterexample, consider that the physical machine could itself be fully virtualized.
+We benefit from substrate independence all the time: it's what makes the concept of "software" meaningful. We generally write code without worrying about the layout of the transistors, the exact temperature of the chip, etc... As long as the computational resources are sufficient, we expect the code to always produce the same output [fn:24]. This works because the software specifies a causal structure that is independent of the computational substrate it's running on.
+
+If we take the *Conscious Computation* assumption with an understanding of *Substrate Independence*, we must admit that we could all be currently running on a [[https://www.youtube.com/watch?v=vo8izCKHiF0][wooden Turing Machine]] right now, and have no way to know!
 
 *** *Objectivity of Conscious States*
 
@@ -68,35 +70,69 @@ Consider the question: "what are you currently experiencing?".
 
 The *Objectivity of Conscious States* assumption says that there is a /single/ correct answer to this question, independent of who is asking the question.
 
-Under [[https://plato.stanford.edu/entries/physicalism/][Physicalism]], we could make this more precise:
+To be more precise (e.g. how do we define "currently"?), we can take a [[https://plato.stanford.edu/entries/physicalism/][Physicalist]] stance and say:
 
-Any conscious state is fully determined by a complete and objective descripiton of its underlying physical state. For example, a complete physical description of the brain, over some period of time, would leave no ambiguity about the corresponding conscious experience.
+Any conscious state is fully determined by a complete and objective descripiton of its underlying physical state. For example, a complete physical description of the brain, over some period of time, would leave no ambiguity about the contents of the corresponding conscious experience(s).
 
 ** The Contradiction
+:PROPERTIES:
+:ID:       7df86589-400d-4eb0-acba-a7c87a1936e2
+:END:
 
-Taken together, these assumptions imply there should be a single objective answer to the question: "what is HAL currently experiencing"?
+Now consider the question: "what did HAL experience in its final moment?".
 
-To answer it, we should start with the causal structure associated with HAL's software. Then, we should look for how that structure intrinsically selects a subset of the events as being part of the same experience. We might expect that subset to change as the computation progresses, but let's keep it simple for now and just expect at least one such subset (i.e. a minimal "moment of experience").
+*Conscious Computation* says this question is worth asking.
 
-What is a causal structure, specifically? Imagine you could zoom into HAL's processor as it was running. You'd see digital memory rapidly changing state with a "bit flip" event being the most relevant primitive. You might also notice that the current state of memory determines the next state, with logical circuits implementing the transition. To abstract-away any details of the physical implementation, consider each bit flip event as a node in a graph. Then, add a directed edge between events to indicate causal dependence (i.e. a certain bit flip event could only logically occur after another). The resulting directed-acyclic causal graph represents the lowest-level causal structure of HAL's computation. This would have too many details to be useful in practice, but that's not relevant for the present argument.
+*Substrate Independence* says that the answer only depends on the causal structure intrinsic to HAL's program.
 
-What kind of substructure in this graph could correspond to a "moment of experience"? Minimally, it would need to associate many bit flip events to a single "frame" of HAL's subjective time. This is referred to as "binding" the information into a single experience. The lack of a consensus on a solution to this is called The Binding Problem [fn:12].
+*Objectivity of Conscious States* says that we can, in principle, find an objective feature in HAL's causal structure that answers the question.
 
-There are only a few ways I could imagine defining intrinsic binding in a causal graph. Most obvious is to just assert that when many events are in the causal past of a single event, they are all "bound". This fails because the single event has no internal structure to integrate the information - it's just a bit flip!
+To see why this is impossible, we first need to clarify the meaning of "causal structure" and "experience". Then, we consider what's available in this structure to objectively combine units of information into a "moment of experience". We find that there's simply no way to do this, implying at least one of our assumptions is false.
 
-Another approach might be to define an extended "screen" of events, and define all the events impinging on the screen to bound into the same experience. This fails because trying to define the screen generates an infinite regress: what intrinsic structure in the graph would select out the events corresponding to the screen? That's the problem we set out to solve!
+*** From Computation to Causal Structure
 
-The last option is to say the binding is /emergent/ in some tower of complexity and abstraction built on top of the graph. Computationalists talk about things like recursion, phase-locking, self-modeling, attention-heads, second-order perception, prediction error minimization, integrated information, etc... They expect that somewhere in these abstractions built from the causal graph, a well-defined "moment of experience" will arise.  I can't see how that could be true, given that the underlying causal graph is missing the relevant structure to define objective boundaries / subsets.
+Imagine you could zoom into HAL's processor as it was dying. You'd see digital memory rapidly changing state, with a "bit flip" event being the lowest-level state change that's relevant for the computation. You might also notice that the current state of memory determines the next state, with digital logic circuits implementing the transition function.
 
-My conclusion from this argument is to reject the *Conscious Computation* assumption and answer "nothing" to "what is HAL currently experiencing".
+We can abstract-away HAL's physical implementation details by focusing on the causal dependence between bit flip events. This can be represented with a [[https://en.wikipedia.org/wiki/Directed_acyclic_graph][directed acyclic graph]] where the nodes correspond to bit flip events and the edges mean "this bit flip event must logically happen before this one".
+
+Such a graph's structure fully captures all intrinsic properties of HAL's final computation. To see why, consider any measurable output of the computation (e.g HAL saying "I'm afraid..."). If there was some aspect of the computation that contributed to this output, it must /by definition/ be captured in the causal graph. Anythng else literally can have no effect.
+
+The same logic applies to HAL's /experience/: *anything that affects it must be represented in the causal graph*.
+
+*** Experience: All at Once
+
+There's only one property of experience we need for the present argument: /wholeness/. Our awareness has rich structures in it, bound together in a [[https://plato.stanford.edu/entries/consciousness-unity/#OneFirVie][unified whole]]. We experience a "now" with many things happening "all at once". Our awareness is "field-like" and has extension over several dimensions. We are made of trillions of cells, but (usually) have only one experience. An explanation for this wholeness is an open problem in philosophy of mind [fn:12].
+
+For now, we only need to assume this property is included in the *Objectivity of Conscious States* assumption. That is, every objective description of a conscious state must unambiguously associate many bits of information together. Just like there's no ambiguity as to which bits on your laptop are associated with a certain image file, there should be no ambiguity about what physical events in your brain are bound into the same moment of experience.
+
+*** Finding Experience in Causal Structure
+
+What kind of substructure in HAL's causal graph could correspond to a "moment of experience"? Minimally, it would need to associate many graph nodes (i.e. bit flip events) to a single "frame" of HAL's subjective time. And, critically, this must be done using only the causal structure itself. Otherwise, we'd be injecting something "from the outside" that's not intrinsic to the computation.
+
+We coult just assert that when many events are in the causal past of a single event, they are all "bound" into a single "moment of experience". This approach directly uses the intrinsic structure of the graph and unambiguously associates many nodes together. However, it fails because the single event has no internal structure to integrate the information - it's just a bit flip! Not to mention that such "fan-in" substructures are ubiquitous...
+
+Another approach might be to define an extended "screen" of events, and define all the events impinging on the screen to be bound into the same experience. This fails because trying to define the screen generates an infinite regress: what intrinsic structure in the graph would objectively select the events corresponding to the screen? That's the same problem we set out to solve!
+
+One last option is to say the binding is /emergent/ in some tower of complexity and abstraction built on top of the causal graph. Computationalists talk about things like recursion, phase-locking, self-modeling, attention-heads, second-order perception, prediction-error minimization, integrated information, etc... They expect that somewhere in these abstractions built from the causal graph, a well-defined "moment of experience" will arise.  I simply can't see how that could be true, given that the underlying causal graph is missing the relevant structure to define objective boundaries.
+
+*** Conclusion: Don't Cry for HAL
+
+The assumptions presented lead to a dead end: computations do not have an intrinsic structure that allows objectively defining a "moment of experience".
+
+My conclusion from this argument is to reject the *Conscious Computation* assumption. The answer to "what did HAL experience in its final moment?" is "Nothing". Don't cry for HAL.
 
 ** Discussion
+:PROPERTIES:
+:ID:       f765cc2d-4734-4d29-b7c4-65feab366c01
+:END:
 
-- Implications for models of consciousness - may need binding in the ontology.
-- Mention that some computationalists may reject the objectivity assumption instead.
-- Ruliadists take the position that map=territory, hence everything is computer.
-  - That's going too far. This argument shows we should be more humble about the territory.
-- Address the "wrong level of description" counterpoint (e.g. which atoms in the body are alive)
+I struggle with this conclusion. On one hand, it aligns with my intuition that we should not be worried about GPUs suffering, for example. On the other hand, I find many of the arguments for computationalists theories of mind compelling.
+
+If we do reject *Conscious Computation*, then we need a framework beyond computation to explain our own consciousness. This does not necessarily imply physics has non-computable properties [fn:6]. Instead, we may find that even perfect simulations fail to capture certain properties of the reality they are simulating. The [[https://en.wikipedia.org/wiki/Map%E2%80%93territory_relation][map is not the territory]], and maybe the "wholeness" in the territory gets inevitably lost in a computational map. Something like this seems to happen when we simulate quantum computers on traditional computers: the "wholeness" of the quantum state gets fractured in the simulation of that state. The price is an exponential slowdown in the simulation.
+
+So why not just assert that our brain leverages some "wholeness" in physics (e.g. quantum entanglement) which classical computers don't have access to? This is the approach persued by QRI, and I consider it a very worthwhile investigation. If true, it could provide a solution to the "binding problem" [fn:26] as well as explain why biological evolution favored bound conscious states: wholeness comes with a computational advantage, similar (or identical) to the advantage we find in quantum computers.
+
+For better or worse, that approach is not so clearly the right path. One reason is that some computationists have convinced themselves that, actually, the map /is/ the territory. Or at least they no longer think the distinction is philosophically sound. This "constructivist turn" in theories of mind asserts that the only meaningful languages we can use do describe anything must be [[https://en.wikipedia.org/wiki/Constructivism_(philosophy_of_mathematics)][constructive]]. This turns out to be equivalent to saying that all models of reality must be computable, and that referencing any property (e.g. "wholeness") beyond what can be computed is a form of sloppy thinking. They explain the wholeness we see in quantum states as a property of the model made by an observer embedded in a multiverse, not an intrinsic property of reality.
 
 ** Acknowledgements
 
@@ -108,6 +144,10 @@ Thank you Franz, Hikari, Lou, Teafaerie, and Theda for helpful discussions!
 :PROPERTIES:
 :ID:       c34ddc64-5fc5-4f0f-9069-e5f23520a02f
 :END:
+
+[fn:26] [[https://www.physicalism.com/#6][Non-materialist physicalism: an experimentally testable conjecture.]]
+[fn:25] I personally consider substrate independence to be a principle, not an assumption. However, I present it as a an assumption here because I don't think it's accepted in all philosophical contexts.
+[fn:24] This applies to any "pure" computational function (e.g. compute pi), which does not have inputs from the physical world (e.g. randomness, keyboard input, etc...)
 [fn:23] [[https://g.co/kgs/6bUpuYX][Trespassing on Einstein's Lawn]] is a beautiful account of this idea.
 [fn:22] Technically, HAL can confirm that it's running on a Turing-complete substrate, but that's it.
 [fn:21] Defined here as "what it's like" to be something (see intro [[https://proteanbazaar.substack.com/p/consciousness-actually-explained][here]]). This does not necessitate a sense of self.
@@ -119,16 +159,16 @@ Thank you Franz, Hikari, Lou, Teafaerie, and Theda for helpful discussions!
 [fn:15] You might expect at atom to be one of the simplest things to simulate, but it's not! Even perfectly simulating a hydrogen atom in its ground state is a formiddable task for a classical computer!
 [fn:14] Scott Aaronson has said the real thing to explain is the Classical Slowdown, not the Quantum Speedup. This is because quantum computers run at the same "speed level" as the underlying reality, where normal computers suffer an exponential slowdown.
 [fn:3] Which leads some people, like Seth Lloyd, to declare that the universe /is/ a quantum computer.
-[fn:7] By "computer" I mean a classical computer like today's digital computers (e.g. CPUs and GPUs), often understood to mean a fancy Turing Machine. Quantum computers are something else.
+[fn:7] By "computer", I mean "physical system that processes information ". This includes CPUs and GPUs, but doesn't include quantum computers.
 [fn:13] For example, Integrated-information Theory (IIT) provides a metric for how conscious a system that can be computed from the graph's structure. However, it doesn't identify an intrinsic mechanism for determining why a system like the brain generates on unified experience instead of many smaller ones.
 [fn:11] Scott Aaronson aggregated additional examples [[https://scottaaronson.blog/?p=1951][here]] of the absurd conclusions that computational theories of mind lead to.
 [fn:1] Permutation City by Greg Egan takes this concept to a beautiful extreme, demonstrating the absurdity of computational theories of mind.
 [fn:10] This is the approach taken by [[https://www.wolframphysics.org/][Wolfram Physics]], which models both minds and their environments as computations that are continuously branching and merging in a computational multiverse. The wavefunction (and it's collapse) are not part of the ontology, but instead just a tool used by observers to make predictions in this multiverse.
 [fn:2] See [[https://qualiacomputing.com/2023/10/26/the-view-from-my-topological-pocket-an-introduction-to-field-topology-for-solving-the-boundary-problem/][The View From My Topological Pocket: An Introduction to Field Topology for Solving the Boundary Problem]] and [[https://youtu.be/g0YID6XV-PQ?si=v9yFUN22dndeVcrO&t=319][Solving the Phenomenal Binding Problem: Topological Segmentation as the Correct Explanation Space]].
-[fn:12] Also called the "Combination Problem", see Chalmer's exposition [[https://consc.net/papers/combination.pdf ][here]].
+[fn:12] See the "Binding/Combination Problem" or the "Boundary Problem". See Chalmer's exposition [[https://consc.net/papers/combination.pdf ][here]].
 [fn:4] A perfect simulation assumes sufficient computational resources and perfect knowledge of initial conditions (practically impossible). It must compute the same transformations on (representations of) physical states that we measure in reality. Quantum theory restricts such simulations to only producing outcome probabilities for a given measurement frame.
 [fn:5] Joscha Bach says that for something to exist it must be implemented, and that therefore only computational/constructive languages should be used in modelling fundamental physics. [[https://www.wolframphysics.org/][Wolfram Physics]] is one notable effort in this direction.
-[fn:6] Non-computable physics being necessary to explain consciousness was famously proposed by Roger Penrose in [[https://en.wikipedia.org/wiki/The_Emperor%27s_New_Mind][The Emperor's New Mind]]. I'm /not/ saying this.
+[fn:6] Non-computable physics being necessary to explain consciousness was famously proposed by Roger Penrose in [[https://en.wikipedia.org/wiki/The_Emperor%27s_New_Mind][The Emperor's New Mind]].
 [fn:8] It's not clear how the brain could make use of this wholeness in physics, but at least it's possible. Computers making use of it seems impossible by construction.
 [fn:9] David Bohm named wholeness as the hallmark of quantum theory in "[[https://en.wikipedia.org/wiki/Wholeness_and_the_Implicate_Order][Wholeness and the Implicate Order]]"
 
