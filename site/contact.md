@@ -4,6 +4,6 @@ title: Contact
 
 Email: (rot13 "qna.tvefu@tznvy.pbz")
 
-Github: [dangirsh](https://github.com/dangirsh)
+X: [@dangirsh](https://x.com/dangirsh)
 
 [PGP Public Key](../doc/gpg.txt)
