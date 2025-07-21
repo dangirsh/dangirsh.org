@@ -48,9 +48,9 @@ The discrepancy in our thought experiment calls our assumptions into question, i
 
 The primary *assumptions about consciousness* we used are:
 
-1.1. The content of conscious states can be reported by a hypothetical qualiascope.
+1.1. The contents of conscious states can be reported by a hypothetical qualiascope.
 
-1.2. The content of conscious states is objective, meaning all qualiascopes measuring the same state must agree.
+1.2. The contents of conscious states are objective, meaning all qualiascopes measuring the same state must agree.
 
 1.3. The contents of conscious states are objectively grouped into moments of experience, based on subjective simultaneity.
 
@@ -75,12 +75,13 @@ For now, I'm going to take all of these assumptions as given and focus on explai
 
 To understand 2.3, we need to first define the objective structure of a computation (2.2) that is relevant for its conscious state. This is tricky because, consciousness aside, it's not obvious how to think about a computation's structure: a function can be computed by different algorithms (e.g. bubble or merge sort), algorithms have multiple implementations (e.g. serial or parallel), and these implementations can run on many different physical substrates (e.g. silicon or [[https://www.youtube.com/watch?v=vo8izCKHiF0][wood]]) [fn:11].
 
-From assumption 1.1, we can infer that conscious states must participate in /causality/. Otherwise, they could not be measured by causally affecting the output of a qualiascope. This suggests using the /causal structure/ of a computation as the relevant representation for 2.2. If there's some aspect of a computation not cacptured by its causal structure, then /by definition/ it can't affect the output of the qualiascope and is therefore irrelevant under the present assumptions about consciousness.
+From assumption 1.1, we can infer that conscious states must participate in /causality/. Otherwise, they could not be measured by causally affecting the output of a qualiascope. This suggests using the /causal structure/ of a computation as the relevant representation for 2.2. If there's some aspect of a computation not captured by its causal structure, then /by definition/ it can't affect the output of the qualiascope and is therefore irrelevant under the present assumptions about consciousness.
 
-What exactly is a computation's causal structure? It's commonly represented as a graph, where the nodes represent events (e.g. bit flips) and the directed edges represent causal dependence between events. This causal graph abstracts-away details like the physical properties of the computer, how information is encoded, and the ordering of causally-independent events. What's left is the essence of the computation, which remains invariant under changes to those details [fn:12]. It is also objective: all observers measuring the same computation will infer the same causal structure [fn:13].
+Another way to arrive at causal structure is to take an /internal perspective/ of a computation. Imagine an AI exploring a self-contained virtual world. What can it learn, in principle, about its situation? Very simply, it can take actions, record observations, and build predictive models. Critically, these will never reveal, for example, if it's running on a CPU or GPU. That's because it can /only infer the causal structure of its virtual world/, which could be physically implemented in many different ways. The same argument applies to an AI building models of its own consciousness: only the causal structure is available!
 
-#+ATTR_HTML: width="500px"
-#+ATTR_ORG: :width 500
+But what exactly is a computation's causal structure? It's commonly represented as a graph, where the nodes represent events (e.g. bit flips) and the directed edges represent causal dependence between events [fn:27]. This causal graph is invariant to changes in details like the physical properties of the computer, how information is encoded, and the order of causally-independent events [fn:12]. It is also objective: all observers measuring the same computation will infer the same causal structure [fn:13].
+
+#+ATTR_HTML: :width 500px
 [[../img/wolfram-causal-graph.png]]
 
 * Causal Graphs Fail to Bind
@@ -88,46 +89,41 @@ What exactly is a computation's causal structure? It's commonly represented as a
 :ID:       b447fdac-556d-40f3-bee2-bcb2ec0a5fce
 :END:
 
-Our thought experiment has led us to conclude that a computation's causal graph is the relevant objective structure underlying it's hypothetical conscious state (2.2). This means that any measurable objective property of the conscious state must be understood in terms of the causal graph. We'll focus only on one such property, which is the association of multiple events into each moment of experience (1.3). Now, we'll find that the intrinsic structure of a causal graph cannot account for this objective association (2.3).
+We'll proceed with the assumption that a computation's causal graph contains an objective representation of its hypothetical conscious state (2.2). This means that any measurable objective property of the conscious state must be understandable in terms of its causal graph. We'll focus only on one such property, which is the grouping of multiple events into each moment of experience (1.3). Crucially, we'll find that the intrinsic structure of a causal graph cannot account for this objective association (2.3).
 
-What would it mean for a computation's causal structure to objectively associate many events into a moment of experience? Well, minimally, we'd need a way to determine which events are experienced /simultaneously/ using only the causal structure.
+What would it mean for a computation's causal structure to objectively group several events into a moment of experience? We can rephrase this and ask: how can we determine which events are /subjectively experienced as /simultaneous/ using the causal structure alone? If we imagine the /experience/ of each lightning strike as being represented by different parts of the graph, *what graph structure tells us they are experienced simultaneously*?
 
-A naive approach would be to assign a time to every event in the graph and then determine simultaneity based these times. This approach doesn't work because there simply is no such global time as part of the graph's structure. All we have is an abstract representation of events and their causal dependence. These events are not embedded in some other structure, nor do they carry some internal time value. We only have the topology of the graph to work with.
+A naive approach would be to assign a time to every event in the graph and then determine simultaneity based on an equivalence between these times (i.e. the times on the two lightning experiences should match). This approach doesn't work because there simply is no such global time as part of the graph's structure. All we have is an abstract representation of events and their causal dependence. These events are not embedded in some other structure, nor do they carry some internal time value. We only have the topology of the graph to work with! [fn:29]
 
-A more promising approach might be to define some internal perspective in the graph and then define simultaneity relative to this perspective. This is a key idea in [[https://arxiv.org/abs/1310.1667][Observer-Centric Physics]] as well as [[https://www.wolframphysics.org/][Wolfram Physics]]. The issue with these approaches is they only sharply define simultaneity relative to a single node of the perspective. So, the entity that can "experience" the simultaneous events is itself just a bit flip! That's not a very rich perspective to take.
+A more promising approach might be to define some internal perspective in the graph and then define simultaneity relative to this perspective. This is a key idea in [[https://arxiv.org/abs/1310.1667][Observer-Centric Physics]] as well as [[https://www.wolframphysics.org/][Wolfram Physics]]. The issue with these approaches is they only sharply define simultaneity relative to a single node of the perspective. So, the entity that can subjectively experience the simultaneous events is itself just a bit flip! That's not a very rich perspective to take.
 
-#+ATTR_HTML: width="500px"
-#+ATTR_ORG: :width 500
+#+ATTR_HTML: :width 500px
 [[../img/knuth-chain.png]]
 
-A final approach is to make an appeal to complexity: maybe a sufficiently tangled causal graph will have an emergent notion of simultaneity relative to some rich internal perspective. This may be true, but will this kind of simultaneity satisfy the sharp objectivity requirement? I don't see how it could. I think there will always be some fuzziness in this emergent definition, leaving open the possibility for qualiascopes to disagree on objective facts.
+A final approach is to make an appeal to complexity: maybe a sufficiently tangled causal graph will have an /emergent/ notion of simultaneity relative to some /rich/ internal perspective. This may be true, but will this kind of simultaneity be truly objective? I don't see how it could. I think there will always be some fuzziness in this emergent definition, leaving open the possibility for qualiascopes to disagree on objective facts.
 
-One way to see this is as a bootstrapping problem. To associate events together, we first need a reference frame from which simultaneity can be defined. But any non-trivial reference frame must /itself/ consist of many events associated together! To believe that a causal graph can objectively associate events together is like believing these hands can draw themselves out of the void:
+One way to see this is as a bootstrapping problem. To associate events together, we first need a reference frame from which simultaneity can be defined. But any non-trivial reference frame must /itself/ consist of many events associated together! We have an infinite regress. To believe that a causal graph can objectively associate events together is like believing these hands can draw themselves out of the void [fn:28]:
 
-#+ATTR_HTML: width="500px"
-#+ATTR_ORG: :width 500
+#+ATTR_HTML: :width 500px
 [[../img/escher-hands.jpg]]
 
-My take-away is to reject the idea that causal graphs have the necessary structure to explain how multiple events are objectively associated to the same conscious experience. We've already seen that this claim (2.3) contradicts the assumption of the objectivity of conscious states (2.1). So, something has to give...
+My take-away is to reject the idea that causal graphs have the necessary structure to explain how multiple events are objectively associated to the same conscious experience. We've already seen that this claim (2.3) contradicts the assumption of the objectivity of conscious states (1.2). So, something has to give...
 
 * Potential Resolutions
 
-In presenting this argument to proponents of computation accounts for consciousness, I've seen the following reactions:
+In presenting this argument to proponents of computation accounts for consciousness, I've seen a several interesting responses.
 
-** Appeal to Emergence
-
-TODO
+** TODO Appeal to Emergence
 
 - "finding binding in causal graphs is like asking which atoms in you body are conscious"
 
-** Consciousness is an Illusion
+** TODO Consciousness is an Illusion
 
-TODO
 - Consciousness/binding is "as-if".
 - Rejects 1.1 and 1.2.
 - Eliminativism / illusionism
 
-** Everything is Computer
+** TODO Everything is Computer
 
 - Constructivist philosophy says the only language we can use to build models are computational
 - Therefore, something must be wrong with this argument, since it rules out fully-describing consciousness in computational terms.
@@ -137,7 +133,7 @@ TODO
 :ID:       f765cc2d-4734-4d29-b7c4-65feab366c01
 :END:
 
-I struggle with this conclusion. On one hand, it aligns with my intuition that we should not be worried about GPUs suffering, for example. On the other hand, I find many of the arguments for computationalists theories of mind compelling.
+It's not easy for me to conclude that computer's can't be conscious. On one hand, it aligns with my intuition that we should not be worried about GPUs suffering, for example. On the other hand, I find many of the arguments for computationalists theories of mind compelling.
 
 If we do reject conscious computation, then we need a framework beyond computation to explain our own consciousness. This does not necessarily imply physics has non-computable properties [fn:14]. Instead, we may find that even perfect simulations fail to capture certain properties of the reality they are simulating. The [[https://en.wikipedia.org/wiki/Map%E2%80%93territory_relation][map is not the territory]], and maybe the "wholeness" in the territory gets inevitably lost in a computational map. Something like this seems to happen when we simulate quantum computers on traditional computers: the "wholeness" of the quantum state gets fractured in the simulation of that state. This fracturing comes at a cost: the simulation generally needs exponentially more resources than the quantum computer.
 
@@ -147,11 +143,11 @@ Of course, there are also reasons to reject this approach. Some compiutationists
 
 From this perspective, maybe the objectivity of conscious states assumption should be discarded instead. After all, it's not even clear that physical states can be objectively defined [fn:17] [fn:18], so why should we expect that for conscious states? This may leave the door open for conscious computation, though many other objections [fn:3] to that would need to be handled.
 
-** Acknowledgements
+* Acknowledgements
 
 Thank you [[https://x.com/algekalipso][Andrés Gómez Emilsson]] @ [[https://qri.org][QRI]] for introducing me to these ideas. Thank you [[http://bach.ai][Joscha Bach]] for [[https://lu.ma/3gul33by][provoking]] me to write them down.
 
-** Related
+* Related
 
 - [[https://qualiacomputing.com/2023/10/26/the-view-from-my-topological-pocket-an-introduction-to-field-topology-for-solving-the-boundary-problem/][The View From My Topological Pocket: An Introduction to Field Topology for Solving the Boundary Problem]]
 - [[https://youtu.be/g0YID6XV-PQ?si=v9yFUN22dndeVcrO&t=319][Solving the Phenomenal Binding Problem: Topological Segmentation as the Correct Explanation Space]].
@@ -160,10 +156,14 @@ Thank you [[https://x.com/algekalipso][Andrés Gómez Emilsson]] @ [[https://qri
 - [[https://www.physicalism.com/#6][Non-materialist physicalism: an experimentally testable conjecture.]]
 - [[https://philsci-archive.pitt.edu/1891/1/UniverseCreationComputer.pdf][Universe creation on a computer]]
 
-** Footnotes
+* Footnotes
 :PROPERTIES:
 :ID:       c34ddc64-5fc5-4f0f-9069-e5f23520a02f
 :END:
+
+[fn:29] If this is confusing to you, don't feel bad. It literally took an Einstein to expell this notion of absolute time from physics! See the [[https://en.wikipedia.org/wiki/Relativity_of_simultaneity][relativity of simultaneity]].
+[fn:28] This image is also used by Eric Weinstein as a key metaphor in Geometric Unity, but that's irrelevant to how it's used here.
+[fn:27] The open philosophical debates about how to think about causality are not relevant here. There is no ambiguity about how to generate a causal graph from a computation.
 [fn:26] Note that all of these applies to computation /in general/: we didn't make any assumptions about the type of computation or the computational substrate. So, even a perfect brain simulation is in question!
 [fn:25] Any discrepancies between them should be attributed to measurement errors and/or faults in the devices. For simplicity we can assume that we have idealized qualiascopes, with no such errors.
 [fn:24] According to ChatGPT o3: "the word 'qualiascope' likely originated with Logan Trujillo in 2003, but Giulio Tononi’s 2012 book popularized it so thoroughly that many non-specialists now attribute the term to him."
@@ -191,15 +191,14 @@ Thank you [[https://x.com/algekalipso][Andrés Gómez Emilsson]] @ [[https://qri
 [fn:17] This a manifestation of the [[https://en.wikipedia.org/wiki/Relativity_of_simultaneity][relativity of simultaneity]].
 [fn:18] [[https://g.co/kgs/6bUpuYX][Trespassing on Einstein's Lawn]] is a beautiful account of this idea.
 
-** COMMENT TODO
+* COMMENT TODO
 
-- use the fact that computational events are onotologically distinct -> clean causal
-- footnote indicating there is no ambiguity about how to generate the graph (not affected by philosophical confusion about causality)
+- use the fact that computational events are onotologically distinct -> clean causal graph
 - qscopes measure bits, and can only agree on inference of objective causal structure of the computation that generated those bits. this is not the case in a more general physical case, where the bits generally come from wavefunction collapse
 - img captions / credit
 
 
-** COMMENT Send to
+* COMMENT Send to
 
   Adam
   Creon
