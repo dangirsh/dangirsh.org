@@ -112,7 +112,7 @@ blockquote {
     font-size: 0.8em;
     vertical-align: super;
     text-decoration: none;
-    padding: 0 0.2rem;
+    padding: 0 0.05rem;
 }
 
 .footnote-ref:hover {
