@@ -131,6 +131,7 @@ blockquote {
 
 .footnotes ol {
     padding-left: 2rem;
+    margin-right: 0;
 }
 
 .footnotes li {
@@ -146,6 +147,19 @@ blockquote {
 .footnotes a.footnote-back {
     font-size: 0.9em;
     margin-left: 0.4rem;
+}
+
+/* Images */
+article img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1.6rem auto;
+}
+
+/* Article content width */
+article {
+    max-width: 100%;
 }
 
 article .header {

@@ -31,11 +31,14 @@ Imagine a device called a "qualiascope" [fn:24] that shows you the contents of a
 
 Two bolts of lightning flash before your eyes in perfect synchrony, how lucky! Even more lucky, we had /two/ qualiascopes pointing at you while this happened. Now consider the question: *should expect them to show identical outputs, in all cases?*
 
+#+ATTR_HTML: :style width:60%;max-width:60%;margin-left:auto;margin-right:auto;display:block
+[[../img/theda-lightning.jpeg]]
+
 Well, they are measuring the same underlying experience, so there's *only one correct output* [fn:25]. After all, *what you are experiencing is independent of who is asking about it*. So, both of their outputs should include a description of two synchronous lightning strikes.
 
 What if we repeat this experiment with a purportedly conscious computer witnessing the dual lightning strikes? *Should we still expect the two qualiascopes to give identical outputs?* You might think the answer is again "yes" since there's still just a single experience being measured.
 
-However, a closer look at the nature of computation does not support this conclusion! We'll see that there's no objective way for a computational structure to assign the information from each lightning strike to the same "subjective frame", leaving the door open for each qualiascope to do it differently. One may output "synchronous lightning strikes" and the other "back-to-back lightning strikes" and /neither/ is right/wrong!
+However, a closer look at the nature of computation does not support this conclusion! We'll see that there's no objective way for a computational structure to assign the information from each lightning strike to the same "subjective frame", leaving the door open for each qualiascope to do it differently. One may output "synchronous lightning strikes" and the other "back-to-back lightning strikes" and /neither/ is more correct!
 
 Where did we go wrong?
 
@@ -81,7 +84,7 @@ Another way to arrive at causal structure is to take an /internal perspective/ o
 
 But what exactly is a computation's causal structure? It's commonly represented as a graph, where the nodes represent events (e.g. bit flips) and the directed edges represent causal dependence between events [fn:27]. This causal graph is invariant to changes in details like the physical properties of the computer, how information is encoded, and the order of causally-independent events [fn:12]. It is also objective: all observers measuring the same computation will infer the same causal structure [fn:13].
 
-#+ATTR_HTML: :width 500px
+#+ATTR_HTML: :style width:60%;max-width:60%;margin-left:auto;margin-right:auto;display:block
 [[../img/wolfram-causal-graph.png]]
 
 * Causal Graphs Fail to Bind
@@ -93,18 +96,18 @@ We'll proceed with the assumption that a computation's causal graph contains an 
 
 What would it mean for a computation's causal structure to objectively group several events into a moment of experience? We can rephrase this and ask: how can we determine which events are /subjectively experienced as /simultaneous/ using the causal structure alone? If we imagine the /experience/ of each lightning strike as being represented by different parts of the graph, *what graph structure tells us they are experienced simultaneously*?
 
-A naive approach would be to assign a time to every event in the graph and then determine simultaneity based on an equivalence between these times (i.e. the times on the two lightning experiences should match). This approach doesn't work because there simply is no such global time as part of the graph's structure. All we have is an abstract representation of events and their causal dependence. These events are not embedded in some other structure, nor do they carry some internal time value. We only have the topology of the graph to work with! [fn:29]
+A naive approach would be to assign a time to every event in the graph and then determine simultaneity based on an equivalence between these times (i.e. the times on the two lightning experiences should match). This approach doesn't work because there simply is no such global time as part of the graph's structure. All we have is an abstract representation of events and their causal dependence. These events are not embedded in some larger structure, nor do they carry some internal time value. We only have the topology of the graph to work with! [fn:29]
 
-A more promising approach might be to define some internal perspective in the graph and then define simultaneity relative to this perspective. This is a key idea in [[https://arxiv.org/abs/1310.1667][Observer-Centric Physics]] as well as [[https://www.wolframphysics.org/][Wolfram Physics]]. The issue with these approaches is they only sharply define simultaneity relative to a single node of the perspective. So, the entity that can subjectively experience the simultaneous events is itself just a bit flip! That's not a very rich perspective to take.
+A more promising approach might be to define some internal perspective in the graph and then define simultaneity relative to this perspective. This is a key idea in [[https://arxiv.org/abs/1310.1667][Observer-Centric Physics]] as well as [[https://www.wolframphysics.org/][Wolfram Physics]]. The issue with these approaches is they only sharply define simultaneity relative to a single node of the internal perspective. So, the entity that can subjectively experience the simultaneous events is itself just a bit flip! That's not a very rich perspective to take.
 
-#+ATTR_HTML: :width 500px
+#+ATTR_HTML: :style width:60%;max-width:60%;margin-left:auto;margin-right:auto;display:block
 [[../img/knuth-chain.png]]
 
 A final approach is to make an appeal to complexity: maybe a sufficiently tangled causal graph will have an /emergent/ notion of simultaneity relative to some /rich/ internal perspective. This may be true, but will this kind of simultaneity be truly objective? I don't see how it could. I think there will always be some fuzziness in this emergent definition, leaving open the possibility for qualiascopes to disagree on objective facts.
 
 One way to see this is as a bootstrapping problem. To associate events together, we first need a reference frame from which simultaneity can be defined. But any non-trivial reference frame must /itself/ consist of many events associated together! We have an infinite regress. To believe that a causal graph can objectively associate events together is like believing these hands can draw themselves out of the void [fn:28]:
 
-#+ATTR_HTML: :width 500px
+#+ATTR_HTML: :style width:60%;max-width:60%;margin-left:auto;margin-right:auto;display:block
 [[../img/escher-hands.jpg]]
 
 My take-away is to reject the idea that causal graphs have the necessary structure to explain how multiple events are objectively associated to the same conscious experience. We've already seen that this claim (2.3) contradicts the assumption of the objectivity of conscious states (1.2). So, something has to give...
