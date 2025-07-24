@@ -5,13 +5,15 @@ date: 2025-05-29
 
 I don't think that computers[fn:1] will ever wake up, no matter what software they are running. In this post, I'll present my version of a lesser-known argument[fn:3] for this stance, which I first learned from [[https://qri.org/][QRI]] [[https://qualiacomputing.com/2023/10/26/the-view-from-my-topological-pocket-an-introduction-to-field-topology-for-solving-the-boundary-problem/][here]][fn:4].
 
-The main idea focuses on an aspect of consciousness[fn:2] called "global binding"[fn:5], which is the deceptively simple observation that we are /simultaneously/ aware of the contents of our experience. In other words, we have a experiential "now" with rich structures in it. To make my point, I'll only need to use a well-defined simplification of global binding: the simultaneous experience of two events.
+The main idea focuses on an aspect of consciousness[fn:2] called "global binding"[fn:5], which is the deceptively simple observation that we are /simultaneously/ aware of the contents of our experience. In other words, we have a experiential "now" with rich structures in it. To make my point, I'll only need to use a simplification of global binding: the simultaneous experience of two events.
 
-I'll show that, under certain reasonable assumptions about consciousness, the framework of computation cannot account for global binding. I then discuss the implications of this conclusion, including the option of questioning the assumptions.
+I'll show that, under certain assumptions about consciousness, the framework of computation cannot account for global binding. I then discuss the implications of this conclusion, including the option of questioning the assumptions.
 
 I try to assume minimal background knowledge in this post, since I believe this argument merits wider awareness.
 
 * A Case for Conscious Computers
+
+Why would someone expect a computer to be conscious in the first place?
 
 Computational accounts for consciousness are [[https://cimc.ai/][in vogue]].  Their detractors risk being characterized as scientifically illiterate, carbon chauvinists[fn:19], or hyperfixated on microtubules[fn:20]. What makes the proponents so sure that consciousness is a property of computation?
 
@@ -23,108 +25,88 @@ One solid way to conclude that a computer could /in principle/ be conscious goes
 
 There are strong reasons to believe in each of these and they imply that a powerful-enough computer, running the right program, will wake up[fn:8].
 
-This conclusion is deeply seductive to technologists. If true, we can understand the brain as a sophisticated biological computer[fn:22]. If true, we may one day upload our minds onto immortal computational substrates[fn:9]. And, if true, we might build a conscious AI that's a worthy successor to humanity[fn:21]. The stakes couldn't be higher!
+This conclusion is deeply seductive to technologists. If true, we can understand the brain as a sophisticated biological computer[fn:22]. If true, we may one day upload our minds onto immortal computational substrates[fn:9]. And, if true, we might build a conscious AI that's a worthy successor to humanity[fn:21].
 
-The present argument against conscious computers takes aim at #3 above and suggests that no computation, not even a perfect brain simulation, can wake up.
+The stakes couldn't be higher!
 
-* What Did HAL See?
+* A Case Against Conscious Computers
+
+The present argument against conscious computers takes aim at #3 above and suggests that no computation, not even a perfect brain simulation, can have a conscious experience.
+
+At a high-level, the argument goes like this:
+
+1. Observe that you can consciously experience two events as either simultaneous or not.
+2. Assume that this fact can be derived by analyzing your brain.
+3. Expect the same for a hypothetically conscious computer (swapping "brain" for "computer") and find that the assumption fails!
+
+Specifically, we'll see that no computation can implement the experience of simultaneity. Of course, a computer can /report/ "seeing" two events as simultaneous or not. This functional[fn:32] account of simultaneity is not in question. We're interested in whether /the experience of simultaneity itself/ can be implemented on a computer, not in its downstream report.
+
+One possible conclusion from this is that computation is not a suitable framework for explaining global binding, and is therefore insufficient to account for our conscious experience. Alternatively, we might have a bad assumption about consciousness. We'll explore both options.
+
+* The Qualiascope
 :PROPERTIES:
 :ID:       23843b1e-f10e-4f28-8a29-8519e46310ab
 :END:
 
-Let's start with a thought experiment to make things more concrete.
+Let's do a thought experiment to make things more concrete.
 
-Imagine a device called a "qualiascope"[fn:24] that shows you the contents of a conscious experience (i.e. it's a mind reader). If it were currently pointing at you, the qualiascope would output details about the screen you're reading this on, your inner monologue, background sounds, etc... If it were pointing at a rock, it would probably output nothing[fn:23].
+Imagine that you and your robot friend named "HAL" are watching a fierce lightning storm. HAL claims to be consciously experiencing the storm alongside you. You want to verify this claim.
 
-Two bolts of lightning flash before your eyes, and you experience them as /simultaneous./ Any qualiascope pointing at you during that time should agree and output something like: "simultaneous flashes".
+You notice that sometimes two lightning bolts strike simultaneously. Other times, there's a barely perceptable delay between strikes. You and HAL always agree on whether the strikes are simultaneous or not.
 
-Two more strikes, but this time you perceive a small gap in time between them. Now any qualiascope pointing at you should say: "back-to-back flashes".
-
-The stikes continue many times, and any qualiascope pointing at you always accurately matches your experience.
-
-#+CAPTION: You experience two flashes of lightning simultaneously, how lucky!
-#+ATTR_HTML: :style width:60%;max-width:60%;margin-left:auto;margin-right:auto;display:block
+#+CAPTION: HAL comments on the ineffable beauty of the storm.
+#+ATTR_HTML: :style width:60%;max-width:60%;margin-left:auto;margin-right:auto;display:block :title Painting by Theda Vetter
 [[../img/theda-lightning.jpeg]]
 
-Everything seems simple so far, but we've already snuck in a miracle! *What could the qualiascopes be measuring to always agree with your experience?* Is such a device even physically possible?
+Now, imagine a device called a "qualiascope"[fn:24] that reports the contents of conscious experiences. When point it at you, it accurately reports whether you're experiencing two simultaneous lightning strikes or not
 
-Your first guess may be that qualiascopes measure some relevant events in your brain (e.g. neurons firing) and then infer the simultaneity of your experience based on the simultaneity of these events. However, simultaneity is only defined relative to a measurement frame[fn:17]. What's right frame to use here? What's more, we should expect the fact of whether the strikes are simultaneous (or not) /in your conscious experience/ to be independent of the measurement frame. After all, what you're experiencing is independent of who is asking about it! This reasoning makes the simulteneity of brain (or any other) events a dubious candidate for the source of the qualiascopes' measurements.
+*Will the qualiascope work on HAL*?
 
-While you ponder that, let's consider repeating the lightning scenario with a purportedly conscious computer named "HAL"[fn:31] in your place. After the each pair of strikes, HAL shows an output indicating if it experienced the strikes as simultaneous or not. A qualiascope pointing at HAL does the same. *Is it possible for the qualiascope to always agree with HAL?*
+* What Might a Qualiascope Measure?
 
-Now, we're on more solid footing: unlike the brain, there is no mystery about HAL's mechanism. We can understand what the qualiascope has access to within the framework of computation. We'll find that there's no way to account for the /objectivity/ of HAL's purported conscious experience of simulteneity using HAL's computational structure alone.  This leaves the door open for each qualiascope to do it differently: one qualiascope may output "synchronous lightning strikes" and the other "back-to-back lightning strikes" and /neither/ is more correct!
+Let's assume a qualiascope can be built without violating the laws of physics[fn:35]. How might it work? What could it measure to determine if the lightning strikes are experinced simultaneously or not?
 
-* Proceeding with Care
-:PROPERTIES:
-:ID:       f71b4bba-06be-4542-865d-1071581a82ed
-:END:
+Your first guess may be that qualiascopes could measure some relevant events in your brain (e.g. neurons firing) or HAL's processor (e.g. bit flips) and then infer the simultaneity of the experience based on the simultaneity of these events. However, simultaneity is only defined relative to a measurement frame[fn:29]. Which is the right frame to use here? What's more, we should expect the fact of whether the strikes are simultaneous (or not) /in a conscious experience/ to be independent of the measurement frame. After all, what you're experiencing is independent of who is asking about it! This reasoning makes the simulteneity of events a dubious candidate for the source of the qualiascope's measurements.
 
-The discrepancy in our thought experiment calls our assumptions into question, including the assumption that HAL was conscious in the first place. Before jumping to a conclusion like "therefore computers can't be conscious", lets carefully lay out all of the key assumptions, claims, and logical steps:
+Another option is that the experience of simulteneity is directly encoded in the physical state of the brain/processor. As we just saw, this would have to go beyond the simulteneity of physical events. The most obvious option would be quantum entanglement. This is because entanglement creates a /indivisible whole/ out of many parts, providing a way to objectively link two events to the same "moment" of experience. There are many open questions about this idea, including the question of whether entanglement is even meaningfully present in the brain[fn:34][fn:33]. There are also ways of interpreting entanglement that make it merely a property of our limited models of reality, not a property of physical states[fn:16]. For now, let's categorize this idea as coherent but far from definitive. If it's true, then HAL is simply missing this magic glue (at least until it's upgraded to use a quantum processor).
 
-The primary *assumptions about consciousness* we used are:
+A final option is that the qualiascope analyzes the way the brain processes information about each lightning strike: maybe there's some signature in the processing that indicates whether the events are experienced simultaneously or not. In this option, the qualiascope effectively treats the brain as a biological computer. It also suggests that the binding we seek is a virtual, not physical, property. So, we might expect the same approach to work if we point the qualiascope at HAL...
 
-1.1. The contents of conscious states can be reported by a hypothetical qualiascope.
+* Pointing the Qualiascope at HAL
 
-1.2. The contents of conscious states are objective, meaning all qualiascopes measuring the same state must agree.
+Unlike the brain, there is no mystery about HAL's mechanism: we can fully understand what the qualiascope has access to within the framework of computation. So, is there some structure in HAL's computation that could implement the experience of simultaneous lightning strikes?
 
-1.3. The contents of conscious states are objectively grouped into moments of experience, based on subjective simultaneity.
+This is tricky because, consciousness aside, it's not obvious how to think about a computation's structure: a function can be computed by different algorithms (e.g. bubble or merge sort), algorithms have multiple implementations (e.g. serial or parallel), and these implementations can run on many different physical substrates (e.g. silicon or [[https://www.youtube.com/watch?v=vo8izCKHiF0][wood]])[fn:11]. What is the essence of a computation that's relevant for understanding its conscious experience?
 
-We additionally rely on these *claims about computation*[fn:26]
+One approach is to recognize that conscious states must participate in /causality/ to be measurable by the qualiascope. This suggests the /causal structure/ of a computation is a valid representation for the source of the qualiascope's measurements: if there's some aspect of a computation not captured by its causal structure, then /by definition/ it can't affect the output of the qualiascope and is therefore irrelevant in this context.
 
-2.1. Some computations correspond to conscious states[fn:10].
+But what exactly is a computation's causal structure? It's commonly represented as a graph, where the nodes represent events (e.g. bit flips) and the directed edges represent causal dependence between events[fn:27]. This causal graph is invariant to changes in details like the physical properties of the computer, how information is encoded, and the order of causally-independent events[fn:12].
 
-2.2. Computations have an objective structure that is the source of the qualiascopes' measurements.
-
-2.3. The objective structure of computation cannot inform the grouping of assumption 1.3.
-
-Here are the *logical steps for the contradiction*:
-
-Following 1.1 and 2.1, we point a qualiascope at a conscious computer and expect some output. Given 1.2, we do the same with two qualiascopes and expect matching outputs. From 1.3, we know these matching outputs must always agree on which parts of the computer's experience are grouped into the same "moment" (e.g. synchronous lightning strikes). This implies the "ground truth" of this grouping is present in the objective structure of the computation (2.2) being measured, otherwise, on what basis can we expect all qualiascopes to agree? Finally, claim 2.3 directly contradicts this implication.
-
-For now, I'm going to take all of these assumptions as given and focus on explaining claim 2.3. Then, I'll review ways of resolving this contradiction, including my preferred choice of rejecting 2.1 (i.e. computers can't be conscious) as well as questioning the other assumptions.
-
-* Distilling Computation to Causal Graphs
-:PROPERTIES:
-:ID:       1fd6971d-ed16-4634-b0a3-1fa7eed3fc90
-:END:
-
-To understand 2.3, we need to first define the objective structure of a computation (2.2) that is relevant for its conscious state. This is tricky because, consciousness aside, it's not obvious how to think about a computation's structure: a function can be computed by different algorithms (e.g. bubble or merge sort), algorithms have multiple implementations (e.g. serial or parallel), and these implementations can run on many different physical substrates (e.g. silicon or [[https://www.youtube.com/watch?v=vo8izCKHiF0][wood]])[fn:11].
-
-From assumption 1.1, we can infer that conscious states must participate in /causality/. Otherwise, they could not be measured by causally affecting the output of a qualiascope. This suggests using the /causal structure/ of a computation as the relevant representation for 2.2. If there's some aspect of a computation not captured by its causal structure, then /by definition/ it can't affect the output of the qualiascope and is therefore irrelevant under the present assumptions about consciousness.
-
-Another way to arrive at causal structure is to take an /internal perspective/ of a computation. Imagine an AI exploring a self-contained virtual world. What can it learn, in principle, about its situation? Very simply, it can take actions, record observations, and build predictive models. Critically, these will never reveal, for example, if it's running on a CPU or GPU. That's because it can /only infer the causal structure of its virtual world/, which could be physically implemented in many different ways. The same argument applies to an AI building models of its own consciousness: only the causal structure is available!
-
-But what exactly is a computation's causal structure? It's commonly represented as a graph, where the nodes represent events (e.g. bit flips) and the directed edges represent causal dependence between events[fn:27]. This causal graph is invariant to changes in details like the physical properties of the computer, how information is encoded, and the order of causally-independent events[fn:12]. It is also objective: all observers of a computation will infer the same causal structure[fn:13].
-
-#+CAPTION: A causal graph representing computation as a network of events and their dependencies
+#+CAPTION: A causal graph representing computation as a network of events and their dependencies. Credit: Wolfram Physics.
 #+ATTR_HTML: :style width:60%;max-width:60%;margin-left:auto;margin-right:auto;display:block
 [[../img/wolfram-causal-graph.png]]
 
-* Causal Graphs Fail to Bind
-:PROPERTIES:
-:ID:       b447fdac-556d-40f3-bee2-bcb2ec0a5fce
-:END:
+Another reason to consider the causal structure comes from taking an /internal perspective/ on a computation. Imagine an AI exploring a self-contained virtual world. What can it learn, in principle, about its situation? Very simply, it can take actions, record observations, and build predictive models. Critically, it can never learn, for example, if it's running on a CPU or GPU. That's because it can /only infer the causal structure/ of its virtual world, which could be physically implemented in many different ways. The same argument applies to an AI building a model of another AI's consciousness: only the causal structure is available!
 
-We'll proceed with the assumption that a computation's causal graph contains an objective representation of its hypothetical conscious state (2.2). This means that any measurable objective property of the conscious state must be understandable in terms of its causal graph. We'll focus only on one such property, which is the grouping of multiple events into each moment of experience (1.3). Crucially, we'll find that the intrinsic structure of a causal graph cannot account for this objective grouping (2.3).
+* Finding Binding
 
-What would it mean for a computation's causal structure to objectively group several events into a moment of experience? We can rephrase this and ask: how can we determine which events are /subjectively experienced as /simultaneous/ using the causal structure alone? If we imagine the /experience/ of each lightning strike as being represented by different parts of the graph, *what graph structure tells us they are experienced simultaneously*?
+Let's imagine that the qualiascope can identify which events in HAL's causal graph correspond to the "sub-experience" of each lightning strike[fn:36]. How might it determine if HAL sees them at the same time?
 
-A naive approach would be to assign a time to every event in the graph and then determine simultaneity based on an equivalence between these times (i.e. the times on the two lightning experiences should match). This approach doesn't work because there simply is no such global time as part of the graph's structure. All we have is an abstract representation of events and their causal dependence. These events are not embedded in some larger structure, nor do they carry some internal time value. We only have the topology of the graph to work with![fn:29]
+As we already discussed, the answer isn't as simple as: "compare the times that the events occurred". The simultaneity of events depends on an arbitrary measurement frame, which doesn't fit with the objective nature of experienced simultaneity. Even worse, this approach uses information that's not present in the graph structure (i.e. physical time).
 
-A more promising approach might be to define some internal perspective in the graph and then define simultaneity relative to this perspective. This is a key idea in [[https://arxiv.org/abs/1310.1667][Observer-Centric Physics]] as well as [[https://www.wolframphysics.org/][Wolfram Physics]]. The issue with these approaches is they only sharply define simultaneity relative to a single node of the internal perspective. So, the entity that can subjectively experience the simultaneous events is itself just a bit flip! That's not a very rich perspective to take.
+A more promising idea is to define some internal perspective in the causal graph and then define simultaneity relative to this perspective. This is a key idea in [[https://arxiv.org/abs/1310.1667][Observer-Centric Physics]] and [[https://www.wolframphysics.org/][Wolfram Physics]]. The issue with these approaches is they only sharply define simultaneity relative to a single event of the internal perspective. So, the entity that "experiences" the simultaneous events is itself just a bit flip! That's not a very rich perspective to take.
 
+#+CAPTION: Simultaneity defined relative to a single node in a chain through a causal graph. [[https://arxiv.org/abs/1310.1667][Source]].
 #+ATTR_HTML: :style width:60%;max-width:60%;margin-left:auto;margin-right:auto;display:block
 [[../img/knuth-chain.png]]
 
-A final approach is to make an appeal to complexity: maybe a sufficiently tangled causal graph will have an /emergent/ notion of simultaneity relative to some /rich/ internal perspective. This may be true, but will this kind of simultaneity be truly objective? I don't see how it could. I think there will always be some fuzziness in this emergent definition, leaving open the possibility for qualiascopes to disagree on objective facts.
+A final set of approaches make an appeal to complexity: maybe a sufficiently tangled causal graph will have an /emergent/ notion of simultaneity relative to some (rich) internal perspective. I think these will always suffer from a bootstrapping problem. To group causal events together as "simultaneous", we first need to define an internal reference frame. But, any such reference frame must /itself/ be made of a group of causal events! We have an infinite regress.
 
-One way to see this is as a bootstrapping problem. To group events together, we first need a reference frame from which simultaneity can be defined. But any non-trivial reference frame must /itself/ consist of many events grouped together! We have an infinite regress. To believe that a causal graph can objectively group events together is like believing these hands can draw themselves out of the void[fn:28]:
-
-#+CAPTION: M.C. Escher's "Drawing Hands" - illustrating the bootstrapping problem of self-referential binding
+#+CAPTION: To believe that a causal graph can objectively group events together is like believing these hands can draw themselves out of the void. Artist: M.C. Escher.
 #+ATTR_HTML: :style width:60%;max-width:60%;margin-left:auto;margin-right:auto;display:block
 [[../img/escher-hands.jpg]]
 
-My take-away is to reject the idea that causal graphs have the necessary structure to account for multiple events being objectively grouped to the same conscious experience. We've already seen that this claim (2.3) contradicts the assumption of the objectivity of conscious states (1.2). So, something has to give...
+My take-away is to reject the idea that causal graphs have the necessary structure to account for multiple events being objectively grouped to the same conscious experience.
 
 * Potential Resolutions
 
@@ -168,12 +150,14 @@ Thank you [[https://x.com/algekalipso][Andrés Gómez Emilsson]] @ [[https://qri
 :PROPERTIES:
 :ID:       c34ddc64-5fc5-4f0f-9069-e5f23520a02f
 :END:
+[fn:36] This is already a huge head start, since it corresponds to solving the [[https://en.wikipedia.org/wiki/Hard_problem_of_consciousness][Hard Problem of Consciousness]].
+[fn:35] Here we snuck in the assumption of physicalism: that conscious states can be explained within the framework of physics.
+[fn:33] One [[https://dangirsh.org/doc/Posner_QIP.pdf][idea]] is that nuclear spins can support biologically-relevant entangled states.
+[fn:34] See [[https://www.mdpi.com/1099-4300/26/6/460][Testing the Conjecture That Quantum Processes Create Conscious Experience]].
+[fn:32] [[https://plato.stanford.edu/entries/functionalism/][Functionalism (Stanford Encyclopedia of Philosophy)]]
 [fn:31] From 2001: A Space Odyssey
-
-[fn:17] https://en.wikipedia.org/wiki/Relativity_of_simultaneity
 [fn:30] See [[https://arxiv.org/abs/2308.16068][Ruliology: Linking Computation, Observers and Physical Law]].
 [fn:29] If this is confusing to you, don't feel bad. It literally took an Einstein to expell this notion of absolute time from physics! See the [[https://en.wikipedia.org/wiki/Relativity_of_simultaneity][relativity of simultaneity]].
-[fn:28] This image is also used by Eric Weinstein as a key metaphor in Geometric Unity, but that's irrelevant to how it's used here.
 [fn:27] The open philosophical debates about how to think about causality are not relevant here. There is no ambiguity about how to generate a causal graph from a computation.
 [fn:26] Note that all of these applies to computation /in general/: we didn't make any assumptions about the type of computation or the computational substrate. So, even a perfect brain simulation is in question!
 [fn:25] Any discrepancies between them should be attributed to measurement errors and/or faults in the devices. For simplicity we can assume that we have idealized qualiascopes, with no such errors.
@@ -199,6 +183,7 @@ Thank you [[https://x.com/algekalipso][Andrés Gómez Emilsson]] @ [[https://qri
 [fn:14] Non-computable physics being necessary to explain consciousness was famously proposed by Roger Penrose in [[https://en.wikipedia.org/wiki/The_Emperor%27s_New_Mind][The Emperor's New Mind]].
 [fn:15] See the "Binding/Combination Problem" or the "Boundary Problem". See Chalmer's exposition [[https://consc.net/papers/combination.pdf ][here]].
 [fn:16] This is the approach taken by [[https://www.wolframphysics.org/][Wolfram Physics]], which models both minds and their environments as computations that are continuously branching and merging in a computational multiverse. The wavefunction (and its collapse) are not part of the ontology, but instead just a tool used by observers to make predictions in this multiverse.
+
 [fn:18] [[https://g.co/kgs/6bUpuYX][Trespassing on Einstein's Lawn]] is a beautiful account of this idea.
 
 * COMMENT TODO
