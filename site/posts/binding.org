@@ -76,9 +76,11 @@ So, will the qualiascope work on HAL? The physics-centric approaches suggest "no
 
 What structure in HAL's computation could implement the experience of simultaneous lightning strikes?
 
-This is tricky because, consciousness aside, it's not obvious how to think about a computation's structure: a function can be computed by different algorithms (e.g. bubble or merge sort), algorithms have multiple implementations (e.g. serial or parallel), and these implementations can run on many different physical substrates (e.g. silicon or [[https://www.youtube.com/watch?v=vo8izCKHiF0][wood]])[fn:11]. What is the essence of a computation that's relevant for understanding its purported conscious experience?
+This is a tricky question because, consciousness aside, it's not obvious how to think about a computation's structure: a function can be computed by different algorithms (e.g. bubble or merge sort), algorithms have multiple implementations (e.g. serial or parallel), and these implementations can run on many different physical substrates (e.g. silicon or [[https://www.youtube.com/watch?v=vo8izCKHiF0][wood]])[fn:11]. It's also tricky because there are several theories[fn:43] about how to map  computational structures to conscious experiences.
 
-One approach is to recognize that conscious states must participate in /causality/ to be measurable by the qualiascope. This suggests the /causal structure/ of a computation is a valid representation for the source of the qualiascope's measurements: if there's some aspect of a computation not captured by its causal structure, then /by definition/ it can't affect the output of the qualiascope and is therefore irrelevant in this context.
+Thankfully, we don't need a computational theory of consciousness to decide whether the qualiascope can determine simultaneity in HAL's experience. Instead, we can look at ways of representing computations /in general/ and check if they leave any hope for the qualiascope to work. If they don't, then it doesn't matter what specific software HAL is running - the qualiascope simply won't work.
+
+Notice that conscious states must participate in /causality/ to be measurable by the qualiascope. This suggests the /causal structure/ of a computation is a relevant generic representation for anything HAL might experience. If there's something not captured in the causal structure then, /by definition,/ it can't affect the output of the qualiascope. So, anything that could inform the qualiascope of HAL's experience of simultaneity must be derivable from the causal structure of HAL's computation.
 
 But what exactly is a computation's causal structure? It's commonly represented as a graph, where the nodes represent simple events (e.g. bit flips) and the directed edges represent causal dependence between these events[fn:27]. This causal graph is invariant to changes in details like the physical properties of the computer, how information is encoded, and the order of causally-independent events[fn:12].
 
@@ -174,6 +176,8 @@ Thank you [[https://x.com/algekalipso][Andrés Gómez Emilsson]] @ [[https://qri
 :PROPERTIES:
 :ID:       c34ddc64-5fc5-4f0f-9069-e5f23520a02f
 :END:
+
+[fn:43] IIT, ...  TODO
 [fn:42] Note that it's strange to even talk about different parts of the same experience, potentially indicating that experience is not made of parts!
 [fn:41] Assuming Roger Penrose is wrong about the brain using non-computable processes.
 [fn:40] Turing Completeness Wiki TODO
