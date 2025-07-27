@@ -157,6 +157,28 @@ article img {
     margin: 1.6rem auto;
 }
 
+/* Figure captions */
+figure {
+    margin: 2rem 0;
+    text-align: center;
+}
+
+figcaption {
+    font-size: 1.4rem;
+    color: #666;
+    margin-top: 0.8rem;
+    font-style: italic;
+    text-align: center;
+}
+
+.figure p {
+    text-align: center;
+    font-size: 1.4rem;
+    color: #666;
+    margin-top: 0.8rem;
+    font-style: italic;
+}
+
 /* Article content width */
 article {
     max-width: 100%;
