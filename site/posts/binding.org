@@ -100,9 +100,9 @@ Another reason to consider the causal structure comes from taking an /internal p
 
 Let's assume that the causal graph is /all/ that the synchroscope can know about HAL's computation. We'll also assume that the synchroscope knows[fn:36] which events in HAL's causal graph correspond to the sub-experience[fn:42] of each lightning strike.
 
-Can the synchroscope determine if these events belong to the same moment of HAL's experience?
+*Can the synchroscope determine if these events belong to the same moment of HAL's experience?*
 
-We can immediately rule-out any approach that relies on assigning times to the events in the 45B3h. That would require specifying a measurement frame, which is external to the graph's structure. As previously discussed, this is also in conflict with the observer-independent nature of the how the subjective experience is bound.
+We can immediately rule-out any approach that relies on assigning times to the events in the graph. That would require specifying a measurement frame, which is external to the graph's structure. As previously discussed, this is also in conflict with the observer-independent nature of the how the subjective experience is bound.
 
 A more promising idea is to define some internal frame in the causal graph, relative to which simultaneity can be defined. This is a key idea in [[https://arxiv.org/abs/1310.1667][Observer-Centric Physics]] and [[https://www.wolframphysics.org/][Wolfram Physics]]. The issue with these approaches is they only sharply define simultaneity relative to a single event in the graph. So, the entity that "experiences" the simultaneity is itself just a bit flip! That's not a very rich perspective to take.
 
@@ -118,7 +118,7 @@ A final set of approaches make an appeal to complexity: maybe a sufficiently tan
 
 My take-away is that causal graphs simply don't have the necessary structure to objectively group multiple events into the same conscious experience.
 
-* Back to the Storm
+* TODO Back to the Storm
 
 So, can you use the synchroscope to rule-out HAL having a conscious experience?
 
@@ -126,10 +126,7 @@ Well, it appears that neither HAL's physical state nor its computational structu
 
 We're left with a  possibilities:
 
-
-
-
-* How About the Brain?
+* TODO How About the Brain
 
 - why doesn't the same argument apply to the brain?
   - if it decomposes into a causal graph with minimal nodes (e.g. neuron firing), then it does!
