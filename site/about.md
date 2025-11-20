@@ -1,6 +1,7 @@
 ---
 title: About
 ---
+<!-- Build: macOS 2025-11-20 -->
 
 - Generalist-in-Training
 - Tries to tread lightly, be kind, and stay humble.

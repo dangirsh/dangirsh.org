@@ -1,3 +1,10 @@
 #!/usr/bin/env bash
-# . /home/dan/.nix-profile/etc/profile.d/nix.sh
-nix-build && rsync -P -vr --checksum --delete result/ dangirsh.org:/home/public/
+set -e
+
+# Build the site
+./build.sh
+
+# Deploy to server
+echo "Deploying to server..."
+echo "Note: You will be prompted for SSH password"
+rsync -P -vr --checksum --delete site/_site/ dangirsh.org:/home/public/

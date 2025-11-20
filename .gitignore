@@ -1,1 +1,7 @@
 result
+site/_cache/
+site/_site/
+generator/dist-newstyle/
+site-generator
+.stack-work/
+stack.yaml.lock

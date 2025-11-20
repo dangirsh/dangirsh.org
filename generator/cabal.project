@@ -1,0 +1,7 @@
+packages: .
+
+-- Avoid digest package which has C++ compatibility issues on macOS
+constraints: hakyll -previewServer,
+             warp < 3.4,
+             http2 < 5.3
+allow-newer: hakyll:base, pandoc:base
