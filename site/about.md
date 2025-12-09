@@ -3,6 +3,8 @@ title: About
 ---
 <!-- Build: macOS 2025-11-20 -->
 
+Pursuing those things which may be of interest.
+
 - Generalist-in-Training
 - Tries to tread lightly, be kind, and stay humble.
 - Currently based in Berlin, Germany.
