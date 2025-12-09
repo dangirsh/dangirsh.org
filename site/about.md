@@ -3,12 +3,9 @@ title: About
 ---
 <!-- Build: macOS 2025-11-20 -->
 
-Pursuing those things which may be of interest.
-
-- Generalist-in-Training
-- Tries to tread lightly, be kind, and stay humble.
+- Pursuing those things which may be of interest.
 - Currently based in Berlin, Germany.
-- Co-conspirator in [The Embassy Network](https://embassynetwork.com/), [The Foresight Institute](https://foresight.org/), and [Feytopia](https://feytopia.com/).
+- Co-conspirator in [CIMC](https://cimc.ai), [The Foresight Institute](https://foresight.org/), and [Feytopia](https://feytopia.com/).
 
 Here's a way to give me [anonymous feedback](https://www.admonymous.co/dangirsh).
 
