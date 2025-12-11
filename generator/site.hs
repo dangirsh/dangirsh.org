@@ -21,6 +21,7 @@ main = do
     static "keybase.txt"
     static "img/*"
     static "doc/*"
+    static "audio/*"
 
     -- match "img/*" $ do
     --     route   idRoute

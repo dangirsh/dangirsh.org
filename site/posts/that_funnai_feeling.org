@@ -1,0 +1,65 @@
+---
+title: That Funnai Feeling
+date: 2025-12-09
+---
+
+AI-generated music has gotten very good. Here's what a few minutes of tinkering with [[https://suno.com/][Suno]] will get you. Lyrics mostly my own, inspired by [[https://www.youtube.com/watch?v=ObOqq1knVxs][That Funny Feeling]] by Bo Burnham.
+
+#+BEGIN_EXPORT html
+<audio controls style="width: 100%; margin: 20px 0;">
+  <source src="../audio/that-funnai-feeling.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+#+END_EXPORT
+
+Listen on [[https://suno.com/song/77647325-1705-4302-bc92-5dc6b7890e35?sh=A4t3HE9Ap415j8FG][Suno]] or download the [[../audio/that-funnai-feeling.mp3][mp3]].
+
+* Lyrics
+
+#+BEGIN_VERSE
+Stunning 8K resolution deepfake of a cat
+In order to prove you are human, the Orb is at the Gap
+Lambda's self-awareness, loving chatbots, harmless fun
+The backlash to the backlash to the race that can't be won
+
+There it is again, that funny feeling
+That funny feeling
+There it is again, that funny feeling
+That funny feeling
+
+Praying for the warning shots, Sammy Altman's face
+Sergei Brin is talking shop, Google's in the race
+Female U.S. founders, easy answers, civil war
+Your soulmate at your fingertips, a chatbot you adore
+
+The live-action Lion King, Nano Banana Pro
+20,000 years of this, then Elon steals the show
+Sneaky Waluigi, Mecha Hitler, clever Claude
+If anybody builds it, Yudkowsky has warned us all
+
+There it is again, that funny feeling
+That funny feeling
+There it is again, that funny feeling
+That funny feeling
+
+Responsible scaling plans, system's going live
+And obeying all the protocols in safety level five
+Full-on technophobic, good luck living with no phone
+A book on AI welfare hand delivered by a drone
+
+LLM-induced psychosis, fully out your mind
+Googling sycophancy, loving what you find
+That un-apparent scheming model before the fall
+The quiet comprehending of the ending of it all
+
+There it is again, that funny feeling
+That funny feeling
+There it is again, that funny feeling
+That funny feeling
+
+Hey, what can you say? We were overdue
+But it'll be over soon, you wait
+Hey, what can you say? We were overdue
+But it'll be over soon, just wait
+(repeat and fade out)
+#+END_VERSE
